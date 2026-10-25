@@ -2,237 +2,416 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Itinerario CDMX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CDMX 18–25 nov</title>
+<meta name="theme-color" content="#f4ece1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f5f2;--card:#ffffff;--text:#1d1b19;--muted:#6f6a64;--line:#e7e2db;
-  --accent:#c2410c;--ok:#15803d;--ok-bg:#e8f5ec;--warn:#a16207;--warn-bg:#fdf3dc;--soft:#f1ede7;
+  --paper:#f4ece1;--paper2:#ebe0d0;--ink:#2a211b;--muted:#7a6c60;--line:#dccfbe;
+  --card:#fffaf3;--rosa:#d6336c;--terra:#c2531f;--teal:#1f7a74;--water:#bcd9dd;--park:#c9dcae;
+  --road:#e6d6c0;--road2:#d9c4a6;--ok:#2f7d4f;--okbg:#e2efe3;--warn:#a3650a;--warnbg:#f8ebcf;
 }
 @media (prefers-color-scheme:dark){
-  :root{--bg:#141312;--card:#1d1c1a;--text:#eeebe7;--muted:#a09a93;--line:#2f2c29;
-  --accent:#fb923c;--ok:#4ade80;--ok-bg:#16291d;--warn:#facc15;--warn-bg:#2d2610;--soft:#25231f;}
+  :root{--paper:#18130f;--paper2:#211a14;--ink:#f1e8dc;--muted:#a8998a;--line:#3a2f26;
+  --card:#211a15;--rosa:#ff5c93;--terra:#ff8a4c;--teal:#4cc3b8;--water:#1d3a3f;--park:#24341c;
+  --road:#30261d;--road2:#3c3025;--ok:#6fd096;--okbg:#17291d;--warn:#f0b54a;--warnbg:#2e2412;}
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:760px;margin:0 auto;padding:32px 16px 64px}
-header h1{font-size:28px;margin:0 0 4px}
-header p{margin:0;color:var(--muted)}
-nav{display:flex;gap:8px;overflow-x:auto;padding:16px 0;position:sticky;top:0;background:var(--bg);z-index:2}
-nav a{flex:none;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
-nav a:hover{border-color:var(--accent)}
-section{margin-top:28px}
-h2{font-size:20px;margin:0 0 12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
-.day h3{margin:0;font-size:17px}
-.day .zone{color:var(--muted);font-size:14px;margin:2px 0 12px}
-.tl{list-style:none;margin:0;padding:0}
-.tl li{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
-.tl li:first-child{border-top:0}
-.tl .h{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600;font-size:14px}
-.note{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--muted);margin-top:12px}
-.res{list-style:none;margin:0;padding:0}
-.res li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
-.res li:first-child{border-top:0}
-.badge{flex:none;font-size:12px;font-weight:600;border-radius:999px;padding:2px 8px;margin-top:2px}
-.ok{background:var(--ok-bg);color:var(--ok)}
-.pend{background:var(--warn-bg);color:var(--warn)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;letter-spacing:-.01em}
+a{color:var(--rosa)}
+
+.app{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-height:100vh}
+.mapside{position:sticky;top:0;height:100vh;padding:20px;display:flex;flex-direction:column;gap:12px}
+.panel{padding:28px 28px 80px;max-width:620px}
+
+.brand h1{font-size:34px;line-height:1.05}
+.brand p{color:var(--muted);margin-top:6px}
+
+.mapbox{position:relative;flex:1;min-height:0;background:var(--paper2);border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.mapbox svg{width:100%;height:100%;display:block}
+.daybadge{position:absolute;left:14px;bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;max-width:70%;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.daybadge b{display:block;font-family:Fraunces,serif;font-size:17px}
+.daybadge span{color:var(--muted);font-size:13px}
+.legend{position:absolute;right:12px;top:12px;font-size:11px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 9px}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 11px;font:600 13px Manrope,sans-serif;cursor:pointer;text-align:left;line-height:1.15;transition:.2s}
+.tab small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.tab[aria-selected=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tab[aria-selected=true] small{color:var(--paper);opacity:.7}
+
+section{margin-top:34px}
+section h2{font-size:24px;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+
+.dayhead h2{font-size:28px}
+.dayhead .zone{color:var(--muted);margin-top:2px}
+.stops{list-style:none;padding:0;margin-top:16px;position:relative}
+.stops:before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px}
+.stop{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:8px 0;cursor:pointer;opacity:0;transform:translateY(8px);animation:in .45s forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.num{width:32px;height:32px;border-radius:50%;background:var(--card);border:2px solid var(--rosa);color:var(--rosa);display:grid;place-items:center;font:700 13px Manrope;z-index:1}
+.num.soft{border-color:var(--line);color:var(--muted)}
+.stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px;transition:.2s}
+.stop:hover .body,.stop.on .body{border-color:var(--rosa);transform:translateX(3px)}
+.stop .t{font-weight:700;color:var(--terra);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.stop .n{font-weight:600}
+.stop .d{color:var(--muted);font-size:13.5px}
+.tip{margin-top:12px;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 13px;font-size:13.5px}
+
+.res{list-style:none;padding:0}
+.res li{display:flex;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.res li:first-child{border-top:0;padding-top:0}
+.badge{flex:none;font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;height:fit-content}
+.ok{background:var(--okbg);color:var(--ok)}
+.pend{background:var(--warnbg);color:var(--warn)}
+
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.kpi b{display:block;font:700 24px Fraunces,serif}
+.kpi span{color:var(--muted);font-size:12px}
+.kpi.main{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kpi.main span{color:var(--paper);opacity:.7}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{padding:8px 4px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:600;border-top:0}
-td.n,th.n{text-align:right;white-space:nowrap}
-tr.sub td{background:var(--soft);font-weight:600}
-tr.tot td{background:var(--ok-bg);color:var(--ok);font-weight:700}
-.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.big div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
-.big b{display:block;font-size:20px}
-.big span{color:var(--muted);font-size:13px}
-.big .t{background:var(--ok-bg);border-color:transparent}
-.big .t b{color:var(--ok)}
-a{color:var(--accent)}
-@media (max-width:520px){.tl li{grid-template-columns:72px 1fr}.big{grid-template-columns:1fr}}
+.r{text-align:right;white-space:nowrap}
+tr.tot td{font-weight:700;color:var(--ok)}
+details{margin-top:10px}
+summary{cursor:pointer;font-weight:600;padding:6px 0}
+
+/* map */
+.pin{cursor:pointer;transition:opacity .4s}
+.pin .dot{transition:r .3s,fill .3s}
+.pin text{font:600 9px Manrope,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--paper2);stroke-width:3px;transition:opacity .3s}
+.pin.dim{opacity:.28}
+.pin.dim text{opacity:0}
+.pin.act .dot{fill:var(--rosa)}
+.pin.pulse .ring{animation:pulse 1.2s ease-out infinite}
+@keyframes pulse{from{r:6;opacity:.7}to{r:18;opacity:0}}
+.route{fill:none;stroke:var(--rosa);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.zlabel{font:700 8px Manrope,sans-serif;letter-spacing:.18em;fill:var(--muted);opacity:.75;text-transform:uppercase}
+
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .mapside{min-width:0}
+  .mapside{height:auto;position:sticky;top:0;z-index:5;background:var(--paper);padding:12px 12px 8px}
+  .brand{display:none}
+  .mapbox{height:42vh;flex:none}
+  .panel{padding:8px 16px 80px;max-width:none}
+  .daybadge,.legend{display:none}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi.main{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <h1>Ciudad de México</h1>
-  <p>18 al 25 de noviembre de 2026. Danny y Ximena. Airbnb en Av. Juárez 56, Centro.</p>
-</header>
+<div class="app">
+  <aside class="mapside">
+    <div class="brand">
+      <h1>Ciudad de México</h1>
+      <p>18 al 25 de noviembre. Danny y Ximena.</p>
+    </div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="mapbox">
+      <svg id="map" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid meet" aria-label="Mapa ilustrado de CDMX">
+        <defs>
+          <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".5" fill="currentColor" opacity=".06"/></pattern>
+          <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+          <radialGradient id="glow"><stop offset="0" stop-color="var(--rosa)" stop-opacity=".35"/><stop offset="1" stop-color="var(--rosa)" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect x="-400" y="-400" width="1200" height="1300" fill="var(--paper2)"/>
+        <rect x="-400" y="-400" width="1200" height="1300" fill="url(#grain)" style="color:var(--ink)"/>
 
-<nav>
-  <a href="#reservas">Reservas</a><a href="#d18">Mié 18</a><a href="#d19">Jue 19</a><a href="#d20">Vie 20</a><a href="#d21">Sáb 21</a><a href="#d22">Dom 22</a><a href="#d23">Lun 23</a><a href="#d24">Mar 24</a><a href="#d25">Mié 25</a><a href="#dinero">Dinero</a>
-</nav>
+        <g filter="url(#rough)">
+          <path d="M300 120 C340 110 395 130 400 170 C405 215 380 250 345 262 C318 270 296 245 292 215 C288 180 280 130 300 120Z" fill="var(--water)" opacity=".8"/>
+          <path d="M112 205 C130 196 160 198 172 210 C182 222 176 248 160 252 C140 258 116 250 108 236 C102 224 102 212 112 205Z" fill="var(--park)"/>
+          <path d="M140 300 C160 296 178 304 176 318 C172 330 150 330 140 322 C132 314 132 304 140 300Z" fill="var(--park)" opacity=".7"/>
+          <path d="M150 360 C185 350 230 358 236 372 C240 386 200 392 172 388 C150 384 138 370 150 360Z" fill="var(--park)" opacity=".55"/>
+          <path d="M230 418 C250 410 290 412 305 424 C318 436 300 452 270 452 C245 452 222 440 230 418Z" fill="var(--water)" opacity=".7"/>
+        </g>
+        <g stroke="var(--water)" stroke-width="1.2" fill="none" opacity=".9">
+          <path d="M238 428 q10 6 20 0 t20 0 t20 0"/><path d="M242 438 q10 6 20 0 t20 0 t18 0"/>
+        </g>
 
-<section id="reservas">
-  <h2>Reservas</h2>
-  <div class="card">
-    <ul class="res">
-      <li><span class="badge ok">Hecho</span><div>Vuelo de vuelta IB304, miércoles 25 a las 12:50 desde la T1 (327,71 €)</div></li>
-      <li><span class="badge ok">Hecho</span><div>Ballet Folklórico, domingo 22 a las 20:30. Galería, fila A, asientos 19 y 20. Ticketmaster, orden 35-33494/MX2 (820 pesos). Entradas en la app</div></li>
-      <li><span class="badge ok">Hecho</span><div>Casa Kahlo (Casa Roja), viernes 20 a las 10:00. GetYourGuide GYGFWVXQ8Q28 (76,76 €). Pedido el cambio a Casa Azul</div></li>
-      <li><span class="badge pend">Pendiente</span><div>Lucha libre, viernes 20 a las 20:30: <a href="https://www.ticketmaster.com.mx/viernes-espectacular-de-lucha-libre-cmll-mexico-20-11-2026/event/1400648FE60454ED">Viernes Espectacular en Ticketmaster</a></div></li>
-      <li><span class="badge pend">Pendiente</span><div>Globo AeroTours, lunes 23. Paquete Especial, 2.849 pesos por persona. Mirar reseñas y certificación AFAC antes de pagar</div></li>
-      <li><span class="badge pend">Pendiente</span><div>Casa Gilardi, martes 24 a las 10:00: reservar en <a href="https://casagilardi.mx/en/">casagilardi.mx</a>. Se paga en efectivo el día</div></li>
-      <li><span class="badge pend">Pendiente</span><div>Casa Azul: solo si no aceptan el cambio, comprarla en Airbnb (11:15, 82 € los dos, con el descuento)</div></li>
-    </ul>
-  </div>
-</section>
+        <g fill="none" stroke-linecap="round">
+          <path d="M60 300 C70 180 140 110 230 108 C320 110 360 200 350 300 C340 390 270 440 200 440 C120 440 52 390 60 300Z" stroke="var(--road2)" stroke-width="3"/>
+          <path d="M120 270 C125 205 165 165 215 165 C265 165 290 205 288 255 C285 310 255 345 210 345 C160 345 116 320 120 270Z" stroke="var(--road)" stroke-width="2.4"/>
+          <path d="M130 222 C160 214 190 205 212 199 C228 194 240 182 252 160" stroke="var(--road2)" stroke-width="3.4"/>
+          <path d="M188 100 C186 200 182 300 178 450" stroke="var(--road2)" stroke-width="3"/>
+          <path d="M232 200 C236 270 244 350 252 450" stroke="var(--road)" stroke-width="2.4"/>
+          <path d="M235 196 C260 200 278 204 300 206" stroke="var(--road)" stroke-width="2.2"/>
+          <path d="M252 160 C285 110 315 70 338 36" stroke="var(--road2)" stroke-width="2.2" stroke-dasharray="1 5"/>
+        </g>
 
-<section>
-  <h2>Día a día</h2>
+        <g opacity=".9">
+          <path d="M318 478 L345 432 L360 452 L372 420 L398 478Z" fill="var(--road2)"/>
+          <path d="M339 442 L345 432 L351 442 L347 440 L343 444Z M367 430 L372 420 L378 431 L374 429 L370 433Z" fill="var(--card)"/>
+        </g>
+        <g transform="translate(36 52)" opacity=".7">
+          <circle r="13" fill="var(--card)" stroke="var(--line)"/>
+          <path d="M0 -9 L3 0 L0 -2 L-3 0Z" fill="var(--rosa)"/><text y="-15" text-anchor="middle" class="zlabel" style="letter-spacing:0">N</text>
+        </g>
 
-  <div class="card day" id="d18">
-    <h3>Miércoles 18: llegada</h3>
-    <p class="zone">Aeropuerto y casa</p>
-    <ul class="tl">
-      <li><span class="h">20:20</span><span>Ximena aterriza en la T2 (AM 713) y pasa a la T1 con el Aerotrén o en taxi corto</span></li>
-      <li><span class="h">22:10</span><span>Danny aterriza en la T1 (IB311)</span></li>
-      <li><span class="h">23:00</span><span>Taxi autorizado o Uber hasta Av. Juárez 56</span></li>
-      <li><span class="h">23:30</span><span>Cena a domicilio o en una taquería cerca</span></li>
-    </ul>
-    <div class="note">Esa noche, nada de alejarse: el Centro se vacía bastante a esas horas.</div>
-  </div>
+        <text x="196" y="186" class="zlabel">Centro</text>
+        <text x="150" y="268" class="zlabel">Roma</text>
+        <text x="96" y="198" class="zlabel">Chapultepec</text>
+        <text x="216" y="358" class="zlabel">Coyoacán</text>
+        <text x="122" y="356" class="zlabel">San Ángel</text>
+        <text x="232" y="468" class="zlabel">Xochimilco</text>
+        <text x="306" y="160" class="zlabel">Aeropuerto</text>
+        <text x="300" y="24" class="zlabel">Teotihuacán</text>
+        <text x="335" y="48" class="zlabel" style="letter-spacing:.05em">45 km</text>
 
-  <div class="card day" id="d19">
-    <h3>Jueves 19: Centro a pie</h3>
-    <p class="zone">Todo andando desde casa</p>
-    <ul class="tl">
-      <li><span class="h">Mañana</span><span>Tranquila, para descansar del vuelo</span></li>
-      <li><span class="h">14:00</span><span>La Ciudadela: artesanías, imanes y recuerdos</span></li>
-      <li><span class="h">15:30</span><span>Alameda y MUNAL (hasta las 18:00)</span></li>
-      <li><span class="h">17:30</span><span>Paseo por Madero, Casa de los Azulejos y Palacio Postal</span></li>
-      <li><span class="h">Noche</span><span>Garibaldi: ir y volver en Uber y quedarse en la plaza</span></li>
-    </ul>
-  </div>
+        <circle id="glowc" r="40" fill="url(#glow)" opacity="0"/>
+        <path id="route" class="route"/>
+        <g id="pins"></g>
+        <g id="walker" opacity="0"><circle r="7" fill="var(--rosa)" opacity=".25"/><circle r="4" fill="var(--rosa)" stroke="var(--card)" stroke-width="1.5"/></g>
+      </svg>
+      <div class="legend">Mapa ilustrado, no a escala</div>
+      <div class="daybadge" id="badge"></div>
+    </div>
+  </aside>
 
-  <div class="card day" id="d20">
-    <h3>Viernes 20: Coyoacán y lucha libre</h3>
-    <p class="zone">Sur, y de noche Arena México</p>
-    <ul class="tl">
-      <li><span class="h">8:30</span><span>Salida a Coyoacán. Café y pan allí</span></li>
-      <li><span class="h">10:00</span><span>Casa Kahlo (Casa Roja), Aguayo 54</span></li>
-      <li><span class="h">11:15</span><span>Casa Azul, a dos calles</span></li>
-      <li><span class="h">13:00</span><span>Paseo por el centro de Coyoacán y comida</span></li>
-      <li><span class="h">15:00</span><span>Cineteca Nacional de Xoco, a 10 min (70 pesos)</span></li>
-      <li><span class="h">17:00</span><span>Vuelta a casa y descanso</span></li>
-      <li><span class="h">20:30</span><span>Lucha libre en la Arena México. Uber ida y vuelta</span></li>
-    </ul>
-    <div class="note">Hay desfile de la Revolución por Av. Juárez por la mañana. Salid antes de las 9:00 y pedid el Uber fuera de la ruta.</div>
-  </div>
+  <main class="panel">
+    <section id="dia" style="margin-top:4px"></section>
 
-  <div class="card day" id="d21">
-    <h3>Sábado 21: San Ángel y Xochimilco</h3>
-    <p class="zone">Sur</p>
-    <ul class="tl">
-      <li><span class="h">9:00</span><span>Desayuno en Café Nin</span></li>
-      <li><span class="h">10:00</span><span>Bazar del Sábado y Jardín del Arte, Plaza San Jacinto</span></li>
-      <li><span class="h">13:30</span><span>Comida en San Ángel</span></li>
-      <li><span class="h">15:30</span><span>Trajinera de 1 h en Xochimilco, embarcadero Nuevo Nativitas</span></li>
-      <li><span class="h">Noche</span><span>Vuelta a casa y cena cerca</span></li>
-    </ul>
-    <div class="note">La trajinera cuesta unos 750 pesos la hora por barca. Si alguien en bici dice que el embarcadero está cerrado, es un gancho.</div>
-  </div>
+    <section id="reservas">
+      <h2>Reservas</h2>
+      <div class="card">
+        <ul class="res">
+          <li><span class="badge ok">Hecho</span><div>Vuelo de vuelta IB304, miércoles 25 a las 12:50 desde la T1 (327,71 €)</div></li>
+          <li><span class="badge ok">Hecho</span><div>Ballet Folklórico, domingo 22 a las 20:30. Galería, fila A, asientos 19 y 20. Entradas en la app de Ticketmaster (orden 35-33494/MX2)</div></li>
+          <li><span class="badge ok">Hecho</span><div>Casa Kahlo (Casa Roja), viernes 20 a las 10:00. GetYourGuide GYGFWVXQ8Q28 (76,76 €). Pedido el cambio a Casa Azul</div></li>
+          <li><span class="badge pend">Pendiente</span><div>Lucha libre, viernes 20 a las 20:30: <a href="https://www.ticketmaster.com.mx/viernes-espectacular-de-lucha-libre-cmll-mexico-20-11-2026/event/1400648FE60454ED">Ticketmaster</a></div></li>
+          <li><span class="badge pend">Pendiente</span><div>Globo AeroTours, lunes 23. Paquete Especial, 2.849 pesos por persona. Mirar reseñas y certificación AFAC antes de pagar</div></li>
+          <li><span class="badge ok">Hecho</span><div>Casa Gilardi, jueves 19 a las 10:00. 600 pesos por persona en efectivo el día</div></li>
+          <li><span class="badge pend">Pendiente</span><div>Casa Azul: solo si no aceptan el cambio, comprarla en Airbnb (11:15, 82 € los dos, con el descuento)</div></li>
+        </ul>
+      </div>
+    </section>
 
-  <div class="card day" id="d22">
-    <h3>Domingo 22: Lagunilla, Centro Histórico y ballet</h3>
-    <p class="zone">Norte del Centro y Centro</p>
-    <ul class="tl">
-      <li><span class="h">9:30</span><span>Tianguis de antigüedades de la Lagunilla</span></li>
-      <li><span class="h">11:30</span><span>Biblioteca Vasconcelos (gratis)</span></li>
-      <li><span class="h">12:30</span><span>Casa Wabi y comida en el Café Sabino</span></li>
-      <li><span class="h">15:30</span><span>Zócalo, Catedral y Palacio Nacional, a pie</span></li>
-      <li><span class="h">20:30</span><span>Ballet Folklórico en Bellas Artes, a pie</span></li>
-    </ul>
-    <div class="note">El Palacio Nacional a veces cierra sin avisar: miradlo el día antes y llevad pasaporte.</div>
-  </div>
-
-  <div class="card day" id="d23">
-    <h3>Lunes 23: globo en Teotihuacán y Roma</h3>
-    <p class="zone">Teotihuacán con transporte incluido</p>
-    <ul class="tl">
-      <li><span class="h">Madrugada</span><span>Recogida de AeroTours en CDMX</span></li>
-      <li><span class="h">Mañana</span><span>Globo, desayuno en cueva y zona arqueológica</span></li>
-      <li><span class="h">Mediodía</span><span>Vuelta a CDMX y a casa a descansar</span></li>
-      <li><span class="h">Noche</span><span>Paseo y cena por Roma y Condesa</span></li>
-    </ul>
-    <div class="note">No se puede subir a la Pirámide del Sol, y a la de la Luna como mucho a la primera plataforma.</div>
-  </div>
-
-  <div class="card day" id="d24">
-    <h3>Martes 24: Chapultepec</h3>
-    <p class="zone">Todo en la misma zona</p>
-    <ul class="tl">
-      <li><span class="h">9:00</span><span>Desayuno</span></li>
-      <li><span class="h">10:00</span><span>Casa Gilardi (600 pesos en efectivo)</span></li>
-      <li><span class="h">11:15</span><span>Castillo de Chapultepec, a 10 min en Uber. Unas 2 h</span></li>
-      <li><span class="h">13:30</span><span>Comida</span></li>
-      <li><span class="h">15:00</span><span>Museo Nacional de Antropología, hasta las 18:00</span></li>
-      <li><span class="h">Noche</span><span>Última cena</span></li>
-    </ul>
-  </div>
-
-  <div class="card day" id="d25">
-    <h3>Miércoles 25: vuelta</h3>
-    <p class="zone">Checkout a las 11:00</p>
-    <ul class="tl">
-      <li><span class="h">8:00</span><span>Desayuno cerca y maletas</span></li>
-      <li><span class="h">9:30</span><span>Danny sale al aeropuerto (T1)</span></li>
-      <li><span class="h">11:00</span><span>Checkout del Airbnb</span></li>
-      <li><span class="h">12:50</span><span>Danny vuela a Madrid (IB304), llega el jueves 26 a las 6:00</span></li>
-      <li><span class="h">17:00</span><span>Ximena vuela a Hermosillo desde la T2 (AM 712)</span></li>
-    </ul>
-  </div>
-</section>
-
-<section id="dinero">
-  <h2>Dinero</h2>
-  <div class="big">
-    <div><b>664 €</b><span>Entradas, los dos</span></div>
-    <div><b>881 €</b><span>Día a día, los dos</span></div>
-    <div class="t"><b>1.545 €</b><span>Total en CDMX</span></div>
-  </div>
-  <p style="color:var(--muted);font-size:14px">Sin vuelos ni Airbnb. Euro a unos 20 pesos.</p>
-
-  <div class="card">
-    <h3 style="margin:0 0 8px;font-size:16px">Entradas</h3>
-    <table>
-      <tr><th>Sitio</th><th class="n">Danny</th><th class="n">Ximena</th></tr>
-      <tr><td>Globo AeroTours (incluye Teotihuacán)</td><td class="n">142,50 €</td><td class="n">142,50 €</td></tr>
-      <tr><td>Casa Kahlo</td><td class="n">38,38 €</td><td class="n">38,38 €</td></tr>
-      <tr><td>Casa Azul (Airbnb)</td><td class="n">41 €</td><td class="n">41 €</td></tr>
-      <tr><td>Casa Gilardi</td><td class="n">30 €</td><td class="n">30 €</td></tr>
-      <tr><td>Ballet Folklórico</td><td class="n">20,50 €</td><td class="n">20,50 €</td></tr>
-      <tr><td>Trajinera, a medias</td><td class="n">18,75 €</td><td class="n">18,75 €</td></tr>
-      <tr><td>Lucha libre, zona ring</td><td class="n">17,50 €</td><td class="n">17,50 €</td></tr>
-      <tr><td>Castillo de Chapultepec</td><td class="n">10,50 €</td><td class="n">5,25 €</td></tr>
-      <tr><td>Museo de Antropología</td><td class="n">10,50 €</td><td class="n">5,25 €</td></tr>
-      <tr><td>MUNAL</td><td class="n">4,75 €</td><td class="n">4,75 €</td></tr>
-      <tr><td>Cineteca</td><td class="n">3,50 €</td><td class="n">3,50 €</td></tr>
-      <tr class="tot"><td>Total</td><td class="n">337 €</td><td class="n">327 €</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h3 style="margin:0 0 8px;font-size:16px">Día a día, para los dos</h3>
-    <table>
-      <tr><th>Concepto</th><th class="n">Al día</th><th class="n">Total</th></tr>
-      <tr><td>Comida (fondas, taquerías y alguna cena buena)</td><td class="n">55 €</td><td class="n">330 €</td></tr>
-      <tr><td>Cafés y antojos por la calle</td><td class="n">10 €</td><td class="n">60 €</td></tr>
-      <tr><td>Cerveza o mezcal con la cena</td><td class="n">8 €</td><td class="n">48 €</td></tr>
-      <tr><td>Uber y metro</td><td class="n">15 €</td><td class="n">90 €</td></tr>
-      <tr><td>Agua, Oxxo y propinas</td><td class="n">10 €</td><td class="n">60 €</td></tr>
-      <tr><td>Sábado: Uber a Xochimilco y vuelta</td><td class="n"></td><td class="n">40 €</td></tr>
-      <tr><td>Miércoles 18: Uber y cena</td><td class="n"></td><td class="n">45 €</td></tr>
-      <tr><td>Miércoles 25: taxis y desayuno</td><td class="n"></td><td class="n">47 €</td></tr>
-      <tr><td>Una noche de fiesta</td><td class="n"></td><td class="n">50 €</td></tr>
-      <tr><td>Recuerdos</td><td class="n"></td><td class="n">60 €</td></tr>
-      <tr><td>Imprevistos</td><td class="n"></td><td class="n">50 €</td></tr>
-      <tr><td>Seguro de viaje</td><td class="n"></td><td class="n">Amex</td></tr>
-      <tr class="tot"><td>Total</td><td class="n"></td><td class="n">881 €</td></tr>
-    </table>
-  </div>
-</section>
+    <section id="dinero">
+      <h2>Dinero</h2>
+      <div class="kpis">
+        <div class="kpi"><b>664 €</b><span>Entradas, los dos</span></div>
+        <div class="kpi"><b>881 €</b><span>Día a día, los dos</span></div>
+        <div class="kpi main"><b>1.545 €</b><span>Total en CDMX, sin vuelos ni Airbnb. Euro a unos 20 pesos</span></div>
+      </div>
+      <div class="card">
+        <details>
+          <summary>Entradas por persona</summary>
+          <table>
+            <tr><th>Sitio</th><th class="r">Danny</th><th class="r">Ximena</th></tr>
+            <tr><td>Globo (incluye Teotihuacán)</td><td class="r">142,50 €</td><td class="r">142,50 €</td></tr>
+            <tr><td>Casa Kahlo</td><td class="r">38,38 €</td><td class="r">38,38 €</td></tr>
+            <tr><td>Casa Azul</td><td class="r">41 €</td><td class="r">41 €</td></tr>
+            <tr><td>Casa Gilardi</td><td class="r">30 €</td><td class="r">30 €</td></tr>
+            <tr><td>Ballet Folklórico</td><td class="r">20,50 €</td><td class="r">20,50 €</td></tr>
+            <tr><td>Trajinera, a medias</td><td class="r">18,75 €</td><td class="r">18,75 €</td></tr>
+            <tr><td>Lucha libre</td><td class="r">17,50 €</td><td class="r">17,50 €</td></tr>
+            <tr><td>Castillo de Chapultepec</td><td class="r">10,50 €</td><td class="r">5,25 €</td></tr>
+            <tr><td>Museo de Antropología</td><td class="r">10,50 €</td><td class="r">5,25 €</td></tr>
+            <tr><td>MUNAL</td><td class="r">4,75 €</td><td class="r">4,75 €</td></tr>
+            <tr><td>Cineteca</td><td class="r">3,50 €</td><td class="r">3,50 €</td></tr>
+            <tr class="tot"><td>Total</td><td class="r">337 €</td><td class="r">327 €</td></tr>
+          </table>
+        </details>
+        <details>
+          <summary>Día a día, para los dos</summary>
+          <table>
+            <tr><th>Concepto</th><th class="r">Al día</th><th class="r">Total</th></tr>
+            <tr><td>Comida</td><td class="r">55 €</td><td class="r">330 €</td></tr>
+            <tr><td>Cafés y antojos</td><td class="r">10 €</td><td class="r">60 €</td></tr>
+            <tr><td>Cerveza o mezcal</td><td class="r">8 €</td><td class="r">48 €</td></tr>
+            <tr><td>Uber y metro</td><td class="r">15 €</td><td class="r">90 €</td></tr>
+            <tr><td>Agua, Oxxo y propinas</td><td class="r">10 €</td><td class="r">60 €</td></tr>
+            <tr><td>Uber a Xochimilco</td><td></td><td class="r">40 €</td></tr>
+            <tr><td>Miércoles 18: Uber y cena</td><td></td><td class="r">45 €</td></tr>
+            <tr><td>Miércoles 25: taxis y desayuno</td><td></td><td class="r">47 €</td></tr>
+            <tr><td>Una noche de fiesta</td><td></td><td class="r">50 €</td></tr>
+            <tr><td>Recuerdos</td><td></td><td class="r">60 €</td></tr>
+            <tr><td>Imprevistos</td><td></td><td class="r">50 €</td></tr>
+            <tr><td>Seguro de viaje</td><td></td><td class="r">Amex</td></tr>
+            <tr class="tot"><td>Total</td><td></td><td class="r">881 €</td></tr>
+          </table>
+        </details>
+      </div>
+    </section>
+  </main>
 </div>
+
+<script>
+const P={
+  casa:{x:210,y:200,n:"Casa",l:"Av. Juárez 56"},
+  aicm:{x:300,y:206,n:"Aeropuerto",l:"AICM"},
+  ciudadela:{x:203,y:214,n:"La Ciudadela"},
+  munal:{x:222,y:192,n:"MUNAL"},
+  madero:{x:228,y:200,n:"Madero"},
+  garibaldi:{x:226,y:180,n:"Garibaldi"},
+  kahlo:{x:204,y:328,n:"Casa Kahlo"},
+  azul:{x:222,y:336,n:"Casa Azul"},
+  coyoacan:{x:232,y:352,n:"Coyoacán"},
+  xoco:{x:204,y:308,n:"Cineteca"},
+  arena:{x:212,y:230,n:"Arena México"},
+  sanangel:{x:158,y:340,n:"San Ángel"},
+  xochimilco:{x:268,y:432,n:"Xochimilco"},
+  lagunilla:{x:240,y:174,n:"Lagunilla"},
+  vasconcelos:{x:202,y:168,n:"Vasconcelos"},
+  wabi:{x:190,y:156,n:"Casa Wabi"},
+  zocalo:{x:238,y:202,n:"Zócalo"},
+  bellas:{x:216,y:197,n:"Bellas Artes"},
+  teoti:{x:338,y:36,n:"Teotihuacán"},
+  roma:{x:172,y:252,n:"Roma y Condesa"},
+  gilardi:{x:150,y:244,n:"Casa Gilardi"},
+  castillo:{x:136,y:222,n:"Castillo"},
+  antropo:{x:128,y:210,n:"Antropología"}
+};
+const D=[
+ {k:"18",d:"Mié 18",s:"Llegada",z:"Aeropuerto y casa",stops:[
+  ["20:20","aicm","Aterriza Ximena","T2, AM 713. Pasa a la T1 con el Aerotrén"],
+  ["22:10","aicm","Aterriza Danny","T1, IB311"],
+  ["23:00","casa","A casa","Taxi autorizado o Uber hasta Av. Juárez 56"],
+  ["23:30","casa","Cena","A domicilio o en una taquería cerca"]],
+  tip:"Esa noche, cena cerca y nada de alejarse: el Centro se vacía bastante."},
+ {k:"19",d:"Jue 19",s:"Chapultepec",z:"Todo en la misma zona",stops:[
+  ["10:00","gilardi","Casa Gilardi","Reservada. 600 pesos en efectivo. Uber desde casa, unos 20 min"],
+  ["11:15","castillo","Castillo de Chapultepec","A 10 min en Uber. Unas 2 h"],
+  ["13:30","castillo","Comida",""],
+  ["15:00","antropo","Museo de Antropología","Hasta las 18:00"],
+  ["Noche","casa","Cena cerca de casa",""]],
+  tip:"Primer día y llegasteis tarde: si vais cansados, Antropología se puede acortar a las salas Mexica y Maya."},
+ {k:"20",d:"Vie 20",s:"Coyoacán",z:"Sur, y de noche Arena México",stops:[
+  ["10:00","kahlo","Casa Kahlo","Aguayo 54. Las entradas llegan por correo el día antes"],
+  ["11:15","azul","Casa Azul","A dos calles. Entrada a hora fija"],
+  ["13:00","coyoacan","Coyoacán","Paseo por el centro y comida"],
+  ["15:00","xoco","Cineteca de Xoco","A 10 min, 70 pesos"],
+  ["17:00","casa","Descanso","Vuelta a casa"],
+  ["20:30","arena","Lucha libre","Viernes Espectacular. Uber ida y vuelta"]],
+  tip:"Desfile de la Revolución por Av. Juárez: salid antes de las 9:00 y pedid el Uber fuera de la ruta."},
+ {k:"21",d:"Sáb 21",s:"San Ángel",z:"Sur",stops:[
+  ["9:00","sanangel","Café Nin","Desayuno"],
+  ["10:00","sanangel","Bazar del Sábado","Jardín del Arte, Plaza San Jacinto"],
+  ["13:30","sanangel","Comida en San Ángel",""],
+  ["15:30","xochimilco","Xochimilco","Trajinera de 1 h desde Nuevo Nativitas"],
+  ["Noche","casa","Cena cerca de casa",""]],
+  tip:"Trajinera: unos 750 pesos la hora por barca. Si alguien dice que el embarcadero está cerrado, es un gancho."},
+ {k:"22",d:"Dom 22",s:"Lagunilla y ballet",z:"Norte del Centro y Centro",stops:[
+  ["9:30","lagunilla","Lagunilla","Tianguis de antigüedades"],
+  ["11:30","vasconcelos","Biblioteca Vasconcelos","Gratis"],
+  ["12:30","wabi","Casa Wabi","Y comida en el Café Sabino"],
+  ["15:30","zocalo","Zócalo","Catedral y Palacio Nacional, a pie"],
+  ["20:30","bellas","Ballet Folklórico","Bellas Artes, galería fila A"]],
+  tip:"El Palacio Nacional a veces cierra sin avisar: miradlo el día antes y llevad pasaporte."},
+ {k:"23",d:"Lun 23",s:"Globo",z:"Teotihuacán con transporte incluido",stops:[
+  ["Madrugada","casa","Recogida","AeroTours os recoge en CDMX"],
+  ["Mañana","teoti","Globo en Teotihuacán","Vuelo, desayuno en cueva y zona arqueológica"],
+  ["Mediodía","casa","Descanso","Vuelta a casa"],
+  ["Noche","roma","Roma y Condesa","Paseo y cena"]],
+  tip:"No se sube a la Pirámide del Sol; a la de la Luna, como mucho a la primera plataforma."},
+ {k:"24",d:"Mar 24",s:"Centro",z:"Todo a pie desde casa",stops:[
+  ["10:30","ciudadela","La Ciudadela","Artesanías y recuerdos, último día"],
+  ["12:00","munal","Alameda y MUNAL","Cierra a las 18:00"],
+  ["14:30","madero","Madero y comida","Casa de los Azulejos y Palacio Postal de camino"],
+  ["Tarde","casa","Descanso y maletas",""],
+  ["Noche","garibaldi","Garibaldi","Última noche. Ir y volver en Uber"]]},
+ {k:"25",d:"Mié 25",s:"Vuelta",z:"Checkout a las 11:00",stops:[
+  ["8:00","casa","Desayuno y maletas",""],
+  ["9:30","aicm","Danny al aeropuerto","IB304 a las 12:50, llega a Madrid el jueves 26 a las 6:00"],
+  ["11:00","casa","Checkout del Airbnb",""],
+  ["17:00","aicm","Vuela Ximena a Hermosillo","T2, AM 712"]]}
+];
+
+const svg=document.getElementById('map'),pinsG=document.getElementById('pins'),route=document.getElementById('route'),
+walker=document.getElementById('walker'),glow=document.getElementById('glowc'),NS='http://www.w3.org/2000/svg';
+const pinEl={};
+for(const [id,p] of Object.entries(P)){
+  const g=document.createElementNS(NS,'g');g.setAttribute('class','pin dim');g.setAttribute('transform',`translate(${p.x} ${p.y})`);g._x=p.x;g._y=p.y;
+  g.innerHTML=`<circle class="ring" r="6" fill="none" stroke="var(--rosa)" stroke-width="1.5" opacity="0"/><circle class="dot" r="3.5" fill="var(--teal)" stroke="var(--card)" stroke-width="1.4"/><text x="7" y="3">${p.n}</text>`;
+  g.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
+  pinsG.appendChild(g);pinEl[id]=g;
+}
+
+let vb=[0,0,400,480],anim;
+function scalePins(){const k=Math.max(.45,Math.min(1.1,vb[2]/330));for(const g of Object.values(pinEl))g.setAttribute('transform',`translate(${g._x} ${g._y}) scale(${k})`);walker.style.transform='';}
+function tween(to,ms=900){
+  cancelAnimationFrame(anim);const from=vb.slice(),t0=performance.now();
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const f=now=>{const k=Math.min(1,(now-t0)/ms),e=ease(k);vb=from.map((v,i)=>v+(to[i]-v)*e);svg.setAttribute('viewBox',vb.join(' '));scalePins();if(k<1)anim=requestAnimationFrame(f)};
+  anim=requestAnimationFrame(f);
+}
+function fit(ids){
+  const xs=ids.map(i=>P[i].x),ys=ids.map(i=>P[i].y);
+  let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const box=svg.getBoundingClientRect(),ar=box.width/box.height||.83;
+  let w=Math.max(x1-x0,70)+90,h=Math.max(y1-y0,70)+90;
+  if(w/h>ar)h=w/ar;else w=h*ar;
+  return [(x0+x1)/2-w/2,(y0+y1)/2-h/2,w,h];
+}
+function pathFor(pts){
+  if(pts.length<2)return'';
+  let d=`M${pts[0].x} ${pts[0].y}`;
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y;
+    d+=` Q${mx-dy*.18} ${my+dx*.18} ${b.x} ${b.y}`}
+  return d;
+}
+let walkRaf;
+function drawRoute(ids){
+  cancelAnimationFrame(walkRaf);
+  const seq=ids.filter((v,i)=>i===0||v!==ids[i-1]).map(i=>P[i]);
+  const d=pathFor(seq);route.setAttribute('d',d);walker.setAttribute('opacity',0);
+  if(!d){route.style.strokeDasharray='';return}
+  const L=route.getTotalLength();
+  route.style.transition='none';route.style.strokeDasharray=L;route.style.strokeDashoffset=L;
+  route.getBoundingClientRect();
+  route.style.transition='stroke-dashoffset 1.8s cubic-bezier(.6,0,.2,1) .35s';route.style.strokeDashoffset=0;
+  setTimeout(()=>{route.style.strokeDasharray='2 5';route.style.transition='none';route.style.strokeDashoffset=0;startWalk(L)},2250);
+}
+function startWalk(L){
+  walker.setAttribute('opacity',1);const t0=performance.now(),dur=Math.max(4000,L*45);
+  const f=now=>{const k=((now-t0)%dur)/dur,p=route.getPointAtLength(k*L);walker.setAttribute('transform',`translate(${p.x} ${p.y})`);walkRaf=requestAnimationFrame(f)};
+  walkRaf=requestAnimationFrame(f);
+}
+function highlight(id){
+  document.querySelectorAll('.pin').forEach(g=>g.classList.remove('pulse'));
+  document.querySelectorAll('.stop').forEach(s=>s.classList.toggle('on',s.dataset.p===id));
+  if(!id)return;pinEl[id].classList.add('pulse');
+  glow.setAttribute('cx',P[id].x);glow.setAttribute('cy',P[id].y);glow.setAttribute('opacity',1);
+}
+
+const tabs=document.getElementById('tabs'),dia=document.getElementById('dia'),badge=document.getElementById('badge');
+D.forEach((day,i)=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.innerHTML=`${day.d}<small>${day.s}</small>`;b.onclick=()=>show(i);tabs.appendChild(b)});
+
+function show(i){
+  const day=D[i];
+  [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+  tabs.children[i].scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+  const ids=day.stops.map(s=>s[1]),uniq=[...new Set(ids)];
+  for(const [id,g] of Object.entries(pinEl)){const on=uniq.includes(id);g.classList.toggle('dim',!on);g.classList.toggle('act',on)}
+  glow.setAttribute('opacity',0);
+  const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];tween(fit([...new Set(rt)]));drawRoute(rt);
+  badge.innerHTML=`<b>${day.d}: ${day.s}</b><span>${day.z}</span>`;
+  const order={};let n=0;ids.forEach(id=>{if(!(id in order))order[id]=++n});
+  dia.innerHTML=`<div class="dayhead"><h2>${day.d.replace('Mié','Miércoles').replace('Jue','Jueves').replace('Vie','Viernes').replace('Sáb','Sábado').replace('Dom','Domingo').replace('Lun','Lunes').replace('Mar','Martes')}: ${day.s}</h2><p class="zone">${day.z}</p></div>
+  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.08*j}s"><span class="num${s[1]==='casa'?' soft':''}">${s[1]==='casa'?'⌂':day.stops.slice(0,j+1).filter(x=>x[1]!=='casa').length}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}</ol>
+  ${day.tip?`<div class="tip">${day.tip}</div>`:''}`;
+  dia.querySelectorAll('.stop').forEach(li=>{li.onmouseenter=()=>highlight(li.dataset.p);li.onclick=()=>highlight(li.dataset.p)});
+  try{localStorage.setItem('cdmx-day',i)}catch(e){}
+}
+const today=new Date(),start=new Date(2026,10,18);
+let first=Math.round((today-start)/864e5);
+if(first<0||first>7){try{first=+localStorage.getItem('cdmx-day')||0}catch(e){first=0}}
+requestAnimationFrame(()=>show(first));
+addEventListener('keydown',e=>{const cur=[...tabs.children].findIndex(b=>b.getAttribute('aria-selected')==='true');if(e.key==='ArrowRight'&&cur<D.length-1)show(cur+1);if(e.key==='ArrowLeft'&&cur>0)show(cur-1)});
+let tx=null;document.querySelector('.mapbox').addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.querySelector('.mapbox').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,cur=[...tabs.children].findIndex(b=>b.getAttribute('aria-selected')==='true');if(dx<-50&&cur<D.length-1)show(cur+1);if(dx>50&&cur>0)show(cur-1);tx=null});
+</script>
 </body>
 </html>

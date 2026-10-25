@@ -44,16 +44,17 @@ button{font-family:inherit}
 body.nomap .mapbox{display:none}
 
 /* svg */
-.land{stroke:none}
+.land{stroke:#cfc2ae;stroke-width:.8;vector-effect:non-scaling-stroke}
+.land.park{stroke:#a9c79a}.land.wat{stroke:#93bdd6}
 .road{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .lbl{font-family:Manrope,sans-serif;text-anchor:middle;paint-order:stroke fill;stroke-linejoin:round}
-.zl{fill:#857b70;stroke:#f7f3ec;stroke-width:3px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.zl{fill:#a39787;stroke:#f7f3ec;stroke-width:3px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .zl.sm{font-size:9px;font-weight:700}
 .wl{fill:#4f86a8;stroke:#b9dcef;stroke-width:2px;font-size:10px;font-style:italic;font-weight:600}
 .rl{fill:#9b9083;stroke:#f7f3ec;stroke-width:2.5px;font-size:8.5px;font-weight:700}
 .pin{cursor:pointer}
 .pin .bub{transition:transform .3s cubic-bezier(.3,1.5,.5,1);transform-box:fill-box;transform-origin:center}
-.pin .pn{font:800 12px Manrope;fill:#fff;text-anchor:middle}
+.pin .pn{font:800 8px Manrope;fill:#fff;text-anchor:middle}
 .pin.idea .pn{font-size:12px}
 .pin.on .bub{transform:scale(1.3)}
 .pin .lab text{font:700 11.5px Manrope;fill:#1c1b22;text-anchor:middle}
@@ -429,11 +430,11 @@ el('rect',{x:-600,y:-600,width:1700,height:1800,fill:'#ece6dc'},world);
 el('path',{class:'land',fill:'#f7f3ec',d:smooth([[19.56,-99.24],[19.58,-99.10],[19.53,-99.03],[19.47,-99.04],[19.42,-99.00],[19.36,-98.98],[19.29,-99.00],[19.24,-99.06],[19.25,-99.16],[19.28,-99.23],[19.36,-99.27],[19.46,-99.27]])},world);
 
 const lands=[
- ['#f6e7c8',[[19.448,-99.152],[19.449,-99.127],[19.437,-99.121],[19.426,-99.125],[19.424,-99.150],[19.433,-99.156]]],
- ['#f3e9e2',[[19.424,-99.170],[19.423,-99.149],[19.412,-99.146],[19.404,-99.151],[19.405,-99.168]]],
- ['#f3e9e2',[[19.420,-99.184],[19.421,-99.171],[19.408,-99.169],[19.402,-99.177],[19.406,-99.186]]],
- ['#f6e7c8',[[19.368,-99.176],[19.367,-99.150],[19.352,-99.146],[19.339,-99.152],[19.338,-99.172],[19.350,-99.180]]],
- ['#f6e7c8',[[19.356,-99.202],[19.355,-99.184],[19.343,-99.181],[19.336,-99.190],[19.339,-99.203]]],
+ ['#f8eedb',[[19.448,-99.152],[19.449,-99.127],[19.437,-99.121],[19.426,-99.125],[19.424,-99.150],[19.433,-99.156]]],
+ ['#f6eee8',[[19.424,-99.170],[19.423,-99.149],[19.412,-99.146],[19.404,-99.151],[19.405,-99.168]]],
+ ['#f6eee8',[[19.420,-99.184],[19.421,-99.171],[19.408,-99.169],[19.402,-99.177],[19.406,-99.186]]],
+ ['#f8eedb',[[19.368,-99.176],[19.367,-99.150],[19.352,-99.146],[19.339,-99.152],[19.338,-99.172],[19.350,-99.180]]],
+ ['#f8eedb',[[19.356,-99.202],[19.355,-99.184],[19.343,-99.181],[19.336,-99.190],[19.339,-99.203]]],
 ];
 for(const [f,p] of lands)el('path',{class:'land',fill:f,d:smooth(p)},world);
 
@@ -442,7 +443,7 @@ const water=[
  [[19.275,-99.125],[19.278,-99.085],[19.262,-99.065],[19.246,-99.075],[19.240,-99.110],[19.255,-99.130]],
  [[19.4215,-99.1885],[19.4220,-99.1845],[19.4175,-99.1830],[19.4165,-99.1870]],
 ];
-for(const p of water)el('path',{class:'land',fill:'#b9dcef',d:smooth(p)},world);
+for(const p of water)el('path',{class:'land wat',fill:'#d6eaf4',d:smooth(p)},world);
 
 const parks=[
  [[19.4275,-99.1825],[19.4270,-99.1990],[19.4220,-99.2120],[19.4070,-99.2170],[19.4010,-99.2040],[19.4060,-99.1900],[19.4135,-99.1800]],
@@ -455,7 +456,7 @@ const parks=[
  [[19.4720,-99.0750],[19.4720,-99.0560],[19.4560,-99.0560],[19.4560,-99.0750]],
  [[19.2960,-99.1000],[19.2960,-99.0760],[19.2840,-99.0760],[19.2840,-99.1000]],
 ];
-for(const p of parks)el('path',{class:'land',fill:'#cfe5bf',d:smooth(p)},world);
+for(const p of parks)el('path',{class:'land park',fill:'#e1eed6',d:smooth(p)},world);
 
 el('path',{class:'land',fill:'#e4ded3',d:smooth([[19.452,-99.088],[19.452,-99.060],[19.418,-99.054],[19.418,-99.085]])},world);
 for(const [a,b] of [[[19.423,-99.083],[19.447,-99.062]],[[19.426,-99.079],[19.449,-99.058]]]){
@@ -484,9 +485,8 @@ const roads=[
 ];
 const rg=g(world);
 for(const [pts,w,c] of roads){const d=smooth(pts,false),major=w>=5;
-  el('path',{d,class:'road',stroke:major?'#e3cf9a':'#ddd4c6','stroke-width':(major?4.2:2.6)+1.6},rg);
-  el('path',{d,class:'road',stroke:major?'#fbe8b0':'#ffffff','stroke-width':major?4.2:2.6},rg)}
-{const [x,y]=pr(19.4326,-99.1332);el('rect',{x:x-1.2,y:y-1,width:2.4,height:2,fill:'#e2d9cb'},rg)}
+  el('path',{d,class:'road',stroke:major?'#d8c7a8':'#e4d9c8','stroke-width':major?1.3:.8},rg)}
+
 
 /* decoración que mantiene tamaño en pantalla */
 const deco=g(world),fixed=[];
@@ -500,14 +500,14 @@ const ZL=[[19.4385,-99.1385,'Centro',0],[19.4570,-99.1530,'Guerrero',1],[19.4150
 const LBL=[];const lbl=(o,w,h,p)=>{o._w=w;o._h=h;o._p=p;LBL.push(o)};
 for(const [a,b,t,s] of ZL)lbl(fx(a,b,`<text class="lbl zl${s?' sm':''}" y="4">${t}</text>`),t.length*(s?7:9)+8,16,s?2:1);
 for(const [a,b,t] of [[19.488,-98.995,'Lago de Texcoco'],[19.233,-99.098,'Canales de Xochimilco']])lbl(fx(a,b,`<text class="lbl wl" y="4">${t}</text>`),t.length*6.5,14,3);
-for(const [a,b,t,r] of [[19.4005,-99.196,'Periférico',-80],[19.3795,-99.1765,'Insurgentes',-72],[19.3995,-99.122,'Viaducto',0],[19.4415,-99.1425,'Reforma',-35],[19.385,-99.140,'Tlalpan',-84],[19.575,-98.985,'a Teotihuacán, 45 km',-52]])lbl(fx(a,b,`<text class="lbl rl" transform="rotate(${r})">${t}</text>`),Math.abs(r)>45?14:t.length*6,Math.abs(r)>45?t.length*6:12,4);
+for(const [a,b,t,r] of [[19.575,-98.985,'a Teotihuacán, 45 km',-52]])lbl(fx(a,b,`<text class="lbl rl" transform="rotate(${r})">${t}</text>`),Math.abs(r)>45?14:t.length*6,Math.abs(r)>45?t.length*6:12,4);
 
 /* ruta, pines, viajero */
 const routeG=g(world),pinG=g(world);
 const pinEls={};
 for(const [id,[la,lo,n,e]] of Object.entries(P)){
   const [x,y]=pr(la,lo),o=g(pinG,{class:'pin off hide'+(IDS[id]?' idea':'')}),w=n.length*6.6+16;
-  o.innerHTML=`<g class="inner"><g class="bub"><circle r="12" fill="${IDS[id]?'#fff':'var(--c,#bbb)'}" stroke="${IDS[id]?'var(--c,#bbb)':'#fff'}" stroke-width="2.5" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))"/><text class="pn" y="4.3"></text></g>
+  o.innerHTML=`<g class="inner"><g class="bub"><circle r="13" fill="#fff" stroke="var(--c,#bbb)" stroke-width="1.6" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))"/><text y="4.6" text-anchor="middle" style="font-size:13px">${e}</text><g class="nb"><circle cx="10" cy="-10" r="6.5" fill="var(--c,#bbb)" stroke="#fff" stroke-width="1.2"/><text class="pn" x="10" y="-7.2"></text></g></g>
   <g class="lab"><rect x="${-w/2}" y="15" width="${w}" height="19" rx="6" fill="#fff" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))"/><text y="28.3">${n}</text></g></g>`;
   o._x=x;o._y=y;o._lw=w;o.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
   fixed.push(o);pinEls[id]=o;
@@ -618,7 +618,7 @@ async function show(i,force){
   const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];curRt=rt;
   NUM={};let nn=0;for(const id of ids)if(!(id in NUM))NUM[id]=id==='casa'?'⌂':++nn;for(const id of ex)NUM[id]=P[id][3];
   for(const [id,o] of Object.entries(pinEls)){const on=uniq.includes(id);o.classList.toggle('off',!on);o.classList.toggle('hide',!on);o.classList.remove('on','pop');o.style.setProperty('--c',on?c:'#d8cfc0');
-    if(on){o.querySelector('.pn').textContent=NUM[id];pinG.appendChild(o);void o.getBBox();o.classList.add('pop');o.querySelector('.inner').style.animationDelay=(1+uniq.indexOf(id)*.12)+'s'}}
+    if(on){o.querySelector('.pn').textContent=NUM[id];o.querySelector('.nb').style.display=(id==='casa'||IDS[id])?'none':'';pinG.appendChild(o);void o.getBBox();o.classList.add('pop');o.querySelector('.inner').style.animationDelay=(1+uniq.indexOf(id)*.12)+'s'}}
   pinOrder=[...uniq];apply();renderIdeas();
   routeG.innerHTML='';walker.style.display='none';cancelAnimationFrame(walkRaf);routeTok++;
   badge.innerHTML=`<b>${day.d}</b><span>${day.s}</span>`;

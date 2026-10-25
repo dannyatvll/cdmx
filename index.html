@@ -37,7 +37,10 @@ a{color:var(--day)}
 .title-card{position:absolute;left:12px;top:12px;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:6px 13px 7px;box-shadow:3px 3px 0 var(--day);transform:rotate(-2.5deg);transition:box-shadow .5s;pointer-events:none}
 .title-card b{display:block;font:800 19px/1 "Baloo 2",sans-serif;color:var(--day);transition:color .5s}
 .title-card span{font:700 12px Manrope;color:#5d5470}
-.mapbtn{position:absolute;right:12px;bottom:12px;background:#fff;border:3px solid var(--ink);border-radius:999px;font:800 13px "Baloo 2",sans-serif;padding:4px 12px 3px;color:var(--ink);cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.mapbtn{position:absolute;right:12px;bottom:12px;background:#fff;border:3px solid var(--ink);border-radius:999px;font:800 13px "Baloo 2",sans-serif;padding:4px 12px 3px;color:#1d1a3a;cursor:pointer;box-shadow:2px 2px 0 #1d1a3a}
+.maptog{display:none;flex:none;border:3px solid var(--ink);background:var(--card);color:var(--ink);border-radius:16px;padding:0 12px;font:800 13px/1 "Baloo 2",sans-serif;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+body.nomap .mapbox{display:none}
+.tag.km{background:var(--b);color:#fff}
 
 /* svg */
 .land{stroke:#1d1a3a;stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
@@ -45,8 +48,8 @@ a{color:var(--day)}
 .road.base{stroke:#1d1a3a}
 .road.top{stroke:#fff}
 .lbl{font-family:"Baloo 2",sans-serif;font-weight:800;text-anchor:middle;paint-order:stroke fill;stroke-linejoin:round}
-.zl{fill:#fff;stroke:#1d1a3a;stroke-width:4.5px;font-size:15px;letter-spacing:.05em;text-transform:uppercase}
-.zl.sm{font-size:11px;stroke-width:3.5px}
+.zl{fill:#fff;stroke:#1d1a3a;stroke-width:4px;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+.zl.sm{font-size:10px;stroke-width:3px}
 .wl{fill:#1f5f9a;stroke:#d6f1ff;stroke-width:3px;font-size:11px;font-style:italic}
 .rl{fill:#1d1a3a;stroke:#fff;stroke-width:3px;font-size:9.5px;letter-spacing:.03em}
 .pin{cursor:pointer;transition:opacity .4s}
@@ -155,6 +158,7 @@ body.dragging .tab{animation:wig .5s ease-in-out infinite alternate}
   .mapbox{height:46vh;flex:none;border-radius:22px;border-width:3px;box-shadow:4px 4px 0 var(--day)}
   .panel{padding:8px 16px 80px;max-width:none}
   .title-card b{font-size:16px}
+  .maptog{display:block}
   .kpis{grid-template-columns:1fr 1fr}
   .kpi.main{grid-column:1/-1}
 }
@@ -167,7 +171,7 @@ body.dragging .tab{animation:wig .5s ease-in-out infinite alternate}
       <h1><span>Ciudad</span> <span>de</span> <span>México</span></h1>
       <p>18 al 25 de noviembre. Danny y Ximena.</p>
     </div>
-    <div class="tabs" id="tabs" role="tablist"></div>
+    <div style="display:flex;gap:8px;min-width:0"><div class="tabs" id="tabs" role="tablist" style="flex:1;min-width:0"></div><button class="maptog" id="maptog">Ocultar mapa</button></div>
     <div class="mapbox">
       <svg id="map" preserveAspectRatio="xMidYMid slice" aria-label="Mapa dibujado de CDMX"></svg>
       <div class="title-card" id="badge"></div>
@@ -490,18 +494,19 @@ fx(19.268,-99.08,'<g class="bob" style="animation-delay:-1.4s"><path d="M-14 0 L
 /* textos */
 const ZL=[[19.4385,-99.1385,'Centro',0],[19.4570,-99.1530,'Guerrero',1],[19.4150,-99.1585,'Roma',0],[19.4130,-99.1790,'Condesa',1],[19.4185,-99.2040,'Chapultepec',0],
   [19.3600,-99.1560,'Coyoacán',0],[19.3510,-99.1945,'San Ángel',1],[19.4270,-99.1520,'Doctores',1],[19.322,-99.186,'Ciudad Universitaria',1],[19.585,-99.115,'Sierra de Guadalupe',1],[19.715,-98.844,'Teotihuacán',0],[19.40,-99.24,'Santa Fe',1],[19.36,-99.06,'Iztapalapa',1]];
-for(const [a,b,t,s] of ZL)fx(a,b,`<text class="lbl zl${s?' sm':''}">${t}</text>`);
-for(const [a,b,t] of [[19.488,-98.995,'Lago de Texcoco'],[19.233,-99.098,'Canales de Xochimilco']])fx(a,b,`<text class="lbl wl">${t}</text>`);
-for(const [a,b,t,r] of [[19.4005,-99.196,'Periférico',-80],[19.3795,-99.1765,'Insurgentes',-72],[19.3995,-99.122,'Viaducto',0],[19.4415,-99.1425,'Reforma',-35],[19.385,-99.140,'Tlalpan',-84],[19.575,-98.985,'a Teotihuacán, 45 km',-52]])fx(a,b,`<text class="lbl rl" transform="rotate(${r})">${t}</text>`);
+const LBL=[];const lbl=(o,w,h,p)=>{o._w=w;o._h=h;o._p=p;LBL.push(o)};
+for(const [a,b,t,s] of ZL)lbl(fx(a,b,`<text class="lbl zl${s?' sm':''}" y="4">${t}</text>`),t.length*(s?7:9)+8,16,s?2:1);
+for(const [a,b,t] of [[19.488,-98.995,'Lago de Texcoco'],[19.233,-99.098,'Canales de Xochimilco']])lbl(fx(a,b,`<text class="lbl wl" y="4">${t}</text>`),t.length*6.5,14,3);
+for(const [a,b,t,r] of [[19.4005,-99.196,'Periférico',-80],[19.3795,-99.1765,'Insurgentes',-72],[19.3995,-99.122,'Viaducto',0],[19.4415,-99.1425,'Reforma',-35],[19.385,-99.140,'Tlalpan',-84],[19.575,-98.985,'a Teotihuacán, 45 km',-52]])lbl(fx(a,b,`<text class="lbl rl" transform="rotate(${r})">${t}</text>`),Math.abs(r)>45?14:t.length*6,Math.abs(r)>45?t.length*6:12,4);
 
 /* ruta, pines, viajero */
 const routeG=g(world),pinG=g(world);
 const pinEls={};
 for(const [id,[la,lo,n,e]] of Object.entries(P)){
-  const [x,y]=pr(la,lo),o=g(pinG,{class:IDS[id]?'pin off hide':'pin off'}),w=n.length*7+18;
+  const [x,y]=pr(la,lo),o=g(pinG,{class:'pin off hide'}),w=n.length*7+18;
   o.innerHTML=`<g class="inner"><g class="bub"><path d="M0 0 C-6 -10 -17 -16 -17 -28 A17 17 0 1 1 17 -28 C17 -16 6 -10 0 0Z" fill="var(--c,#bbb)" stroke="#1d1a3a" stroke-width="3"/><text y="-21" text-anchor="middle" style="font-size:18px">${e}</text></g>
   <g class="lab"><rect x="${-w/2}" y="6" width="${w}" height="21" rx="10.5" fill="#fff" stroke="#1d1a3a" stroke-width="2.5"/><text y="21.5" text-anchor="middle" class="lbl" style="font-size:13px;fill:#1d1a3a">${n}</text></g></g>`;
-  o._x=x;o._y=y;o.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
+  o._x=x;o._y=y;o._lw=w;o.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
   fixed.push(o);pinEls[id]=o;
 }
 const walker=fx(0,0,'<g class="bob"><circle r="16" fill="#fff" stroke="#1d1a3a" stroke-width="3"/><text y="7" text-anchor="middle" style="font-size:19px" id="ride">🚕</text></g>');
@@ -512,8 +517,19 @@ let vb=W0.slice(),anim,units=1;
 function box(){const r=svg.getBoundingClientRect();return [r.width||400,r.height||400]}
 function apply(){
   svg.setAttribute('viewBox',vb.join(' '));
-  const [bw,bh]=box();units=Math.max(vb[2]/bw,vb[3]/bh);
-  for(const o of fixed)o.setAttribute('transform',`translate(${o._x} ${o._y}) scale(${units})`);
+  const [bw,bh]=box();units=Math.min(vb[2]/bw,vb[3]/bh);
+  const ps=units*(bw<600?.8:1);
+  for(const o of fixed)o.setAttribute('transform',`translate(${o._x} ${o._y}) scale(${o._lw?ps:units})`);
+  declutter(ps);
+}
+let pinOrder=[];
+function declutter(ps){
+  const u=units,occ=[],hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]);
+  for(const id of pinOrder){const o=pinEls[id];occ.push([o._x-17*ps,o._y-48*ps,o._x+17*ps,o._y])}
+  for(const id of pinOrder){const o=pinEls[id],r=[o._x-o._lw/2*ps,o._y+5*ps,o._x+o._lw/2*ps,o._y+28*ps],l=o.querySelector('.lab');
+    if(hit(r))l.style.display='none';else{l.style.display='';occ.push(r)}}
+  for(const o of [...LBL].sort((a,b)=>a._p-b._p)){const r=[o._x-o._w/2*u,o._y-o._h/2*u,o._x+o._w/2*u,o._y+o._h/2*u];
+    if(hit(r))o.style.display='none';else{o.style.display='';occ.push(r)}}
 }
 function tween(to,ms=1100){
   cancelAnimationFrame(anim);const from=vb.slice(),t0=performance.now();
@@ -558,6 +574,7 @@ function drawRoute(ids,c,k){
   },1900);
 }
 function highlight(id){
+  if(pinOrder.includes(id)){pinOrder=[id,...pinOrder.filter(x=>x!==id)];apply()}
   for(const o of Object.values(pinEls))o.classList.remove('on');
   document.querySelectorAll('.stop').forEach(s=>s.classList.toggle('on',s.dataset.p===id));
   const o=pinEls[id];if(!o)return;void o.getBBox();o.classList.add('on');pinG.appendChild(o);
@@ -596,8 +613,9 @@ async function show(i,force){
   const ex=(plan[day.k]||[]).filter(id=>IDS[id]);
   const ids=day.stops.map(s=>s[1]),uniq=[...new Set([...ids,...ex])];
   const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];curRt=rt;
-  for(const [id,o] of Object.entries(pinEls)){const on=uniq.includes(id);o.classList.toggle('off',!on);o.classList.toggle('hide',!on&&!!IDS[id]);o.classList.remove('on','pop');o.style.setProperty('--c',on?c:'#d8cfc0');
+  for(const [id,o] of Object.entries(pinEls)){const on=uniq.includes(id);o.classList.toggle('off',!on);o.classList.toggle('hide',!on);o.classList.remove('on','pop');o.style.setProperty('--c',on?c:'#d8cfc0');
     if(on){pinG.appendChild(o);void o.getBBox();o.classList.add('pop');o.querySelector('.inner').style.animationDelay=(1+uniq.indexOf(id)*.12)+'s'}}
+  pinOrder=[...uniq];apply();renderIdeas();
   routeG.innerHTML='';walker.style.display='none';cancelAnimationFrame(walkRaf);routeTok++;
   badge.innerHTML=`<b>${day.d}</b><span>${day.s}</span>`;
   dia.innerHTML=`<div class="dayhead"><h2>${LONG[day.d.slice(0,3)]} ${day.k}: ${day.s}</h2><p class="zone2">${day.z}</p></div>
@@ -620,17 +638,31 @@ function removeIdea(k,id){plan[k]=(plan[k]||[]).filter(x=>x!==id);savePlan();sho
 function placeIdeas(){const wide=matchMedia('(min-width:1301px)').matches;
   if(wide&&ideasEl.parentNode!==ideasCol)ideasCol.appendChild(ideasEl);
   if(!wide&&ideasEl.previousElementSibling!==dia)dia.after(ideasEl)}
+let me=null;
+function km(a,b){const R=6371,r=Math.PI/180,dl=(b[0]-a[0])*r,dn=(b[1]-a[1])*r,q=Math.sin(dl/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(q))}
+function ref(){
+  if(me&&km(me,[19.43,-99.14])<60)return[[me],'donde estás'];
+  const d=D[cur<0?0:cur],pts=d.stops.map(s=>s[1]).filter(id=>id!=='casa'&&id!=='aicm');
+  const use=(pts.length?pts:['casa']).concat(plan[d.k]||[]).filter(id=>P[id]&&id!=='teoti');
+  return[use.length?use.map(id=>P[id].slice(0,2)):[P.casa.slice(0,2)],'los sitios del '+LONG[d.d.slice(0,3)].toLowerCase()];
+}
+const fmt=k=>k<1?Math.round(k*10)*100+' m':k.toFixed(1).replace('.',',')+' km';
 function renderIdeas(){
-  const list=IDEAS.map((x,i)=>['i'+i,x]).filter(([,x])=>filt==='all'||x[0]===filt);
-  ideasEl.innerHTML=`<h2>Ideas</h2><p class="sub">Arrastra con ⠿ a un día de arriba, o pulsa ＋. Precios aproximados por persona.</p>
-  <div class="planbar"><button id="share">Compartir plan</button></div>
+  if(!ideasEl)return;
+  const [rp,rn]=ref();
+  const list=IDEAS.map((x,i)=>['i'+i,x,Math.min(...rp.map(q=>km(q,[x[3],x[4]])))]).filter(([,x])=>filt==='all'||x[0]===filt).sort((a,b)=>a[2]-b[2]);
+  ideasEl.innerHTML=`<h2>Ideas</h2><p class="sub">Ordenadas por cercanía a ${rn}. Arrastra con ⠿ a un día de arriba, o pulsa ＋. Precios aproximados por persona.</p>
+  <div class="planbar"><button id="near">📍 Cerca de mí</button><button id="share">Compartir plan</button></div>
   <div class="chips"><button class="chip" data-f="all" aria-pressed="${filt==='all'}">Todo</button>${CATS.map(([k,n,e])=>`<button class="chip" data-f="${k}" aria-pressed="${filt===k}">${e} ${n}</button>`).join('')}</div>
-  ${list.map(([id,x])=>`<div class="idea" data-id="${id}" style="--k:${KC[x[0]]}"><div class="em">${x[5]}</div>
-   <div><div class="nm">${x[1]}</div><div class="meta"><span class="tag">${x[2]}</span><span class="tag eu">${x[7]}</span></div><div class="ds">${x[6]}</div>
+  ${list.map(([id,x,d])=>`<div class="idea" data-id="${id}" style="--k:${KC[x[0]]}"><div class="em">${x[5]}</div>
+   <div><div class="nm">${x[1]}</div><div class="meta"><span class="tag">${x[2]}</span><span class="tag eu">${x[7]}</span><span class="tag km">a ${fmt(d)}</span></div><div class="ds">${x[6]}</div>
    <div class="meta"><a class="tag" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[1]+' '+x[2]+' Ciudad de México')}" target="_blank" rel="noopener">Ver en Maps</a></div></div>
    <div class="acts"><div class="grip" title="Arrastrar">⠿</div><button class="addb" aria-label="Añadir a un día">＋</button></div></div>`).join('')}`;
   ideasEl.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filt=b.dataset.f;renderIdeas()});
   ideasEl.querySelector('#share').onclick=share;
+  ideasEl.querySelector('#near').onclick=()=>{if(!navigator.geolocation)return toast('Sin ubicación en este navegador');
+    navigator.geolocation.getCurrentPosition(p=>{me=[p.coords.latitude,p.coords.longitude];
+      if(km(me,[19.43,-99.14])>=60)toast('Estás lejos de CDMX: ordeno por la zona del día');renderIdeas()},()=>toast('No se pudo leer la ubicación'),{timeout:8000})};
   ideasEl.querySelectorAll('.idea').forEach(card=>{
     const id=card.dataset.id;
     card.querySelector('.addb').onclick=()=>{
@@ -653,7 +685,8 @@ function startDrag(e,id){
 }
 function move(e){if(!drag)return;drag.g.style.left=e.clientX+'px';drag.g.style.top=e.clientY+'px';
   const t=targetAt(e.clientX,e.clientY);if(drag.t&&(!t||t.el!==drag.t.el))drag.t.el.classList.remove('over');if(t)t.el.classList.add('over');drag.t=t;
-  if(e.clientY>innerHeight-60)scrollBy(0,12);}
+  if(e.clientY>innerHeight-60)scrollBy(0,12);
+  const tr=tabs.getBoundingClientRect();if(e.clientY>tr.top-20&&e.clientY<tr.bottom+20){if(e.clientX>tr.right-50)tabs.scrollLeft+=10;if(e.clientX<tr.left+50)tabs.scrollLeft-=10}}
 function end(){if(!drag)return;removeEventListener('pointermove',move);drag.g.remove();document.body.classList.remove('dragging');
   if(drag.t){drag.t.el.classList.remove('over');addIdea(drag.t.k,drag.id)}drag=null}
 async function share(){
@@ -662,6 +695,9 @@ async function share(){
 }
 if(location.hash.startsWith('#plan=')){try{plan=JSON.parse(atob(decodeURIComponent(location.hash.slice(6))));savePlan();history.replaceState(null,'',location.pathname)}catch(e){}}
 placeIdeas();renderIdeas();addEventListener('resize',placeIdeas);
+{const b=document.getElementById('maptog');let off=false;try{off=localStorage.getItem('cdmx-nomap')==='1'}catch(e){}
+ const set=()=>{document.body.classList.toggle('nomap',off);b.textContent=off?'Ver mapa':'Ocultar mapa';if(!off)setTimeout(()=>{apply();if(cur>=0)tween(fit([...new Set(pinOrder.concat(['casa']))]),10)},30)};
+ b.onclick=()=>{off=!off;try{localStorage.setItem('cdmx-nomap',off?'1':'0')}catch(e){}set()};set()}
 
 apply();
 const startD=new Date(2026,10,18);

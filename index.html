@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Itinerario CDMX</title>
+<style>
+:root{
+  --bg:#f7f5f2;--card:#ffffff;--text:#1d1b19;--muted:#6f6a64;--line:#e7e2db;
+  --accent:#c2410c;--ok:#15803d;--ok-bg:#e8f5ec;--warn:#a16207;--warn-bg:#fdf3dc;--soft:#f1ede7;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141312;--card:#1d1c1a;--text:#eeebe7;--muted:#a09a93;--line:#2f2c29;
+  --accent:#fb923c;--ok:#4ade80;--ok-bg:#16291d;--warn:#facc15;--warn-bg:#2d2610;--soft:#25231f;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+header h1{font-size:28px;margin:0 0 4px}
+header p{margin:0;color:var(--muted)}
+nav{display:flex;gap:8px;overflow-x:auto;padding:16px 0;position:sticky;top:0;background:var(--bg);z-index:2}
+nav a{flex:none;text-decoration:none;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
+nav a:hover{border-color:var(--accent)}
+section{margin-top:28px}
+h2{font-size:20px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.day h3{margin:0;font-size:17px}
+.day .zone{color:var(--muted);font-size:14px;margin:2px 0 12px}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tl .h{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600;font-size:14px}
+.note{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--muted);margin-top:12px}
+.res{list-style:none;margin:0;padding:0}
+.res li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.res li:first-child{border-top:0}
+.badge{flex:none;font-size:12px;font-weight:600;border-radius:999px;padding:2px 8px;margin-top:2px}
+.ok{background:var(--ok-bg);color:var(--ok)}
+.pend{background:var(--warn-bg);color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;border-top:0}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.sub td{background:var(--soft);font-weight:600}
+tr.tot td{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.big div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.big b{display:block;font-size:20px}
+.big span{color:var(--muted);font-size:13px}
+.big .t{background:var(--ok-bg);border-color:transparent}
+.big .t b{color:var(--ok)}
+a{color:var(--accent)}
+@media (max-width:520px){.tl li{grid-template-columns:72px 1fr}.big{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Ciudad de México</h1>
+  <p>18 al 25 de noviembre de 2026. Danny y Ximena. Airbnb en Av. Juárez 56, Centro.</p>
+</header>
+
+<nav>
+  <a href="#reservas">Reservas</a><a href="#d18">Mié 18</a><a href="#d19">Jue 19</a><a href="#d20">Vie 20</a><a href="#d21">Sáb 21</a><a href="#d22">Dom 22</a><a href="#d23">Lun 23</a><a href="#d24">Mar 24</a><a href="#d25">Mié 25</a><a href="#dinero">Dinero</a>
+</nav>
+
+<section id="reservas">
+  <h2>Reservas</h2>
+  <div class="card">
+    <ul class="res">
+      <li><span class="badge ok">Hecho</span><div>Vuelo de vuelta IB304, miércoles 25 a las 12:50 desde la T1 (327,71 €)</div></li>
+      <li><span class="badge ok">Hecho</span><div>Ballet Folklórico, domingo 22 a las 20:30. Galería, fila A, asientos 19 y 20. Ticketmaster, orden 35-33494/MX2 (820 pesos). Entradas en la app</div></li>
+      <li><span class="badge ok">Hecho</span><div>Casa Kahlo (Casa Roja), viernes 20 a las 10:00. GetYourGuide GYGFWVXQ8Q28 (76,76 €). Pedido el cambio a Casa Azul</div></li>
+      <li><span class="badge pend">Pendiente</span><div>Lucha libre, viernes 20 a las 20:30: <a href="https://www.ticketmaster.com.mx/viernes-espectacular-de-lucha-libre-cmll-mexico-20-11-2026/event/1400648FE60454ED">Viernes Espectacular en Ticketmaster</a></div></li>
+      <li><span class="badge pend">Pendiente</span><div>Globo AeroTours, lunes 23. Paquete Especial, 2.849 pesos por persona. Mirar reseñas y certificación AFAC antes de pagar</div></li>
+      <li><span class="badge pend">Pendiente</span><div>Casa Gilardi, martes 24 a las 13:00: reservar en <a href="https://casagilardi.mx/en/">casagilardi.mx</a>. Se paga en efectivo el día</div></li>
+      <li><span class="badge pend">Pendiente</span><div>Casa Azul: solo si no aceptan el cambio, comprarla en Airbnb (11:15, 82 € los dos, con el descuento)</div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Día a día</h2>
+
+  <div class="card day" id="d18">
+    <h3>Miércoles 18: llegada</h3>
+    <p class="zone">Aeropuerto y casa</p>
+    <ul class="tl">
+      <li><span class="h">20:20</span><span>Ximena aterriza en la T2 (AM 713) y pasa a la T1 con el Aerotrén o en taxi corto</span></li>
+      <li><span class="h">22:10</span><span>Danny aterriza en la T1 (IB311)</span></li>
+      <li><span class="h">23:00</span><span>Taxi autorizado o Uber hasta Av. Juárez 56</span></li>
+      <li><span class="h">23:30</span><span>Cena a domicilio o en una taquería cerca</span></li>
+    </ul>
+    <div class="note">Esa noche, nada de alejarse: el Centro se vacía bastante a esas horas.</div>
+  </div>
+
+  <div class="card day" id="d19">
+    <h3>Jueves 19: Centro a pie</h3>
+    <p class="zone">Todo andando desde casa</p>
+    <ul class="tl">
+      <li><span class="h">Mañana</span><span>Tranquila, para descansar del vuelo</span></li>
+      <li><span class="h">14:00</span><span>La Ciudadela: artesanías, imanes y recuerdos</span></li>
+      <li><span class="h">15:30</span><span>Alameda y MUNAL (hasta las 18:00)</span></li>
+      <li><span class="h">17:30</span><span>Paseo por Madero, Casa de los Azulejos y Palacio Postal</span></li>
+      <li><span class="h">Noche</span><span>Garibaldi: ir y volver en Uber y quedarse en la plaza</span></li>
+    </ul>
+  </div>
+
+  <div class="card day" id="d20">
+    <h3>Viernes 20: Coyoacán y lucha libre</h3>
+    <p class="zone">Sur, y de noche Arena México</p>
+    <ul class="tl">
+      <li><span class="h">8:30</span><span>Salida a Coyoacán. Café y pan allí</span></li>
+      <li><span class="h">10:00</span><span>Casa Kahlo (Casa Roja), Aguayo 54</span></li>
+      <li><span class="h">11:15</span><span>Casa Azul, a dos calles</span></li>
+      <li><span class="h">13:00</span><span>Paseo por el centro de Coyoacán y comida</span></li>
+      <li><span class="h">15:00</span><span>Cineteca Nacional de Xoco, a 10 min (70 pesos)</span></li>
+      <li><span class="h">17:00</span><span>Vuelta a casa y descanso</span></li>
+      <li><span class="h">20:30</span><span>Lucha libre en la Arena México. Uber ida y vuelta</span></li>
+    </ul>
+    <div class="note">Hay desfile de la Revolución por Av. Juárez por la mañana. Salid antes de las 9:00 y pedid el Uber fuera de la ruta.</div>
+  </div>
+
+  <div class="card day" id="d21">
+    <h3>Sábado 21: San Ángel y Xochimilco</h3>
+    <p class="zone">Sur</p>
+    <ul class="tl">
+      <li><span class="h">9:00</span><span>Desayuno en Café Nin</span></li>
+      <li><span class="h">10:00</span><span>Bazar del Sábado y Jardín del Arte, Plaza San Jacinto</span></li>
+      <li><span class="h">13:30</span><span>Comida en San Ángel</span></li>
+      <li><span class="h">15:30</span><span>Trajinera de 1 h en Xochimilco, embarcadero Nuevo Nativitas</span></li>
+      <li><span class="h">Noche</span><span>Vuelta a casa y cena cerca</span></li>
+    </ul>
+    <div class="note">La trajinera cuesta unos 750 pesos la hora por barca. Si alguien en bici dice que el embarcadero está cerrado, es un gancho.</div>
+  </div>
+
+  <div class="card day" id="d22">
+    <h3>Domingo 22: Lagunilla, Centro Histórico y ballet</h3>
+    <p class="zone">Norte del Centro y Centro</p>
+    <ul class="tl">
+      <li><span class="h">9:30</span><span>Tianguis de antigüedades de la Lagunilla</span></li>
+      <li><span class="h">11:30</span><span>Biblioteca Vasconcelos (gratis)</span></li>
+      <li><span class="h">12:30</span><span>Casa Wabi y comida en el Café Sabino</span></li>
+      <li><span class="h">15:30</span><span>Zócalo, Catedral y Palacio Nacional, a pie</span></li>
+      <li><span class="h">20:30</span><span>Ballet Folklórico en Bellas Artes, a pie</span></li>
+    </ul>
+    <div class="note">El Palacio Nacional a veces cierra sin avisar: miradlo el día antes y llevad pasaporte.</div>
+  </div>
+
+  <div class="card day" id="d23">
+    <h3>Lunes 23: globo en Teotihuacán y Roma</h3>
+    <p class="zone">Teotihuacán con transporte incluido</p>
+    <ul class="tl">
+      <li><span class="h">Madrugada</span><span>Recogida de AeroTours en CDMX</span></li>
+      <li><span class="h">Mañana</span><span>Globo, desayuno en cueva y zona arqueológica</span></li>
+      <li><span class="h">Mediodía</span><span>Vuelta a CDMX y a casa a descansar</span></li>
+      <li><span class="h">Noche</span><span>Paseo y cena por Roma y Condesa</span></li>
+    </ul>
+    <div class="note">No se puede subir a la Pirámide del Sol, y a la de la Luna como mucho a la primera plataforma.</div>
+  </div>
+
+  <div class="card day" id="d24">
+    <h3>Martes 24: Chapultepec</h3>
+    <p class="zone">Todo en la misma zona</p>
+    <ul class="tl">
+      <li><span class="h">9:00</span><span>Desayuno</span></li>
+      <li><span class="h">9:30</span><span>Castillo de Chapultepec, unas 2 h</span></li>
+      <li><span class="h">11:30</span><span>Paseo o Uber hasta la Casa Gilardi</span></li>
+      <li><span class="h">13:00</span><span>Casa Gilardi (600 pesos en efectivo)</span></li>
+      <li><span class="h">14:00</span><span>Comida</span></li>
+      <li><span class="h">15:00</span><span>Museo Nacional de Antropología, hasta las 18:00</span></li>
+      <li><span class="h">Noche</span><span>Última cena</span></li>
+    </ul>
+  </div>
+
+  <div class="card day" id="d25">
+    <h3>Miércoles 25: vuelta</h3>
+    <p class="zone">Checkout a las 11:00</p>
+    <ul class="tl">
+      <li><span class="h">8:00</span><span>Desayuno cerca y maletas</span></li>
+      <li><span class="h">9:30</span><span>Danny sale al aeropuerto (T1)</span></li>
+      <li><span class="h">11:00</span><span>Checkout del Airbnb</span></li>
+      <li><span class="h">12:50</span><span>Danny vuela a Madrid (IB304), llega el jueves 26 a las 6:00</span></li>
+      <li><span class="h">17:00</span><span>Ximena vuela a Hermosillo desde la T2 (AM 712)</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="dinero">
+  <h2>Dinero</h2>
+  <div class="big">
+    <div><b>664 €</b><span>Entradas, los dos</span></div>
+    <div><b>881 €</b><span>Día a día, los dos</span></div>
+    <div class="t"><b>1.545 €</b><span>Total en CDMX</span></div>
+  </div>
+  <p style="color:var(--muted);font-size:14px">Sin vuelos ni Airbnb. Euro a unos 20 pesos.</p>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px;font-size:16px">Entradas</h3>
+    <table>
+      <tr><th>Sitio</th><th class="n">Danny</th><th class="n">Ximena</th></tr>
+      <tr><td>Globo AeroTours (incluye Teotihuacán)</td><td class="n">142,50 €</td><td class="n">142,50 €</td></tr>
+      <tr><td>Casa Kahlo</td><td class="n">38,38 €</td><td class="n">38,38 €</td></tr>
+      <tr><td>Casa Azul (Airbnb)</td><td class="n">41 €</td><td class="n">41 €</td></tr>
+      <tr><td>Casa Gilardi</td><td class="n">30 €</td><td class="n">30 €</td></tr>
+      <tr><td>Ballet Folklórico</td><td class="n">20,50 €</td><td class="n">20,50 €</td></tr>
+      <tr><td>Trajinera, a medias</td><td class="n">18,75 €</td><td class="n">18,75 €</td></tr>
+      <tr><td>Lucha libre, zona ring</td><td class="n">17,50 €</td><td class="n">17,50 €</td></tr>
+      <tr><td>Castillo de Chapultepec</td><td class="n">10,50 €</td><td class="n">5,25 €</td></tr>
+      <tr><td>Museo de Antropología</td><td class="n">10,50 €</td><td class="n">5,25 €</td></tr>
+      <tr><td>MUNAL</td><td class="n">4,75 €</td><td class="n">4,75 €</td></tr>
+      <tr><td>Cineteca</td><td class="n">3,50 €</td><td class="n">3,50 €</td></tr>
+      <tr class="tot"><td>Total</td><td class="n">337 €</td><td class="n">327 €</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 8px;font-size:16px">Día a día, para los dos</h3>
+    <table>
+      <tr><th>Concepto</th><th class="n">Al día</th><th class="n">Total</th></tr>
+      <tr><td>Comida (fondas, taquerías y alguna cena buena)</td><td class="n">55 €</td><td class="n">330 €</td></tr>
+      <tr><td>Cafés y antojos por la calle</td><td class="n">10 €</td><td class="n">60 €</td></tr>
+      <tr><td>Cerveza o mezcal con la cena</td><td class="n">8 €</td><td class="n">48 €</td></tr>
+      <tr><td>Uber y metro</td><td class="n">15 €</td><td class="n">90 €</td></tr>
+      <tr><td>Agua, Oxxo y propinas</td><td class="n">10 €</td><td class="n">60 €</td></tr>
+      <tr><td>Sábado: Uber a Xochimilco y vuelta</td><td class="n"></td><td class="n">40 €</td></tr>
+      <tr><td>Miércoles 18: Uber y cena</td><td class="n"></td><td class="n">45 €</td></tr>
+      <tr><td>Miércoles 25: taxis y desayuno</td><td class="n"></td><td class="n">47 €</td></tr>
+      <tr><td>Una noche de fiesta</td><td class="n"></td><td class="n">50 €</td></tr>
+      <tr><td>Recuerdos</td><td class="n"></td><td class="n">60 €</td></tr>
+      <tr><td>Imprevistos</td><td class="n"></td><td class="n">50 €</td></tr>
+      <tr><td>Seguro de viaje</td><td class="n"></td><td class="n">Amex</td></tr>
+      <tr class="tot"><td>Total</td><td class="n"></td><td class="n">881 €</td></tr>
+    </table>
+  </div>
+</section>
+</div>
+</body>
+</html>

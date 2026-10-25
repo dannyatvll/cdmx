@@ -4,109 +4,127 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CDMX 18–25 nov</title>
-<meta name="theme-color" content="#f4ece1">
+<meta name="theme-color" content="#fbf1e2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 :root{
-  --paper:#f4ece1;--paper2:#ebe0d0;--ink:#2a211b;--muted:#7a6c60;--line:#dccfbe;
-  --card:#fffaf3;--rosa:#d6336c;--terra:#c2531f;--teal:#1f7a74;--water:#bcd9dd;--park:#c9dcae;
-  --road:#e6d6c0;--road2:#d9c4a6;--ok:#2f7d4f;--okbg:#e2efe3;--warn:#a3650a;--warnbg:#f8ebcf;
+  --paper:#fbf1e2;--ink:#2b1d3a;--muted:#7d6b80;--line:#efdcc6;--card:#fffaf3;
+  --day:#e6007e;--ok:#11875d;--okbg:#dcf3e8;--warn:#a85d00;--warnbg:#fdebc8;
 }
 @media (prefers-color-scheme:dark){
-  :root{--paper:#18130f;--paper2:#211a14;--ink:#f1e8dc;--muted:#a8998a;--line:#3a2f26;
-  --card:#211a15;--rosa:#ff5c93;--terra:#ff8a4c;--teal:#4cc3b8;--water:#1d3a3f;--park:#24341c;
-  --road:#30261d;--road2:#3c3025;--ok:#6fd096;--okbg:#17291d;--warn:#f0b54a;--warnbg:#2e2412;}
+  :root{--paper:#1a1320;--ink:#f6ecf6;--muted:#b9a6bb;--line:#352a3d;--card:#241b2b;
+  --ok:#5fd6a4;--okbg:#14301f;--warn:#f6b24a;--warnbg:#33240f;}
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
 html,body{overflow-x:clip}
 body{background:var(--paper);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;letter-spacing:-.01em}
-a{color:var(--rosa)}
+h1,h2,h3{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+a{color:var(--day)}
 
-.app{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-height:100vh}
-.mapside{position:sticky;top:0;height:100vh;padding:20px;display:flex;flex-direction:column;gap:12px}
-.panel{padding:28px 28px 80px;max-width:620px}
+.app{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);min-height:100vh}
+.mapside{position:sticky;top:0;height:100vh;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.panel{padding:26px 28px 80px;max-width:620px}
 
-.brand h1{font-size:34px;line-height:1.05}
-.brand p{color:var(--muted);margin-top:6px}
+.brand h1{font-size:40px;color:var(--day);transition:color .5s}
+.brand p{color:var(--muted)}
 
-.mapbox{position:relative;flex:1;min-height:0;background:var(--paper2);border-radius:22px;overflow:hidden;border:1px solid var(--line)}
-.mapbox svg{width:100%;height:100%;display:block}
-.daybadge{position:absolute;left:14px;bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;max-width:70%;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.daybadge b{display:block;font-family:Fraunces,serif;font-size:17px}
-.daybadge span{color:var(--muted);font-size:13px}
-.legend{position:absolute;right:12px;top:12px;font-size:11px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 9px}
+.mapbox{position:relative;flex:1;min-height:0;border-radius:26px;overflow:hidden;background:#f3e7cf;box-shadow:0 0 0 4px #fff,0 0 0 6px var(--day),0 14px 40px rgba(60,20,60,.18);transition:box-shadow .5s}
+#map{position:absolute;inset:0;background:#f3e7cf}
+.mapbox:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:450;mix-blend-mode:multiply;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .42 0 0 0 0 .3 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");}
+.leaflet-tile-pane{filter:saturate(1.9) hue-rotate(-12deg) contrast(.9) brightness(1.06) sepia(.12)}
+.leaflet-container{font-family:Manrope,sans-serif}
+.leaflet-control-attribution{font-size:9px;background:rgba(255,250,243,.7)!important}
+.leaflet-control-zoom{display:none}
 
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.title-card{position:absolute;left:14px;top:14px;z-index:500;background:#fff;border-radius:18px;padding:8px 14px 9px;box-shadow:0 6px 18px rgba(60,20,60,.18);transform:rotate(-2deg);border:3px solid var(--day);transition:border-color .5s}
+.title-card b{display:block;font:800 20px/1 "Baloo 2",sans-serif;color:var(--day);transition:color .5s}
+.title-card span{font:600 12px Manrope;color:#6d5a70}
+
+.zone{font:800 15px/1 "Baloo 2",sans-serif;color:#fff;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+  -webkit-text-stroke:5px rgba(60,30,70,.55);paint-order:stroke fill;transform:translate(-50%,-50%) rotate(var(--r,-4deg));opacity:.92;pointer-events:none}
+.zone.big{font-size:19px}
+
+.pin{position:relative;transform:translate(-50%,-100%);transition:opacity .4s,filter .4s;cursor:pointer}
+.pin .bub{width:40px;height:40px;border-radius:50% 50% 50% 6px;transform:rotate(-45deg);background:var(--c);border:3px solid #fff;box-shadow:0 5px 12px rgba(50,20,50,.35);display:grid;place-items:center;margin:0 auto;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.pin .bub i{transform:rotate(45deg);font-style:normal;font-size:20px;line-height:1}
+.pin .lab{position:absolute;left:50%;top:44px;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#2b1d3a;font:800 12.5px/1 "Baloo 2",sans-serif;padding:5px 9px 4px;border-radius:999px;box-shadow:0 3px 8px rgba(50,20,50,.22);border:2px solid var(--c)}
+.pin.off{opacity:.55;filter:grayscale(.6)}
+.pin.off .bub{width:26px;height:26px;border-width:2px}
+.pin.off .bub i{font-size:13px}
+.pin.off .lab{display:none}
+.pin.on .bub{transform:rotate(-45deg) scale(1.25);animation:hop .7s ease}
+@keyframes hop{0%,100%{translate:0 0}40%{translate:0 -12px}}
+.pin.pop{animation:popin .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes popin{from{scale:0}to{scale:1}}
+
+.route{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.route.halo{stroke:#fff;opacity:.9}
+.route.ants{animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-18}}
+.walker{font-size:26px;line-height:1;transform:translate(-50%,-50%);filter:drop-shadow(0 3px 4px rgba(50,20,50,.35))}
+
+.tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 11px;font:600 13px Manrope,sans-serif;cursor:pointer;text-align:left;line-height:1.15;transition:.2s}
-.tab small{display:block;font-weight:500;color:var(--muted);font-size:11px}
-.tab[aria-selected=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.tab[aria-selected=true] small{color:var(--paper);opacity:.7}
+.tab{flex:none;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:6px 12px 5px;font:800 14px/1.05 "Baloo 2",sans-serif;cursor:pointer;text-align:left;transition:.25s}
+.tab small{display:block;font:600 11px Manrope;color:var(--muted)}
+.tab[aria-selected=true]{background:var(--tc);border-color:var(--tc);color:#fff;transform:translateY(-2px);box-shadow:0 6px 14px color-mix(in srgb,var(--tc) 40%,transparent)}
+.tab[aria-selected=true] small{color:#fff;opacity:.85}
 
 section{margin-top:34px}
-section h2{font-size:24px;margin-bottom:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+section h2{font-size:28px;margin-bottom:12px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
 
-.dayhead h2{font-size:28px}
-.dayhead .zone{color:var(--muted);margin-top:2px}
+.dayhead h2{font-size:34px;color:var(--day);transition:color .5s}
+.dayhead .zone2{color:var(--muted);font-weight:600}
 .stops{list-style:none;padding:0;margin-top:16px;position:relative}
-.stops:before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px}
-.stop{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:8px 0;cursor:pointer;opacity:0;transform:translateY(8px);animation:in .45s forwards}
+.stops:before{content:"";position:absolute;left:19px;top:14px;bottom:14px;border-left:3px dashed color-mix(in srgb,var(--day) 45%,transparent)}
+.stop{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding:7px 0;cursor:pointer;opacity:0;transform:translateY(10px);animation:in .45s forwards}
 @keyframes in{to{opacity:1;transform:none}}
-.num{width:32px;height:32px;border-radius:50%;background:var(--card);border:2px solid var(--rosa);color:var(--rosa);display:grid;place-items:center;font:700 13px Manrope;z-index:1}
-.num.soft{border-color:var(--line);color:var(--muted)}
-.stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px;transition:.2s}
-.stop:hover .body,.stop.on .body{border-color:var(--rosa);transform:translateX(3px)}
-.stop .t{font-weight:700;color:var(--terra);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
-.stop .n{font-weight:600}
+.num{width:40px;height:40px;border-radius:50%;background:var(--day);border:3px solid var(--card);box-shadow:0 3px 8px rgba(50,20,50,.2);display:grid;place-items:center;font-size:18px;z-index:1;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.num.soft{background:var(--line)}
+.stop .body{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 13px;transition:.25s}
+.stop:hover .body,.stop.on .body{border-color:var(--day);transform:translateX(3px)}
+.stop.on .num{transform:scale(1.15) rotate(-8deg)}
+.stop .t{font:800 13px "Baloo 2",sans-serif;color:var(--day);letter-spacing:.03em;text-transform:uppercase}
+.stop .n{font-weight:700}
 .stop .d{color:var(--muted);font-size:13.5px}
-.tip{margin-top:12px;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 13px;font-size:13.5px}
+.tip{margin-top:12px;background:var(--warnbg);color:var(--warn);border-radius:14px;padding:10px 13px;font-size:13.5px;font-weight:500}
 
 .res{list-style:none;padding:0}
-.res li{display:flex;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.res li{display:flex;gap:10px;padding:11px 0;border-top:2px dashed var(--line);font-size:14px}
 .res li:first-child{border-top:0;padding-top:0}
-.badge{flex:none;font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;height:fit-content}
+.badge{flex:none;font:800 12px/1 "Baloo 2",sans-serif;border-radius:999px;padding:5px 10px 4px;height:fit-content}
 .ok{background:var(--okbg);color:var(--ok)}
 .pend{background:var(--warnbg);color:var(--warn)}
 
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
-.kpi b{display:block;font:700 24px Fraunces,serif}
+.kpi{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px}
+.kpi b{display:block;font:800 28px/1.1 "Baloo 2",sans-serif}
 .kpi span{color:var(--muted);font-size:12px}
-.kpi.main{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.kpi.main span{color:var(--paper);opacity:.7}
+.kpi.main{background:var(--day);color:#fff;border-color:var(--day);transition:background .5s,border-color .5s}
+.kpi.main span{color:#fff;opacity:.85}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
 td,th{padding:8px 4px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:600;border-top:0}
 .r{text-align:right;white-space:nowrap}
 tr.tot td{font-weight:700;color:var(--ok)}
 details{margin-top:10px}
-summary{cursor:pointer;font-weight:600;padding:6px 0}
-
-/* map */
-.pin{cursor:pointer;transition:opacity .4s}
-.pin .dot{transition:r .3s,fill .3s}
-.pin text{font:600 9px Manrope,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--paper2);stroke-width:3px;transition:opacity .3s}
-.pin.dim{opacity:.28}
-.pin.dim text{opacity:0}
-.pin.act .dot{fill:var(--rosa)}
-.pin.pulse .ring{animation:pulse 1.2s ease-out infinite}
-@keyframes pulse{from{r:6;opacity:.7}to{r:18;opacity:0}}
-.route{fill:none;stroke:var(--rosa);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.zlabel{font:700 8px Manrope,sans-serif;letter-spacing:.18em;fill:var(--muted);opacity:.75;text-transform:uppercase}
+summary{cursor:pointer;font:800 16px "Baloo 2",sans-serif;padding:6px 0}
 
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
-  .mapside{min-width:0}
-  .mapside{height:auto;position:sticky;top:0;z-index:5;background:var(--paper);padding:12px 12px 8px}
+  .mapside{height:auto;position:sticky;top:0;z-index:5;background:var(--paper);padding:10px 12px 10px}
   .brand{display:none}
-  .mapbox{height:42vh;flex:none}
+  .mapbox{height:46vh;flex:none;border-radius:22px}
   .panel{padding:8px 16px 80px;max-width:none}
-  .daybadge,.legend{display:none}
+  .title-card{left:10px;top:10px;padding:6px 11px 7px}
+  .title-card b{font-size:17px}
+  .zone{font-size:12px}.zone.big{font-size:15px}
   .kpis{grid-template-columns:1fr 1fr}
   .kpi.main{grid-column:1/-1}
 }
@@ -121,62 +139,8 @@ summary{cursor:pointer;font-weight:600;padding:6px 0}
     </div>
     <div class="tabs" id="tabs" role="tablist"></div>
     <div class="mapbox">
-      <svg id="map" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid meet" aria-label="Mapa ilustrado de CDMX">
-        <defs>
-          <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".5" fill="currentColor" opacity=".06"/></pattern>
-          <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
-          <radialGradient id="glow"><stop offset="0" stop-color="var(--rosa)" stop-opacity=".35"/><stop offset="1" stop-color="var(--rosa)" stop-opacity="0"/></radialGradient>
-        </defs>
-        <rect x="-400" y="-400" width="1200" height="1300" fill="var(--paper2)"/>
-        <rect x="-400" y="-400" width="1200" height="1300" fill="url(#grain)" style="color:var(--ink)"/>
-
-        <g filter="url(#rough)">
-          <path d="M300 120 C340 110 395 130 400 170 C405 215 380 250 345 262 C318 270 296 245 292 215 C288 180 280 130 300 120Z" fill="var(--water)" opacity=".8"/>
-          <path d="M112 205 C130 196 160 198 172 210 C182 222 176 248 160 252 C140 258 116 250 108 236 C102 224 102 212 112 205Z" fill="var(--park)"/>
-          <path d="M140 300 C160 296 178 304 176 318 C172 330 150 330 140 322 C132 314 132 304 140 300Z" fill="var(--park)" opacity=".7"/>
-          <path d="M150 360 C185 350 230 358 236 372 C240 386 200 392 172 388 C150 384 138 370 150 360Z" fill="var(--park)" opacity=".55"/>
-          <path d="M230 418 C250 410 290 412 305 424 C318 436 300 452 270 452 C245 452 222 440 230 418Z" fill="var(--water)" opacity=".7"/>
-        </g>
-        <g stroke="var(--water)" stroke-width="1.2" fill="none" opacity=".9">
-          <path d="M238 428 q10 6 20 0 t20 0 t20 0"/><path d="M242 438 q10 6 20 0 t20 0 t18 0"/>
-        </g>
-
-        <g fill="none" stroke-linecap="round">
-          <path d="M60 300 C70 180 140 110 230 108 C320 110 360 200 350 300 C340 390 270 440 200 440 C120 440 52 390 60 300Z" stroke="var(--road2)" stroke-width="3"/>
-          <path d="M120 270 C125 205 165 165 215 165 C265 165 290 205 288 255 C285 310 255 345 210 345 C160 345 116 320 120 270Z" stroke="var(--road)" stroke-width="2.4"/>
-          <path d="M130 222 C160 214 190 205 212 199 C228 194 240 182 252 160" stroke="var(--road2)" stroke-width="3.4"/>
-          <path d="M188 100 C186 200 182 300 178 450" stroke="var(--road2)" stroke-width="3"/>
-          <path d="M232 200 C236 270 244 350 252 450" stroke="var(--road)" stroke-width="2.4"/>
-          <path d="M235 196 C260 200 278 204 300 206" stroke="var(--road)" stroke-width="2.2"/>
-          <path d="M252 160 C285 110 315 70 338 36" stroke="var(--road2)" stroke-width="2.2" stroke-dasharray="1 5"/>
-        </g>
-
-        <g opacity=".9">
-          <path d="M318 478 L345 432 L360 452 L372 420 L398 478Z" fill="var(--road2)"/>
-          <path d="M339 442 L345 432 L351 442 L347 440 L343 444Z M367 430 L372 420 L378 431 L374 429 L370 433Z" fill="var(--card)"/>
-        </g>
-        <g transform="translate(36 52)" opacity=".7">
-          <circle r="13" fill="var(--card)" stroke="var(--line)"/>
-          <path d="M0 -9 L3 0 L0 -2 L-3 0Z" fill="var(--rosa)"/><text y="-15" text-anchor="middle" class="zlabel" style="letter-spacing:0">N</text>
-        </g>
-
-        <text x="196" y="186" class="zlabel">Centro</text>
-        <text x="150" y="268" class="zlabel">Roma</text>
-        <text x="96" y="198" class="zlabel">Chapultepec</text>
-        <text x="216" y="358" class="zlabel">Coyoacán</text>
-        <text x="122" y="356" class="zlabel">San Ángel</text>
-        <text x="232" y="468" class="zlabel">Xochimilco</text>
-        <text x="306" y="160" class="zlabel">Aeropuerto</text>
-        <text x="300" y="24" class="zlabel">Teotihuacán</text>
-        <text x="335" y="48" class="zlabel" style="letter-spacing:.05em">45 km</text>
-
-        <circle id="glowc" r="40" fill="url(#glow)" opacity="0"/>
-        <path id="route" class="route"/>
-        <g id="pins"></g>
-        <g id="walker" opacity="0"><circle r="7" fill="var(--rosa)" opacity=".25"/><circle r="4" fill="var(--rosa)" stroke="var(--card)" stroke-width="1.5"/></g>
-      </svg>
-      <div class="legend">Mapa ilustrado, no a escala</div>
-      <div class="daybadge" id="badge"></div>
+      <div id="map" aria-label="Mapa de CDMX"></div>
+      <div class="title-card" id="badge"></div>
     </div>
   </aside>
 
@@ -248,32 +212,40 @@ summary{cursor:pointer;font-weight:600;padding:6px 0}
   </main>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const P={
-  casa:{x:210,y:200,n:"Casa",l:"Av. Juárez 56"},
-  aicm:{x:300,y:206,n:"Aeropuerto",l:"AICM"},
-  ciudadela:{x:203,y:214,n:"La Ciudadela"},
-  munal:{x:222,y:192,n:"MUNAL"},
-  madero:{x:228,y:200,n:"Madero"},
-  garibaldi:{x:226,y:180,n:"Garibaldi"},
-  kahlo:{x:204,y:328,n:"Casa Kahlo"},
-  azul:{x:222,y:336,n:"Casa Azul"},
-  coyoacan:{x:232,y:352,n:"Coyoacán"},
-  xoco:{x:204,y:308,n:"Cineteca"},
-  arena:{x:212,y:230,n:"Arena México"},
-  sanangel:{x:158,y:340,n:"San Ángel"},
-  xochimilco:{x:268,y:432,n:"Xochimilco"},
-  lagunilla:{x:240,y:174,n:"Lagunilla"},
-  vasconcelos:{x:202,y:168,n:"Vasconcelos"},
-  wabi:{x:190,y:156,n:"Casa Wabi"},
-  zocalo:{x:238,y:202,n:"Zócalo"},
-  bellas:{x:216,y:197,n:"Bellas Artes"},
-  teoti:{x:338,y:36,n:"Teotihuacán"},
-  roma:{x:172,y:252,n:"Roma y Condesa"},
-  gilardi:{x:150,y:244,n:"Casa Gilardi"},
-  castillo:{x:136,y:222,n:"Castillo"},
-  antropo:{x:128,y:210,n:"Antropología"}
+  casa:[19.4352,-99.1440,"Casa","🏠"],
+  aicm:[19.4363,-99.0721,"Aeropuerto","✈️"],
+  ciudadela:[19.4293,-99.1481,"La Ciudadela","🧺"],
+  munal:[19.4358,-99.1394,"MUNAL","🖼️"],
+  madero:[19.4342,-99.1385,"Madero","🛍️"],
+  garibaldi:[19.4406,-99.1393,"Garibaldi","🎺"],
+  kahlo:[19.3515,-99.1600,"Casa Kahlo","🌺"],
+  azul:[19.3551,-99.1625,"Casa Azul","💙"],
+  coyoacan:[19.3497,-99.1626,"Coyoacán","☕"],
+  xoco:[19.3609,-99.1640,"Cineteca","🎬"],
+  arena:[19.4247,-99.1522,"Arena México","🤼"],
+  sanangel:[19.3466,-99.1905,"San Ángel","🎨"],
+  xochimilco:[19.2560,-99.0960,"Xochimilco","🛶"],
+  lagunilla:[19.4440,-99.1340,"Lagunilla","🕰️"],
+  vasconcelos:[19.4475,-99.1525,"Vasconcelos","📚"],
+  wabi:[19.4560,-99.1560,"Casa Wabi","🌿"],
+  zocalo:[19.4326,-99.1332,"Zócalo","🇲🇽"],
+  bellas:[19.4352,-99.1412,"Bellas Artes","💃"],
+  teoti:[19.6925,-98.8438,"Teotihuacán","🎈"],
+  roma:[19.4140,-99.1650,"Roma y Condesa","🌮"],
+  gilardi:[19.4113,-99.1866,"Casa Gilardi","🏊"],
+  castillo:[19.4204,-99.1819,"Castillo","🏰"],
+  antropo:[19.4260,-99.1863,"Antropología","🗿"]
 };
+const ZONES=[
+  [19.4362,-99.1300,"Centro Histórico",-3,1],[19.4175,-99.1595,"Roma",5],[19.4085,-99.1760,"Condesa",-6],
+  [19.4185,-99.1960,"Chapultepec",-8,1],[19.3445,-99.1680,"Coyoacán",4,1],[19.3400,-99.2000,"San Ángel",-5],
+  [19.2640,-99.1080,"Xochimilco",-4,1],[19.4500,-99.1450,"Guerrero",3],[19.4290,-99.0830,"Aeropuerto",4],[19.7020,-98.8650,"Teotihuacán",-3,1]
+];
+const COL={"18":"#6c4ee0","19":"#0f9d76","20":"#e6007e","21":"#f07c00","22":"#1774d1","23":"#d79a00","24":"#00a3a6","25":"#8a3fd1"};
+const RIDE={"18":"✈️","23":"🎈","24":"👟","25":"✈️"};
 const D=[
  {k:"18",d:"Mié 18",s:"Llegada",z:"Aeropuerto y casa",stops:[
   ["20:20","aicm","Aterriza Ximena","T2, AM 713. Pasa a la T1 con el Aerotrén"],
@@ -329,89 +301,92 @@ const D=[
   ["17:00","aicm","Vuela Ximena a Hermosillo","T2, AM 712"]]}
 ];
 
-const svg=document.getElementById('map'),pinsG=document.getElementById('pins'),route=document.getElementById('route'),
-walker=document.getElementById('walker'),glow=document.getElementById('glowc'),NS='http://www.w3.org/2000/svg';
-const pinEl={};
-for(const [id,p] of Object.entries(P)){
-  const g=document.createElementNS(NS,'g');g.setAttribute('class','pin dim');g.setAttribute('transform',`translate(${p.x} ${p.y})`);g._x=p.x;g._y=p.y;
-  g.innerHTML=`<circle class="ring" r="6" fill="none" stroke="var(--rosa)" stroke-width="1.5" opacity="0"/><circle class="dot" r="3.5" fill="var(--teal)" stroke="var(--card)" stroke-width="1.4"/><text x="7" y="3">${p.n}</text>`;
-  g.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
-  pinsG.appendChild(g);pinEl[id]=g;
-}
+const map=L.map('map',{zoomControl:false,attributionControl:true,zoomSnap:.25,minZoom:10,maxZoom:17}).setView([19.40,-99.15],12);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19,
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
 
-let vb=[0,0,400,480],anim;
-function scalePins(){const k=Math.max(.45,Math.min(1.1,vb[2]/330));for(const g of Object.values(pinEl))g.setAttribute('transform',`translate(${g._x} ${g._y}) scale(${k})`);walker.style.transform='';}
-function tween(to,ms=900){
-  cancelAnimationFrame(anim);const from=vb.slice(),t0=performance.now();
-  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  const f=now=>{const k=Math.min(1,(now-t0)/ms),e=ease(k);vb=from.map((v,i)=>v+(to[i]-v)*e);svg.setAttribute('viewBox',vb.join(' '));scalePins();if(k<1)anim=requestAnimationFrame(f)};
-  anim=requestAnimationFrame(f);
+for(const [la,ln,t,r,big] of ZONES)
+  L.marker([la,ln],{interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:null,html:`<div class="zone${big?' big':''}" style="--r:${r}deg">${t}</div>`})}).addTo(map);
+
+const pins={};
+for(const [id,[la,ln,n,e]] of Object.entries(P)){
+  const m=L.marker([la,ln],{icon:L.divIcon({className:'',iconSize:null,html:`<div class="pin off" id="pin-${id}"><div class="bub"><i>${e}</i></div><div class="lab">${n}</div></div>`})}).addTo(map);
+  m.on('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id,false)});
+  pins[id]=m;
 }
-function fit(ids){
-  const xs=ids.map(i=>P[i].x),ys=ids.map(i=>P[i].y);
-  let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-  const box=svg.getBoundingClientRect(),ar=box.width/box.height||.83;
-  let w=Math.max(x1-x0,70)+90,h=Math.max(y1-y0,70)+90;
-  if(w/h>ar)h=w/ar;else w=h*ar;
-  return [(x0+x1)/2-w/2,(y0+y1)/2-h/2,w,h];
+const pinEl=id=>document.getElementById('pin-'+id);
+
+function curve(a,b,n=28){
+  const [x1,y1]=a,[x2,y2]=b,mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,cx=mx-dy*.22,cy=my+dx*.22,o=[];
+  for(let i=0;i<=n;i++){const t=i/n,u=1-t;o.push([u*u*x1+2*u*t*cx+t*t*x2,u*u*y1+2*u*t*cy+t*t*y2])}
+  return o;
 }
-function pathFor(pts){
-  if(pts.length<2)return'';
-  let d=`M${pts[0].x} ${pts[0].y}`;
-  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=b.x-a.x,dy=b.y-a.y;
-    d+=` Q${mx-dy*.18} ${my+dx*.18} ${b.x} ${b.y}`}
-  return d;
+let layers=[],walker=null,walkRaf=null,drawT=null;
+function clearRoute(){layers.forEach(l=>map.removeLayer(l));layers=[];if(walker){map.removeLayer(walker);walker=null}cancelAnimationFrame(walkRaf);clearTimeout(drawT)}
+function drawRoute(ids,c,k){
+  clearRoute();
+  const seq=ids.filter((v,i)=>i===0||v!==ids[i-1]).map(i=>P[i].slice(0,2));
+  if(seq.length<2)return;
+  let pts=[];for(let i=1;i<seq.length;i++){const s=curve(seq[i-1],seq[i]);pts=pts.concat(i>1?s.slice(1):s)}
+  const halo=L.polyline(pts,{className:'route halo',weight:9,interactive:false}).addTo(map);
+  const line=L.polyline(pts,{className:'route',color:c,weight:4.5,interactive:false}).addTo(map);
+  layers=[halo,line];
+  [halo,line].forEach(l=>{const p=l._path,L0=p.getTotalLength();p.style.strokeDasharray=L0;p.style.strokeDashoffset=L0;p.getBoundingClientRect();
+    p.style.transition='stroke-dashoffset 1.9s cubic-bezier(.6,0,.2,1)';p.style.strokeDashoffset=0});
+  drawT=setTimeout(()=>{
+    halo._path.style.cssText='';line._path.style.cssText='';
+    line._path.style.strokeDasharray='2 16';line._path.style.strokeWidth='6';line._path.classList.add('ants');
+    walker=L.marker(pts[0],{interactive:false,keyboard:false,zIndexOffset:900,icon:L.divIcon({className:'',iconSize:null,html:`<div class="walker">${RIDE[k]||'🚕'}</div>`})}).addTo(map);
+    const t0=performance.now(),dur=Math.min(14000,Math.max(5000,pts.length*90));
+    const f=now=>{const x=((now-t0)%dur)/dur*(pts.length-1),i=Math.floor(x),q=x-i,a=pts[i],b=pts[Math.min(i+1,pts.length-1)];
+      walker.setLatLng([a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q]);walkRaf=requestAnimationFrame(f)};
+    walkRaf=requestAnimationFrame(f);
+  },2000);
 }
-let walkRaf;
-function drawRoute(ids){
-  cancelAnimationFrame(walkRaf);
-  const seq=ids.filter((v,i)=>i===0||v!==ids[i-1]).map(i=>P[i]);
-  const d=pathFor(seq);route.setAttribute('d',d);walker.setAttribute('opacity',0);
-  if(!d){route.style.strokeDasharray='';return}
-  const L=route.getTotalLength();
-  route.style.transition='none';route.style.strokeDasharray=L;route.style.strokeDashoffset=L;
-  route.getBoundingClientRect();
-  route.style.transition='stroke-dashoffset 1.8s cubic-bezier(.6,0,.2,1) .35s';route.style.strokeDashoffset=0;
-  setTimeout(()=>{route.style.strokeDasharray='2 5';route.style.transition='none';route.style.strokeDashoffset=0;startWalk(L)},2250);
-}
-function startWalk(L){
-  walker.setAttribute('opacity',1);const t0=performance.now(),dur=Math.max(4000,L*45);
-  const f=now=>{const k=((now-t0)%dur)/dur,p=route.getPointAtLength(k*L);walker.setAttribute('transform',`translate(${p.x} ${p.y})`);walkRaf=requestAnimationFrame(f)};
-  walkRaf=requestAnimationFrame(f);
-}
-function highlight(id){
-  document.querySelectorAll('.pin').forEach(g=>g.classList.remove('pulse'));
+function highlight(id,pan=true){
+  document.querySelectorAll('.pin.on').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.stop').forEach(s=>s.classList.toggle('on',s.dataset.p===id));
-  if(!id)return;pinEl[id].classList.add('pulse');
-  glow.setAttribute('cx',P[id].x);glow.setAttribute('cy',P[id].y);glow.setAttribute('opacity',1);
+  const el=pinEl(id);if(!el)return;void el.offsetWidth;el.classList.add('on');
+  pins[id].setZIndexOffset(1000);
+  if(pan&&!map.getBounds().pad(-.15).contains(pins[id].getLatLng()))map.panTo(pins[id].getLatLng(),{duration:.6});
 }
 
-const tabs=document.getElementById('tabs'),dia=document.getElementById('dia'),badge=document.getElementById('badge');
-D.forEach((day,i)=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.innerHTML=`${day.d}<small>${day.s}</small>`;b.onclick=()=>show(i);tabs.appendChild(b)});
+const tabs=document.getElementById('tabs'),dia=document.getElementById('dia'),badge=document.getElementById('badge'),root=document.documentElement;
+D.forEach((day,i)=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.style.setProperty('--tc',COL[day.k]);b.innerHTML=`${day.d}<small>${day.s}</small>`;b.onclick=()=>show(i);tabs.appendChild(b)});
+const LONG={Mié:"Miércoles",Jue:"Jueves",Vie:"Viernes",Sáb:"Sábado",Dom:"Domingo",Lun:"Lunes",Mar:"Martes"};
 
+let cur=-1;
 function show(i){
-  const day=D[i];
+  if(i===cur)return;cur=i;
+  const day=D[i],c=COL[day.k];
+  root.style.setProperty('--day',c);
   [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
   tabs.children[i].scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
   const ids=day.stops.map(s=>s[1]),uniq=[...new Set(ids)];
-  for(const [id,g] of Object.entries(pinEl)){const on=uniq.includes(id);g.classList.toggle('dim',!on);g.classList.toggle('act',on)}
-  glow.setAttribute('opacity',0);
-  const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];tween(fit([...new Set(rt)]));drawRoute(rt);
-  badge.innerHTML=`<b>${day.d}: ${day.s}</b><span>${day.z}</span>`;
-  const order={};let n=0;ids.forEach(id=>{if(!(id in order))order[id]=++n});
-  dia.innerHTML=`<div class="dayhead"><h2>${day.d.replace('Mié','Miércoles').replace('Jue','Jueves').replace('Vie','Viernes').replace('Sáb','Sábado').replace('Dom','Domingo').replace('Lun','Lunes').replace('Mar','Martes')}: ${day.s}</h2><p class="zone">${day.z}</p></div>
-  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.08*j}s"><span class="num${s[1]==='casa'?' soft':''}">${s[1]==='casa'?'⌂':day.stops.slice(0,j+1).filter(x=>x[1]!=='casa').length}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}</ol>
+  const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];
+  for(const [id,m] of Object.entries(pins)){
+    const el=pinEl(id),on=uniq.includes(id);
+    el.classList.toggle('off',!on);el.classList.remove('on','pop');el.style.setProperty('--c',on?c:'#9b8aa0');
+    m.setZIndexOffset(on?500:0);
+    if(on){void el.offsetWidth;el.classList.add('pop');el.style.animationDelay=(.9+uniq.indexOf(id)*.12)+'s'}
+  }
+  clearRoute();
+  const b=L.latLngBounds([...new Set(rt)].map(id=>P[id].slice(0,2)));
+  const small=innerWidth<900;
+  map.flyToBounds(b,{paddingTopLeft:[40,small?70:90],paddingBottomRight:[40,small?40:50],maxZoom:15,duration:1.3});
+  map.once('moveend',()=>{if(cur===i)drawRoute(rt,c,day.k)});
+  badge.innerHTML=`<b>${day.d}</b><span>${day.s}</span>`;
+  dia.innerHTML=`<div class="dayhead"><h2>${LONG[day.d.slice(0,3)]} ${day.k}: ${day.s}</h2><p class="zone2">${day.z}</p></div>
+  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.07*j}s"><span class="num${s[1]==='casa'?' soft':''}">${P[s[1]][3]}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}</ol>
   ${day.tip?`<div class="tip">${day.tip}</div>`:''}`;
-  dia.querySelectorAll('.stop').forEach(li=>{li.onmouseenter=()=>highlight(li.dataset.p);li.onclick=()=>highlight(li.dataset.p)});
+  dia.querySelectorAll('.stop').forEach(li=>{li.onclick=()=>highlight(li.dataset.p);if(matchMedia('(hover:hover)').matches)li.onmouseenter=()=>highlight(li.dataset.p)});
   try{localStorage.setItem('cdmx-day',i)}catch(e){}
 }
-const today=new Date(),start=new Date(2026,10,18);
-let first=Math.round((today-start)/864e5);
+const start=new Date(2026,10,18);
+let first=Math.floor((new Date()-start)/864e5);
 if(first<0||first>7){try{first=+localStorage.getItem('cdmx-day')||0}catch(e){first=0}}
-requestAnimationFrame(()=>show(first));
-addEventListener('keydown',e=>{const cur=[...tabs.children].findIndex(b=>b.getAttribute('aria-selected')==='true');if(e.key==='ArrowRight'&&cur<D.length-1)show(cur+1);if(e.key==='ArrowLeft'&&cur>0)show(cur-1)});
-let tx=null;document.querySelector('.mapbox').addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
-document.querySelector('.mapbox').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,cur=[...tabs.children].findIndex(b=>b.getAttribute('aria-selected')==='true');if(dx<-50&&cur<D.length-1)show(cur+1);if(dx>50&&cur>0)show(cur-1);tx=null});
+show(first);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight'&&cur<D.length-1)show(cur+1);if(e.key==='ArrowLeft'&&cur>0)show(cur-1)});
 </script>
 </body>
 </html>

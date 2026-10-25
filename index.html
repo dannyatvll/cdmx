@@ -51,7 +51,7 @@ body.dragging .day{animation:wig .45s ease-in-out infinite alternate}
 .mapwrap{grid-area:map;position:relative;height:40vh;overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1);background:#efe9df}
 .mapwrap.min{height:0}
 #map{position:absolute;inset:0}
-.maptitle{position:absolute;left:12px;top:12px;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-radius:12px;padding:7px 11px;box-shadow:0 2px 10px rgba(20,18,30,.12);pointer-events:none;color:#1c1b22}
+.maptitle{display:none;position:absolute;left:12px;top:12px;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-radius:12px;padding:7px 11px;box-shadow:0 2px 10px rgba(20,18,30,.12);pointer-events:none;color:#1c1b22}
 .maptitle b{display:flex;align-items:center;gap:7px;font:800 13.5px/1.1 Manrope}
 .maptitle b:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--day)}
 .maptitle span{font:500 12px Manrope;color:#6e6a72}
@@ -83,7 +83,7 @@ body:not(.v-dia) .mapshow{display:none!important}
 .stops:before{content:"";position:absolute;left:15px;top:18px;bottom:18px;width:2px;background:var(--line)}
 .stop{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr);gap:11px;padding:5px 0;cursor:pointer;opacity:0;transform:translateY(6px);animation:in .35s forwards}
 @keyframes in{to{opacity:1;transform:none}}
-.num{width:32px;height:32px;margin-top:8px;border-radius:50%;background:var(--card);border:1.5px solid var(--day);display:grid;place-items:center;font-size:15px;z-index:1;box-shadow:0 0 0 3px var(--bg);position:relative}
+.num{width:32px;height:32px;margin-top:8px;border-radius:50%;background:var(--card);border:1.5px solid var(--day);color:var(--day);display:grid;place-items:center;z-index:1;box-shadow:0 0 0 3px var(--bg);position:relative}
 .num i{position:absolute;top:-5px;right:-6px;min-width:15px;height:15px;border-radius:8px;background:var(--day);color:#fff;font:800 9px/15px Manrope;font-style:normal;text-align:center;padding:0 3px}
 .stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px;transition:border-color .2s,box-shadow .2s}
 .stop.on .body{border-color:var(--day);box-shadow:var(--sh)}
@@ -103,7 +103,7 @@ body:not(.v-dia) .mapshow{display:none!important}
 .sub{color:var(--muted);font-size:13px;margin:4px 0 12px}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:0 16px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font:700 12.5px Manrope;cursor:pointer}
+.chip{flex:none;display:flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font:700 12.5px Manrope;cursor:pointer}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .near{flex:none;border:0;background:var(--soft);border-radius:10px;padding:7px 10px;font:700 12px Manrope;cursor:pointer;white-space:nowrap}
 .idea{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:8px}
@@ -121,7 +121,7 @@ body:not(.v-dia) .mapshow{display:none!important}
 .addb{border:0;background:var(--ink);color:var(--bg);border-radius:10px;width:36px;height:32px;font:700 18px/1 Manrope;cursor:pointer}
 .picker{grid-column:1/-1;display:flex;gap:5px;flex-wrap:wrap}
 .picker button{border:0;border-radius:9px;background:var(--soft);font:700 12px Manrope;padding:6px 10px;cursor:pointer;box-shadow:inset 0 -3px 0 var(--tc)}
-.ghost{position:fixed;z-index:99;pointer-events:none;transform:translate(-50%,-50%);background:var(--card);border-radius:12px;padding:8px 13px;font:700 14px Manrope;box-shadow:0 12px 30px rgba(20,18,30,.25)}
+.ghost{display:flex;align-items:center;gap:6px;position:fixed;z-index:99;pointer-events:none;transform:translate(-50%,-50%);background:var(--card);border-radius:12px;padding:8px 13px;font:700 14px Manrope;box-shadow:0 12px 30px rgba(20,18,30,.25)}
 .toast{position:fixed;left:50%;bottom:calc(92px + var(--safe));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:12px;font:600 14px Manrope;z-index:99;transition:opacity .3s;white-space:nowrap}
 
 /* gastos */
@@ -162,17 +162,18 @@ details.tbl{margin-top:4px}
 details.tbl summary{cursor:pointer;font:700 15px Manrope;padding:6px 0}
 
 /* map markers */
-.mk{position:relative;width:34px;height:34px;cursor:pointer}
-.mk .c{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid var(--c);display:grid;place-items:center;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.22);transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+.mk{cursor:pointer}
+.mk .in{position:relative;width:34px;height:34px}
+.mk .c{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--c);border:2px solid var(--c);display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.22);transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
 .mk .nb{position:absolute;top:-4px;right:-5px;min-width:16px;height:16px;border-radius:8px;background:var(--c);color:#fff;font:800 9.5px/16px Manrope;text-align:center;padding:0 3px;border:1.5px solid #fff}
 .mk .lb{position:absolute;left:50%;top:38px;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#1c1b22;font:700 11.5px Manrope;padding:3px 7px;border-radius:7px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .mk.nolb .lb{display:none}
 .mk.on .c{transform:scale(1.25)}
-.mk.on{z-index:5}
-.mk.pop{animation:pop .45s cubic-bezier(.3,1.5,.5,1) both}
+.mk.on{z-index:5!important}
+.mk.pop .in{animation:pop .45s cubic-bezier(.3,1.5,.5,1) both;animation-delay:inherit}
 @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
 .mk.idea .c{border-style:dashed}
-.walker{width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:13px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.walker{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--day);display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .me{width:16px;height:16px;border-radius:50%;background:#2f7bf6;border:3px solid #fff;box-shadow:0 0 0 6px rgba(47,123,246,.25)}
 
 @media (min-width:900px){
@@ -180,6 +181,7 @@ details.tbl summary{cursor:pointer;font:700 15px Manrope;padding:6px 0}
   .mapwrap,.mapwrap.min{height:100vh;position:sticky;top:0;grid-row:1/3}
   body:not(.v-dia) .mapwrap{display:block}
   .mbtn.minb,.mapshow{display:none!important}
+  .maptitle{display:block}
   .top,main{border-left:1px solid var(--line)}
   .dock{left:auto;right:240px;transform:translateX(50%)}
 }
@@ -217,11 +219,11 @@ details.tbl summary{cursor:pointer;font:700 15px Manrope;padding:6px 0}
       <section><h3>Reservas</h3><div class="card"><ul class="res">
           <li><span class="badge ok">Hecho</span><div>Vuelo de vuelta IB304, miércoles 25 a las 12:50 desde la T1 (327,71 €)</div></li>
           <li><span class="badge ok">Hecho</span><div>Ballet Folklórico, domingo 22 a las 20:30. Galería, fila A, asientos 19 y 20. Entradas en la app de Ticketmaster (orden 35-33494/MX2)</div></li>
-          <li><span class="badge ok">Hecho</span><div>Casa Kahlo (Casa Roja), viernes 20 a las 10:00. GetYourGuide GYGFWVXQ8Q28 (76,76 €). Pedido el cambio a Casa Azul</div></li>
+          <li><span class="badge ok">Hecho</span><div>Casa Kahlo (Casa Roja), viernes 20 a las 10:00. GetYourGuide GYGFWVXQ8Q28 (76,76 €). No aceptaron cambiarla por la Casa Azul</div></li>
           <li><span class="badge ok">Hecho</span><div>Lucha libre, viernes 20 a las 20:30. Preferente central, fila A, asientos 167 y 168. Entradas en la app de Ticketmaster (orden 60-34784/MXC, 876 pesos)</div></li>
           <li><span class="badge pend">Pendiente</span><div>Globo AeroTours, lunes 23. Paquete Especial, 2.849 pesos por persona. Mirar reseñas y certificación AFAC antes de pagar</div></li>
           <li><span class="badge ok">Hecho</span><div>Casa Gilardi, jueves 19 a las 10:00. 600 pesos por persona en efectivo el día</div></li>
-          <li><span class="badge pend">Pendiente</span><div>Casa Azul: solo si no aceptan el cambio, comprarla en Airbnb (11:15, 82 € los dos, con el descuento)</div></li>
+          <li><span class="badge pend">Pendiente</span><div>Casa Azul, viernes 20 a las 11:15: la compra Ximena en Airbnb (82 € los dos, con el descuento)</div></li>
         </ul></div></section>
       <section><h3>Detalle</h3><div class="card"><details class="tbl">
           <summary>Entradas por persona</summary>
@@ -272,34 +274,35 @@ details.tbl summary{cursor:pointer;font:700 15px Manrope;padding:6px 0}
 </nav>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script>
 const P={
-  casa:[19.4352,-99.1440,"Casa","🏠"],
-  aicm:[19.4363,-99.0721,"Aeropuerto","✈️"],
-  ciudadela:[19.4293,-99.1481,"La Ciudadela","🧺"],
-  munal:[19.4362,-99.1394,"MUNAL","🖼️"],
-  madero:[19.4339,-99.1375,"Madero","🛍️"],
-  garibaldi:[19.4406,-99.1393,"Garibaldi","🎺"],
-  kahlo:[19.3515,-99.1600,"Casa Kahlo","🌺"],
-  azul:[19.3551,-99.1625,"Casa Azul","💙"],
-  coyoacan:[19.3497,-99.1626,"Coyoacán","☕"],
-  xoco:[19.3609,-99.1640,"Cineteca","🎬"],
-  arena:[19.4247,-99.1522,"Arena México","🤼"],
-  sanangel:[19.3466,-99.1905,"San Ángel","🎨"],
-  xochimilco:[19.2560,-99.0960,"Xochimilco","🛶"],
-  lagunilla:[19.4440,-99.1340,"Lagunilla","🕰️"],
-  vasconcelos:[19.4475,-99.1525,"Vasconcelos","📚"],
-  wabi:[19.4560,-99.1560,"Casa Wabi","🌿"],
-  zocalo:[19.4326,-99.1332,"Zócalo","🇲🇽"],
-  bellas:[19.4352,-99.1412,"Bellas Artes","💃"],
-  teoti:[19.6925,-98.8438,"Teotihuacán","🎈"],
-  roma:[19.4140,-99.1650,"Roma y Condesa","🌮"],
-  gilardi:[19.4113,-99.1866,"Casa Gilardi","🏊"],
-  castillo:[19.4204,-99.1819,"Castillo","🏰"],
-  antropo:[19.4260,-99.1863,"Antropología","🗿"]
+  casa:[19.4352,-99.1440,"Casa","House"],
+  aicm:[19.4363,-99.0721,"Aeropuerto","Plane"],
+  ciudadela:[19.4293,-99.1481,"La Ciudadela","ShoppingBag"],
+  munal:[19.4362,-99.1394,"MUNAL","Image"],
+  madero:[19.4339,-99.1375,"Madero","Footprints"],
+  garibaldi:[19.4406,-99.1393,"Garibaldi","Music"],
+  kahlo:[19.3515,-99.1600,"Casa Kahlo","Flower2"],
+  azul:[19.3551,-99.1625,"Casa Azul","Flower"],
+  coyoacan:[19.3497,-99.1626,"Coyoacán","Coffee"],
+  xoco:[19.3609,-99.1640,"Cineteca","Clapperboard"],
+  arena:[19.4247,-99.1522,"Arena México","Drama"],
+  sanangel:[19.3466,-99.1905,"San Ángel","Palette"],
+  xochimilco:[19.2560,-99.0960,"Xochimilco","Sailboat"],
+  lagunilla:[19.4440,-99.1340,"Lagunilla","Clock"],
+  vasconcelos:[19.4475,-99.1525,"Vasconcelos","Library"],
+  wabi:[19.4560,-99.1560,"Casa Wabi","Sprout"],
+  zocalo:[19.4326,-99.1332,"Zócalo","Flag"],
+  bellas:[19.4352,-99.1412,"Bellas Artes","Theater"],
+  teoti:[19.6925,-98.8438,"Teotihuacán","Mountain"],
+  roma:[19.4140,-99.1650,"Roma y Condesa","Utensils"],
+  gilardi:[19.4113,-99.1866,"Casa Gilardi","Waves"],
+  castillo:[19.4204,-99.1819,"Castillo","Castle"],
+  antropo:[19.4260,-99.1863,"Antropología","Landmark"]
 };
 const COL={"18":"#2f5bd8","19":"#d9442b","20":"#d6336c","21":"#d98e00","22":"#0f8fa3","23":"#e0631f","24":"#1f8f57","25":"#6a4fd0"};
-const RIDE={"18":"✈️","23":"🎈","24":"👟","25":"✈️"};
+const RIDE={"18":"Plane","23":"Wind","24":"Footprints","25":"Plane"};
 const D=[
  {k:"18",d:"Mié 18",s:"Llegada",z:"Aeropuerto y casa",stops:[
   ["20:20","aicm","Aterriza Ximena","T2, AM 713. Pasa a la T1 con el Aerotrén"],
@@ -316,7 +319,7 @@ const D=[
   tip:"Primer día y llegasteis tarde: si vais cansados, Antropología se puede acortar a las salas Mexica y Maya."},
  {k:"20",d:"Vie 20",s:"Coyoacán",z:"Sur, y de noche Arena México",stops:[
   ["10:00","kahlo","Casa Kahlo","Aguayo 54. Las entradas llegan por correo el día antes"],
-  ["11:15","azul","Casa Azul","A dos calles. Entrada a hora fija"],
+  ["11:15","azul","Casa Azul","A dos calles. Entrada a hora fija; la compra Ximena"],
   ["13:00","coyoacan","Coyoacán","Paseo por el centro y comida"],
   ["15:00","xoco","Cineteca de Xoco","A 10 min, 70 pesos"],
   ["17:00","casa","Descanso","Vuelta a casa"],
@@ -354,7 +357,6 @@ const D=[
   ["11:00","casa","Checkout del Airbnb",""],
   ["17:00","aicm","Vuela Ximena a Hermosillo","T2, AM 712"]]}
 ];
-const CATS=[["loc","Favoritos locales","👀"],["caf","Cafés y desayunos","☕"],["tac","Tacos","🌮"],["car","Carnes","🥩"],["mar","Mariscos","🦐"],["com","Restaurantes top","🍽️"],["ant","Antojitos y mercados","🫓"],["cop","Bares y cantinas","🍸"],["pla","Planes y shows","🎟️"],["vis","Visitar y pasear","🗺️"]];
 const IDEAS=[
  ["caf","El Cardenal","Centro",19.4339,-99.1357,"🥐","Chocolate y conchas con nata. Un clásico de familias chilangas, a 10 min andando","15 €"],
  ["caf","Café de Tacuba","Centro",19.4365,-99.1380,"🕯️","Abierto desde 1912, enchiladas y tamales en un salón precioso","13 €"],
@@ -411,25 +413,27 @@ const IDEAS=[
  ["tac","La Once Mil","Lomas",19.4280,-99.2140,"💎","Estrella Michelin. Tacos de lujo: wagyu, pork belly y trufa. El capricho caro","35 €"],
  ["tac","Tacos Charly","Tlalpan",19.2955,-99.1690,"🥇","Bib Gourmand: suadero confitado y pastor cortado finito. De 15 a 23, cerrado domingo, solo efectivo. Pilla de camino de Xochimilco a casa el sábado","5 €",1],
  ["tac","Orinoco","Roma",19.4180,-99.1640,"🐷","Tacos regios con chicharrón de rib eye. Muy de TikTok","8 €"],
- ["cop","Handshake Speakeasy","Zona Rosa",19.4255,-99.1630,"🤝","Nº 6 del mundo en The World's 50 Best Bars 2026. Reservar con tiempo","20 €"],
- ["cop","Licorería Limantour","Roma",19.4175,-99.1615,"🍸","Coctelería de lista mundial, sin reserva y con ambiente","15 €"],
- ["cop","Hanky Panky","Juárez",19.4290,-99.1535,"🚪","Speakeasy escondido: se entra por otro local. Con reserva","20 €"],
- ["cop","Baltra","Condesa",19.4095,-99.1745,"🐢","Bar pequeño de cócteles. Los martes, martinis a 100 pesos","12 €"],
- ["cop","Bar La Ópera","Centro",19.4348,-99.1405,"🎭","Cantina de 1876 junto a Bellas Artes, con la bala de Pancho Villa en el techo","12 €"],
- ["cop","Salón Tenampa","Garibaldi",19.4406,-99.1395,"🎺","La cantina de los mariachis desde 1925. Para el martes en Garibaldi","10 €"],
- ["cop","Tío Pepe","Centro",19.4342,-99.1420,"🍺","Cantina de 1869 a dos calles de casa","8 €"],
- ["cop","Bósforo","Centro",19.4325,-99.1445,"🥃","Mezcalería oscura y pequeña, música buena. Al lado de casa","10 €"],
- ["cop","Las Duelistas","Centro",19.4285,-99.1430,"🍶","Pulquería con murales. Pulque curado muy barato","3 €",1],
- ["cop","Zinco Jazz Club","Centro",19.4340,-99.1370,"🎷","Jazz en directo en un sótano del Centro","15 €"],
- ["pla","Piñatas en el Museo de Arte Popular","Centro",19.4335,-99.1460,"🪅","Exposición de piñatas hasta el 13 dic, mar a dom de 10 a 18. 60 pesos, domingo gratis","3 €"],
- ["pla","Catedral de noche","Centro",19.4343,-99.1335,"🕯️","Recorridos nocturnos desde las 19:30 hasta el 21 nov. Confirmar fechas","5 €"],
- ["pla","Stand-up en Cozumel Terrace","Roma",19.4200,-99.1680,"🎤","Comedia los jueves en Roma Norte. Mirar cartel en sus redes","8 €"],
- ["pla","Stand Up Turibus","Centro",19.4320,-99.1400,"🚌","Paseo nocturno, una copa y show. Algunos jueves; 499 pesos","25 €"],
- ["pla","Cine Tonalá","Roma Sur",19.4120,-99.1610,"🎞️","Cine pequeño con bar y comedia algunas noches","5 €"],
- ["vis","Paseo en bici por Reforma","Reforma",19.4270,-99.1677,"🚲","Los domingos cierran Reforma a coches por la mañana. Ecobici o bici de alquiler","3 €"],
- ["vis","Mirador del Monumento a la Revolución","Tabacalera",19.4362,-99.1546,"🗼","Ascensor de cristal y vistas del Centro, a 10 min andando","5 €"],
- ["vis","Museo Soumaya y Jumex","Polanco",19.4407,-99.2048,"🪞","El Soumaya gratis y el Jumex enfrente, arte contemporáneo","5 €"],
- ["pla","Corona Capital","Autódromo",19.4040,-99.0910,"🎸","Festival del 20 al 22 nov con The Strokes, Gorillaz y Twenty One Pilots. Abono desde unos 5.000 pesos","256 €"],
+ ["mez","Museo del Tequila y el Mezcal","Garibaldi",19.4410,-99.1385,"🥃","En la misma Plaza Garibaldi, con cata incluida y terraza. Para el martes antes de los mariachis","5 €",1],
+ ["mez","La Clandestina","Condesa",19.4175,-99.1700,"🌵","Mezcalería pequeña con mezcales artesanales de todo el país","12 €",1],
+ ["coc","Handshake Speakeasy","Zona Rosa",19.4255,-99.1630,"🤝","Nº 6 del mundo en The World's 50 Best Bars 2026. Reservar con tiempo","20 €"],
+ ["coc","Licorería Limantour","Roma",19.4175,-99.1615,"🍸","Coctelería de lista mundial, sin reserva y con ambiente","15 €"],
+ ["coc","Hanky Panky","Juárez",19.4290,-99.1535,"🚪","Speakeasy escondido: se entra por otro local. Con reserva","20 €"],
+ ["coc","Baltra","Condesa",19.4095,-99.1745,"🐢","Bar pequeño de cócteles. Los martes, martinis a 100 pesos","12 €"],
+ ["can","Bar La Ópera","Centro",19.4348,-99.1405,"🎭","Cantina de 1876 junto a Bellas Artes, con la bala de Pancho Villa en el techo","12 €"],
+ ["can","Salón Tenampa","Garibaldi",19.4406,-99.1395,"🎺","La cantina de los mariachis desde 1925. Para el martes en Garibaldi","10 €"],
+ ["can","Tío Pepe","Centro",19.4342,-99.1420,"🍺","Cantina de 1869 a dos calles de casa","8 €"],
+ ["mez","Bósforo","Centro",19.4325,-99.1445,"🥃","Mezcalería oscura y pequeña, música buena. Al lado de casa","10 €"],
+ ["mez","Las Duelistas","Centro",19.4285,-99.1430,"🍶","Pulquería con murales. Pulque curado muy barato","3 €",1],
+ ["sho","Zinco Jazz Club","Centro",19.4340,-99.1370,"🎷","Jazz en directo en un sótano del Centro","15 €"],
+ ["mus","Piñatas en el Museo de Arte Popular","Centro",19.4335,-99.1460,"🪅","Exposición de piñatas hasta el 13 dic, mar a dom de 10 a 18. 60 pesos, domingo gratis","3 €"],
+ ["sho","Catedral de noche","Centro",19.4343,-99.1335,"🕯️","Recorridos nocturnos desde las 19:30 hasta el 21 nov. Confirmar fechas","5 €"],
+ ["sho","Stand-up en Cozumel Terrace","Roma",19.4200,-99.1680,"🎤","Comedia los jueves en Roma Norte. Mirar cartel en sus redes","8 €"],
+ ["sho","Stand Up Turibus","Centro",19.4320,-99.1400,"🚌","Paseo nocturno, una copa y show. Algunos jueves; 499 pesos","25 €"],
+ ["sho","Cine Tonalá","Roma Sur",19.4120,-99.1610,"🎞️","Cine pequeño con bar y comedia algunas noches","5 €"],
+ ["pas","Paseo en bici por Reforma","Reforma",19.4270,-99.1677,"🚲","Los domingos cierran Reforma a coches por la mañana. Ecobici o bici de alquiler","3 €"],
+ ["pas","Mirador del Monumento a la Revolución","Tabacalera",19.4362,-99.1546,"🗼","Ascensor de cristal y vistas del Centro, a 10 min andando","5 €"],
+ ["mus","Museo Soumaya y Jumex","Polanco",19.4407,-99.2048,"🪞","El Soumaya gratis y el Jumex enfrente, arte contemporáneo","5 €"],
+ ["sho","Corona Capital","Autódromo",19.4040,-99.0910,"🎸","Festival del 20 al 22 nov con The Strokes, Gorillaz y Twenty One Pilots. Abono desde unos 5.000 pesos","256 €"],
  ["caf","Quentin","Roma",19.4170,-99.1560,"☕","Café de especialidad y pan artesanal, de los que más se repiten en TikTok","4 €",1],
  ["caf","Buna","Roma",19.4185,-99.1590,"🫘","Tostadores de café mexicano, muy de locales","3 €",1],
  ["caf","La Emperatriz","Chapultepec",19.4206,-99.1817,"👑","Cafetería dentro del Castillo de Chapultepec. Para el jueves","5 €"],
@@ -444,18 +448,18 @@ const IDEAS=[
  ["ant","El Puma y El Huarache Loco","Centro",19.4375,-99.1340,"🫓","Plaza de Santo Domingo: pastor baratísimo y al lado huaraches, sopes y tlacoyos","4 €",1],
  ["ant","Mercado Roma","Roma",19.4150,-99.1650,"🛒","Mercado gourmet con puestos de tacos, tamales, mezcal y postres","12 €"],
  ["ant","Mercado de Medellín","Roma Sur",19.4090,-99.1630,"🍲","Comida corrida en fondas: sopa, guisado y agua por muy poco. Local de verdad","5 €",1],
- ["cop","Bar Mauro","Roma",19.4170,-99.1620,"🍹","Nº 10 en The World's 50 Best Bars 2026","15 €"],
- ["cop","Tlecan","Roma",19.4160,-99.1600,"🕳️","Bar de mezcal en un sótano, en The World's 50 Best Bars 2026","15 €"],
- ["cop","Salón Corona","Centro",19.4335,-99.1365,"🍻","Cervecería de toda la vida: tarros y tortas de bacalao, a 10 min de casa","8 €",1],
- ["cop","La Polar","San Rafael",19.4400,-99.1620,"🎻","Cantina famosa por la birria, con mariachis y tríos en las mesas","12 €",1],
- ["cop","Covadonga","Roma",19.4210,-99.1590,"🁫","Cantina asturiana enorme con dominó y ambiente de amigos","10 €",1],
- ["vis","MUAC y Espacio Escultórico","CU",19.3140,-99.1860,"🗿","Museo de arte contemporáneo y la escultura gigante de lava de la UNAM. Muy de TikTok","3 €",1],
- ["vis","Museo Tamayo","Chapultepec",19.4255,-99.1840,"🖼️","Arte contemporáneo al lado de Antropología. Para el jueves","4 €"],
- ["vis","Lanchas del Lago de Chapultepec","Chapultepec",19.4200,-99.1870,"🚣","Remar un rato en el lago, plan tonto y bonito","3 €"],
- ["vis","Parque México y Parque España","Condesa",19.4115,-99.1695,"🌳","Paseo por la Condesa entre art déco, perros y cafés. Gratis","0 €"],
- ["vis","Mercado de Jamaica","Jamaica",19.4095,-99.1225,"💐","Mercado de flores enorme y de colores, de lo más fotogénico","0 €",1],
- ["vis","Museo del Juguete Antiguo","Doctores",19.4185,-99.1450,"🧸","Un millón de juguetes antiguos y murales en la azotea. Cerca de la Arena México","4 €",1],
- ["vis","Jardín Botánico de Chapultepec","Chapultepec",19.4210,-99.1900,"🌵","Cactus y orquídeas en el bosque, gratis","0 €"]
+ ["coc","Bar Mauro","Roma",19.4170,-99.1620,"🍹","Nº 10 en The World's 50 Best Bars 2026","15 €"],
+ ["mez","Tlecan","Roma",19.4160,-99.1600,"🕳️","Bar de mezcal en un sótano, en The World's 50 Best Bars 2026","15 €"],
+ ["can","Salón Corona","Centro",19.4335,-99.1365,"🍻","Cervecería de toda la vida: tarros y tortas de bacalao, a 10 min de casa","8 €",1],
+ ["can","La Polar","San Rafael",19.4400,-99.1620,"🎻","Cantina famosa por la birria, con mariachis y tríos en las mesas","12 €",1],
+ ["can","Covadonga","Roma",19.4210,-99.1590,"🁫","Cantina asturiana enorme con dominó y ambiente de amigos","10 €",1],
+ ["mus","MUAC y Espacio Escultórico","CU",19.3140,-99.1860,"🗿","Museo de arte contemporáneo y la escultura gigante de lava de la UNAM. Muy de TikTok","3 €",1],
+ ["mus","Museo Tamayo","Chapultepec",19.4255,-99.1840,"🖼️","Arte contemporáneo al lado de Antropología. Para el jueves","4 €"],
+ ["pas","Lanchas del Lago de Chapultepec","Chapultepec",19.4200,-99.1870,"🚣","Remar un rato en el lago, plan tonto y bonito","3 €"],
+ ["pas","Parque México y Parque España","Condesa",19.4115,-99.1695,"🌳","Paseo por la Condesa entre art déco, perros y cafés. Gratis","0 €"],
+ ["ant","Mercado de Jamaica","Jamaica",19.4095,-99.1225,"💐","Mercado de flores enorme y de colores, de lo más fotogénico","0 €",1],
+ ["mus","Museo del Juguete Antiguo","Doctores",19.4185,-99.1450,"🧸","Un millón de juguetes antiguos y murales en la azotea. Cerca de la Arena México","4 €",1],
+ ["pas","Jardín Botánico de Chapultepec","Chapultepec",19.4210,-99.1900,"🌵","Cactus y orquídeas en el bosque, gratis","0 €"]
 ];
 const IDS={};IDEAS.forEach((x,i)=>{const id='i'+i;IDS[id]=x;P[id]=[x[3],x[4],x[1],x[5]]});
 
@@ -464,7 +468,7 @@ const BASE=["Día a día: comida, cafés, cerveza, Uber y agua",98,0];
 const G={
  "18":[["Uber del aeropuerto y cena",45,0]],
  "19":[BASE,["Casa Gilardi, en efectivo",60,0],["Castillo de Chapultepec",15.75,0],["Museo de Antropología",15.75,0]],
- "20":[BASE,["Casa Kahlo",76.76,1],["Casa Azul, si no aceptan el cambio",82,0],["Lucha libre",43.8,1],["Cineteca",7,0]],
+ "20":[BASE,["Casa Kahlo",76.76,1],["Casa Azul, la compra Ximena",82,0],["Lucha libre",43.8,1],["Cineteca",7,0]],
  "21":[BASE,["Uber a Xochimilco y vuelta",40,0],["Trajinera, 1 h",37.5,0]],
  "22":[BASE,["Ballet Folklórico",41,1]],
  "23":[BASE,["Globo AeroTours",285,0]],
@@ -475,6 +479,11 @@ const LOOSE=[["Una noche de fiesta",50],["Recuerdos",60],["Imprevistos",50]];
 const ENT=["Gilardi","Castillo","Antropología","Kahlo","Azul","Lucha","Cineteca","Trajinera","Ballet","Globo","MUNAL"];
 
 const $=s=>document.querySelector(s),root=document.documentElement;
+const IC=(n,s=18,w=2)=>{try{const e=lucide.createElement(lucide.icons[n]||lucide.icons.MapPin);e.setAttribute('width',s);e.setAttribute('height',s);e.setAttribute('stroke-width',w);return e.outerHTML}catch(_){return''}};
+const CATI={caf:'Coffee',tac:'Flame',mar:'Fish',car:'Beef',com:'ChefHat',ant:'Soup',coc:'Martini',can:'Beer',mez:'Wine',mus:'Landmark',pas:'Trees',sho:'Ticket'};
+const CATC={caf:'#a0672b',tac:'#d9442b',mar:'#1f7fb6',car:'#9b2c2c',com:'#2f5bd8',ant:'#d98e00',coc:'#7a3fbf',can:'#b5651d',mez:'#1f8f57',mus:'#3b4a8f',pas:'#2e8b57',sho:'#d6336c'};
+const ICN={"Paseo en bici por Reforma":"Bike","Mirador del Monumento a la Revolución":"Binoculars","Lanchas del Lago de Chapultepec":"Sailboat","Mercado de Jamaica":"Flower2","Museo del Juguete Antiguo":"Sparkles","Corona Capital":"Guitar","Cine Tonalá":"Clapperboard","Stand-up en Cozumel Terrace":"Mic","Stand Up Turibus":"Bus","Zinco Jazz Club":"Music","Catedral de noche":"Church","Panadería Rosetta":"Croissant","Churrería El Moro":"Cookie","Mercado de San Juan":"Store","Mercado Roma":"Store","Mercado de Medellín":"Store","Esquites Don Josué":"Wheat","Los Danzantes":"Wine","Tacos Charly":"Star","El Califa de León":"Star","La Once Mil":"Gem","Salón Tenampa":"Music","Museo del Tequila y el Mezcal":"Wine","Jardín Botánico de Chapultepec":"Sprout","Parque México y Parque España":"Trees"};
+const ideaIcon=x=>ICN[x[1]]||CATI[x[0]]||'MapPin';
 const eur=n=>{const v=n>=100?Math.round(n):Math.round(n*100)/100;let [i,d]=String(v).split('.');i=i.replace(/\B(?=(\d{3})+(?!\d))/g,'.');return i+(d?','+(d.length<2?d+'0':d):'')+' €'};
 const LONG={Mié:"Miércoles",Jue:"Jueves",Vie:"Viernes",Sáb:"Sábado",Dom:"Domingo",Lun:"Lunes",Mar:"Martes"};
 let plan={};try{plan=JSON.parse(localStorage.getItem('cdmx-plan')||'{}')}catch(e){}
@@ -488,7 +497,7 @@ let map=null,mapReady=false;
 const markers={},mkEl={};
 function mkMarker(id){
   const [la,lo,n,e]=P[id],el=document.createElement('div');
-  el.className='mk'+(IDS[id]?' idea':'');el.innerHTML=`<div class="c">${e}</div><div class="nb"></div><div class="lb">${n}</div>`;
+  el.className='mk'+(IDS[id]?' idea':'');el.innerHTML=`<div class="in"><div class="c">${IC(IDS[id]?ideaIcon(IDS[id]):e,17,2.2)}</div><div class="nb"></div><div class="lb">${n}</div></div>`;
   el.addEventListener('click',ev=>{ev.stopPropagation();const li=document.querySelector(`.stop[data-p="${id}"]`);if(li){setView('dia');li.scrollIntoView({behavior:'smooth',block:'center'})}highlight(id)});
   mkEl[id]=el;markers[id]=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat([lo,la]);
 }
@@ -542,7 +551,7 @@ function drawRoute(){
 }
 function startWalk(){
   if(!walker){const el=document.createElement('div');el.className='walker';walker=new maplibregl.Marker({element:el})}
-  walker.getElement().textContent=RIDE[D[cur].k]||'🚕';walker.setLngLat(routePts[0]).addTo(map);
+  walker.getElement().innerHTML=IC(RIDE[D[cur].k]||'Car',14,2.2);walker.setLngLat(routePts[0]).addTo(map);
   const t0=performance.now(),dur=Math.min(16000,Math.max(7000,routePts.length*110));
   const f=now=>{const x=((now-t0)%dur)/dur*(routePts.length-1),i=Math.floor(x),q=x-i,a=routePts[i],b=routePts[Math.min(i+1,routePts.length-1)];
     walker.setLngLat([a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q]);walkRaf=requestAnimationFrame(f)};
@@ -580,7 +589,7 @@ function show(i,force){
     for(const [id,m] of Object.entries(markers))if(!uniq.includes(id))m.remove();
     uniq.forEach((id,j)=>{if(!markers[id])mkMarker(id);const el=mkEl[id];el.style.setProperty('--c',c);
       el.querySelector('.nb').textContent=NUM[id]||'';el.querySelector('.nb').style.display=NUM[id]?'':'none';
-      el.classList.remove('on','pop');if(changed){void el.offsetWidth;el.classList.add('pop');el.style.animationDelay=(.25+j*.07)+'s'}
+      el.classList.remove('on','pop');if(changed){void el.offsetWidth;el.classList.add('pop');el.querySelector('.in').style.animationDelay=(.25+j*.07)+'s'}
       markers[id].addTo(map)});
     if(changed){cancelAnimationFrame(walkRaf);if(walker)walker.remove();if(mapReady)map.getSource('route').setData({type:'FeatureCollection',features:[]});
       fitDay([...new Set([...curRt,...ex])]);map.once('moveend',()=>{if(cur===i){drawRoute();declutter()}})}
@@ -589,7 +598,7 @@ function show(i,force){
   badge.innerHTML=`<b>${LONG[day.d.slice(0,3)]} ${day.k}</b><span>${day.s}</span>`;
   const tot=dayTotal(day.k),ext=extrasTotal(day.k);
   dia.innerHTML=`<div class="dayhead"><h2>${day.s}</h2><p>${LONG[day.d.slice(0,3)]} ${day.k} de noviembre. ${day.z}</p></div>
-  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.05*j}s"><span class="num">${P[s[1]][3]}${NUM[s[1]]?`<i>${NUM[s[1]]}</i>`:''}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}${ex.map(id=>{const x=IDS[id];return `<li class="stop extra" data-p="${id}"><span class="num">${x[5]}</span><div class="body"><button class="x" data-rm="${id}" aria-label="Quitar">×</button><div class="t">Añadido, unos ${x[7]} por persona</div><div class="n">${x[1]}</div><div class="d">${x[2]}. ${x[6]}</div></div></li>`}).join('')}</ol>
+  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.05*j}s"><span class="num">${IC(P[s[1]][3],15,2.2)}${NUM[s[1]]?`<i>${NUM[s[1]]}</i>`:''}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}${ex.map(id=>{const x=IDS[id];return `<li class="stop extra" data-p="${id}"><span class="num" style="color:${CATC[x[0]]};border-color:${CATC[x[0]]}">${IC(ideaIcon(x),15,2.2)}</span><div class="body"><button class="x" data-rm="${id}" aria-label="Quitar">×</button><div class="t">Añadido, unos ${x[7]} por persona</div><div class="n">${x[1]}</div><div class="d">${x[2]}. ${x[6]}</div></div></li>`}).join('')}</ol>
   ${day.tip?`<div class="tip">${day.tip}</div>`:''}
   <div class="daycost" id="gocost"><div><span>Gasto previsto del día, los dos</span><br><b>${eur(tot)}</b>${ext?` <span>+ ${eur(ext)} añadidos</span>`:''}</div><span>Ver gastos ›</span></div>`;
   dia.querySelectorAll('[data-rm]').forEach(b=>b.onclick=e=>{e.stopPropagation();plan[day.k]=(plan[day.k]||[]).filter(x=>x!==b.dataset.rm);savePlan();show(cur,true)});
@@ -600,10 +609,11 @@ function show(i,force){
 }
 
 /* ---------- ideas ---------- */
+const CN={caf:"Cafés y desayunos",tac:"Tacos",mar:"Pescados y mariscos",car:"Carnes",com:"Restaurantes",ant:"Antojitos y mercados",coc:"Coctelería",can:"Cantinas",mez:"Mezcal, tequila y pulque",mus:"Museos y arte",pas:"Paseos y parques",sho:"Shows y noche"};
 const GROUPS={
-  top:{t:'Destacados',s:'Lo que más repite la gente de CDMX',cats:null,loc:true},
-  comer:{t:'Comer y beber',s:'',cats:[["all","Todo"],["caf","Cafés y desayunos"],["tac","Tacos"],["mar","Mariscos"],["car","Carnes"],["com","Restaurantes"],["ant","Antojitos y mercados"],["cop","Bares y cantinas"]]},
-  hacer:{t:'Qué hacer',s:'',cats:[["all","Todo"],["vis","Visitar y pasear"],["pla","Planes y shows"]]}
+  top:{t:'Destacados',s:'Lo que más repite la gente de CDMX',loc:true,cats:['all','tac','mar','car','caf','ant','com','can','mez','coc','mus','pas','sho']},
+  comer:{t:'Comer y beber',s:'',cats:['all','caf','tac','mar','car','com','ant','coc','can','mez']},
+  hacer:{t:'Planes',s:'',cats:['all','mus','pas','sho']}
 };
 const filt={top:'all',comer:'all',hacer:'all'};let me=null,meMk=null;
 function km(a,b){const R=6371,r=Math.PI/180,dl=(b[0]-a[0])*r,dn=(b[1]-a[1])*r,q=Math.sin(dl/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(q))}
@@ -616,13 +626,13 @@ const fmt=k=>k<1?Math.round(k*10)*100+' m':k.toFixed(1).replace('.',',')+' km';
 function renderIdeas(){for(const g of Object.keys(GROUPS))renderGroup(g)}
 function renderGroup(g){
   const G0=GROUPS[g],el=$('#v-'+g),[rp,rn]=refPts();
-  const all=G0.cats?G0.cats.slice(1).map(c=>c[0]):null;
+  const all=G0.cats.slice(1);
   const list=IDEAS.map((x,i)=>['i'+i,x,Math.min(...rp.map(q=>km(q,[x[3],x[4]])))])
-    .filter(([,x])=>G0.loc?x[8]:(filt[g]==='all'?all.includes(x[0]):x[0]===filt[g])).sort((a,b)=>a[2]-b[2]);
+    .filter(([,x])=>(!G0.loc||x[8])&&(filt[g]==='all'?all.includes(x[0]):x[0]===filt[g])).sort((a,b)=>a[2]-b[2]);
   el.innerHTML=`<div class="vhead"><h2>${G0.t}</h2><button class="near">📍 Cerca de mí</button></div>
   <p class="sub">${G0.s?G0.s+'. ':''}Ordenado por cercanía a ${rn}. Arrastra con el asa a un día de arriba, o pulsa ＋.</p>
-  ${G0.cats?`<div class="chips">${G0.cats.map(([k,n])=>`<button class="chip" data-f="${k}" aria-pressed="${filt[g]===k}">${n}</button>`).join('')}</div>`:''}
-  ${list.map(([id,x,d])=>`<div class="idea" data-id="${id}"><div class="em">${x[5]}</div>
+  <div class="chips">${G0.cats.filter(k=>k==='all'||IDEAS.some(x=>x[0]===k&&(!G0.loc||x[8]))).map(k=>`<button class="chip" data-f="${k}" aria-pressed="${filt[g]===k}">${k==='all'?'Todo':IC(CATI[k],14,2.2)+' '+CN[k]}</button>`).join('')}</div>
+  ${list.map(([id,x,d])=>`<div class="idea" data-id="${id}"><div class="em" style="background:color-mix(in srgb,${CATC[x[0]]} 13%,transparent);color:${CATC[x[0]]}">${IC(ideaIcon(x),19,2)}</div>
    <div><div class="nm">${x[1]}</div><div class="meta">${x[8]?'<span class="tag loc">Favorito local</span>':''}<span class="tag">${x[2]}</span><span class="tag km">${fmt(d)}</span><span class="tag eu">${x[7]}</span></div><div class="ds">${x[6]}</div>
    <div class="meta"><a class="tag" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[1]+' '+x[2]+' Ciudad de México')}" target="_blank" rel="noopener">Abrir en Maps</a></div></div>
    <div class="acts"><div class="grip" aria-label="Arrastrar"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></div><button class="addb" aria-label="Añadir a un día">＋</button></div></div>`).join('')}`;
@@ -643,7 +653,7 @@ function locate(){
     renderIdeas()},()=>toast('No se pudo leer la ubicación'),{timeout:8000});
 }
 let drag=null;
-function startDrag(e,id){e.preventDefault();const g=document.createElement('div');g.className='ghost';g.textContent=IDS[id][5]+' '+IDS[id][1];document.body.appendChild(g);
+function startDrag(e,id){e.preventDefault();const g=document.createElement('div');g.className='ghost';g.innerHTML=IC(ideaIcon(IDS[id]),15)+' '+IDS[id][1];document.body.appendChild(g);
   document.body.classList.add('dragging');drag={id,g,t:null};move(e);addEventListener('pointermove',move);addEventListener('pointerup',end,{once:true});addEventListener('pointercancel',end,{once:true})}
 function move(e){if(!drag)return;drag.g.style.left=e.clientX+'px';drag.g.style.top=e.clientY+'px';
   const el=document.elementFromPoint(e.clientX,e.clientY),tb=el&&el.closest('.day');

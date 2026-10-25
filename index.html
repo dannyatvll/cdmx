@@ -4,161 +4,152 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CDMX 18–25 nov</title>
-<meta name="theme-color" content="#fff1d0">
+<meta name="theme-color" content="#f6f3ee">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#fff1d0;--ink:#1d1a3a;--muted:#6f6577;--line:#f0d9a8;--card:#fffaf0;
-  --day:#e63b2e;--ok:#118a52;--okbg:#d8f2e2;--warn:#9a5a00;--warnbg:#ffe6a8;
-  --y:#ffc21a;--b:#2a4fd6;--r:#e63b2e;--p:#ff6fa8;--g:#2fae5f;--w:#5cc8f0;
+  --bg:#f6f3ee;--ink:#1c1b22;--muted:#6e6a72;--line:#e6e0d7;--card:#fff;--soft:#f0ece5;
+  --day:#d9442b;--ok:#17804f;--okbg:#e4f3ea;--warn:#9a6200;--warnbg:#fbefd2;
+  --y:#f2b521;--b:#2f5bd8;--r:#d9442b;
+  --sh:0 1px 2px rgba(20,18,30,.05),0 4px 14px rgba(20,18,30,.06);
 }
 @media (prefers-color-scheme:dark){
-  :root{--paper:#17142b;--ink:#fbf2dc;--muted:#b6aec4;--line:#2f2a4d;--card:#211d3b;
-  --ok:#5fd69b;--okbg:#123222;--warn:#ffc35a;--warnbg:#3a2a0c;}
+  :root{--bg:#141318;--ink:#f2efe9;--muted:#a6a1aa;--line:#2b2930;--card:#1c1b21;--soft:#232128;
+  --ok:#5fcf98;--okbg:#14291e;--warn:#f1bd5a;--warnbg:#2c2312;--sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25)}
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
 html,body{overflow-x:clip}
-body{background:var(--paper);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:800;letter-spacing:-.025em;line-height:1.1}
 a{color:var(--day)}
+button{font-family:inherit}
 
-.app{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);min-height:100vh}
-.mapside{position:sticky;top:0;height:100vh;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.panel{padding:26px 28px 80px;max-width:620px}
-.brand h1{font-size:42px}
-.brand h1 span:nth-child(1){color:var(--r)}.brand h1 span:nth-child(2){color:var(--b)}.brand h1 span:nth-child(3){color:#e9a800}
-.brand p{color:var(--muted);font-weight:600}
+.app{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-height:100vh}
+.mapside{position:sticky;top:0;height:100vh;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.panel{padding:28px 28px 80px;max-width:620px}
+.brand h1{font-size:32px}
+.brand p{color:var(--muted);font-weight:500;margin-top:2px}
 
-.mapbox{position:relative;flex:1;min-height:0;border-radius:26px;overflow:hidden;background:#fbe3a6;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--day);transition:box-shadow .5s}
+.mapbox{position:relative;flex:1;min-height:0;border-radius:18px;overflow:hidden;background:#ece6dc;box-shadow:var(--sh);border:1px solid var(--line)}
 .mapbox svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
-.title-card{position:absolute;left:12px;top:12px;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:6px 13px 7px;box-shadow:3px 3px 0 var(--day);transform:rotate(-2.5deg);transition:box-shadow .5s;pointer-events:none}
-.title-card b{display:block;font:800 19px/1 "Baloo 2",sans-serif;color:var(--day);transition:color .5s}
-.title-card span{font:700 12px Manrope;color:#5d5470}
-.mapbtn{position:absolute;right:12px;bottom:12px;background:#fff;border:3px solid var(--ink);border-radius:999px;font:800 13px "Baloo 2",sans-serif;padding:4px 12px 3px;color:#1d1a3a;cursor:pointer;box-shadow:2px 2px 0 #1d1a3a}
-.maptog{display:none;flex:none;border:3px solid var(--ink);background:var(--card);color:var(--ink);border-radius:16px;padding:0 12px;font:800 13px/1 "Baloo 2",sans-serif;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.title-card{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;padding:8px 12px;box-shadow:0 2px 10px rgba(20,18,30,.1);pointer-events:none;color:#1c1b22}
+.title-card b{display:flex;align-items:center;gap:7px;font:800 14px/1.1 Manrope}
+.title-card b:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--day)}
+.title-card span{font:500 12px Manrope;color:#6e6a72}
+.mapbtn{position:absolute;right:12px;bottom:12px;background:#fff;border:0;border-radius:10px;font:700 12.5px Manrope;padding:7px 11px;color:#1c1b22;cursor:pointer;box-shadow:0 2px 10px rgba(20,18,30,.12)}
+.maptog{display:none;flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:0 12px;font:700 12.5px/1 Manrope;cursor:pointer}
 body.nomap .mapbox{display:none}
-.tag.km{background:var(--b);color:#fff}
 
 /* svg */
-.land{stroke:#1d1a3a;stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.land{stroke:none}
 .road{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.road.base{stroke:#1d1a3a}
-.road.top{stroke:#fff}
-.lbl{font-family:"Baloo 2",sans-serif;font-weight:800;text-anchor:middle;paint-order:stroke fill;stroke-linejoin:round}
-.zl{fill:#fff;stroke:#1d1a3a;stroke-width:4px;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
-.zl.sm{font-size:10px;stroke-width:3px}
-.wl{fill:#1f5f9a;stroke:#d6f1ff;stroke-width:3px;font-size:11px;font-style:italic}
-.rl{fill:#1d1a3a;stroke:#fff;stroke-width:3px;font-size:9.5px;letter-spacing:.03em}
-.pin{cursor:pointer;transition:opacity .4s}
-.pin .bub{transition:transform .35s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:50% 100%}
-.pin.off{opacity:.6}
-.pin.off .lab{display:none}
-.pin.on .bub{transform:scale(1.3);animation:hop .7s ease}
-@keyframes hop{0%,100%{translate:0 0}40%{translate:0 -10px}}
-.pin.pop .inner{animation:popin .55s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:50% 100%}
+.lbl{font-family:Manrope,sans-serif;text-anchor:middle;paint-order:stroke fill;stroke-linejoin:round}
+.zl{fill:#857b70;stroke:#f7f3ec;stroke-width:3px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.zl.sm{font-size:9px;font-weight:700}
+.wl{fill:#4f86a8;stroke:#b9dcef;stroke-width:2px;font-size:10px;font-style:italic;font-weight:600}
+.rl{fill:#9b9083;stroke:#f7f3ec;stroke-width:2.5px;font-size:8.5px;font-weight:700}
+.pin{cursor:pointer}
+.pin .bub{transition:transform .3s cubic-bezier(.3,1.5,.5,1);transform-box:fill-box;transform-origin:center}
+.pin .pn{font:800 12px Manrope;fill:#fff;text-anchor:middle}
+.pin.idea .pn{font-size:12px}
+.pin.on .bub{transform:scale(1.3)}
+.pin .lab text{font:700 11.5px Manrope;fill:#1c1b22;text-anchor:middle}
+.pin.pop .inner{animation:popin .45s cubic-bezier(.3,1.5,.5,1) both;transform-box:fill-box;transform-origin:center}
 @keyframes popin{from{transform:scale(0)}to{transform:scale(1)}}
+.pin.hide{display:none}
 .route{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.route.ants{animation:ants .9s linear infinite}
-@keyframes ants{to{stroke-dashoffset:-20}}
-.spin{animation:spin 30s linear infinite;transform-box:fill-box;transform-origin:center}
-@keyframes spin{to{transform:rotate(360deg)}}
-.bob{animation:bob 3s ease-in-out infinite;transform-box:fill-box}
-@keyframes bob{50%{translate:0 -4px}}
-.drift{animation:drift 18s ease-in-out infinite alternate}
-@keyframes drift{to{translate:30px 0}}
 
-.tabs{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:2px 6px 6px 2px}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:1px}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;border:3px solid var(--ink);background:var(--card);color:var(--ink);border-radius:16px;padding:5px 12px 4px;font:800 14px/1.05 "Baloo 2",sans-serif;cursor:pointer;text-align:left;transition:.2s;box-shadow:2px 2px 0 var(--ink)}
-.tab small{display:block;font:700 11px Manrope;opacity:.7}
-.tab[aria-selected=true]{background:var(--tc);color:#fff;transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
-.tab[aria-selected=true] small{opacity:.9}
+.tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 12px;font:700 13px/1.15 Manrope;cursor:pointer;text-align:left;transition:background .2s,color .2s,border-color .2s}
+.tab small{display:block;font:500 11px Manrope;color:var(--muted)}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab[aria-selected=true] small{color:var(--bg);opacity:.75}
+.tab[aria-selected=true]:after{content:"";display:block;height:3px;border-radius:2px;background:var(--tc);margin-top:5px}
 
-section{margin-top:34px}
-section h2{font-size:30px;margin-bottom:12px}
-.card{background:var(--card);border:3px solid var(--ink);border-radius:20px;padding:18px;box-shadow:4px 4px 0 var(--ink)}
+section{margin-top:36px}
+section h2{font-size:22px;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--sh)}
 
-.dayhead h2{font-size:36px;color:var(--day);transition:color .5s}
-.dayhead .zone2{color:var(--muted);font-weight:700}
+.dayhead h2{font-size:30px}
+.dayhead .zone2{color:var(--muted);font-weight:500}
 .stops{list-style:none;padding:0;margin-top:16px;position:relative}
-.stops:before{content:"";position:absolute;left:19px;top:14px;bottom:14px;border-left:3px dashed var(--day);opacity:.6}
-.stop{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding:7px 0;cursor:pointer;opacity:0;transform:translateY(10px);animation:in .45s forwards}
+.stops:before{content:"";position:absolute;left:13px;top:16px;bottom:16px;width:2px;background:var(--line)}
+.stop{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:6px 0;cursor:pointer;opacity:0;transform:translateY(6px);animation:in .35s forwards}
 @keyframes in{to{opacity:1;transform:none}}
-.num{width:40px;height:40px;border-radius:50%;background:var(--day);border:3px solid var(--ink);display:grid;place-items:center;font-size:18px;z-index:1;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
-.num.soft{background:var(--card)}
-.stop .body{background:var(--card);border:3px solid var(--ink);border-radius:16px;padding:9px 13px;transition:.2s;box-shadow:3px 3px 0 transparent}
-.stop:hover .body,.stop.on .body{box-shadow:3px 3px 0 var(--day);transform:translate(-2px,-2px)}
-.stop.on .num{transform:scale(1.15) rotate(-8deg)}
-.stop .t{font:800 13px "Baloo 2",sans-serif;color:var(--day);letter-spacing:.03em;text-transform:uppercase}
+.num{width:28px;height:28px;margin-top:10px;border-radius:50%;background:var(--day);color:#fff;display:grid;place-items:center;font:800 12px Manrope;z-index:1;box-shadow:0 0 0 3px var(--bg)}
+.num.soft{background:var(--soft);color:var(--muted)}
+.num.em{background:var(--card);border:2px solid var(--day);font-size:13px}
+.stop .body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px;transition:border-color .2s,box-shadow .2s}
+.stop:hover .body,.stop.on .body{border-color:var(--day);box-shadow:var(--sh)}
+.stop .t{font:700 11.5px Manrope;color:var(--day);letter-spacing:.06em;text-transform:uppercase}
 .stop .n{font-weight:700}
 .stop .d{color:var(--muted);font-size:13.5px}
-.tip{margin-top:14px;background:var(--y);color:#3a2600;border:3px solid var(--ink);border-radius:14px;padding:10px 13px;font-size:13.5px;font-weight:600;transform:rotate(-.6deg)}
+.tip{margin-top:14px;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 13px;font-size:13.5px;font-weight:500}
 
 .res{list-style:none;padding:0}
-.res li{display:flex;gap:10px;padding:11px 0;border-top:2px dashed var(--line);font-size:14px}
+.res li{display:flex;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
 .res li:first-child{border-top:0;padding-top:0}
-.badge{flex:none;font:800 12px/1 "Baloo 2",sans-serif;border-radius:999px;padding:5px 10px 4px;height:fit-content;border:2px solid currentColor}
+.badge{flex:none;font:700 11px/1 Manrope;border-radius:999px;padding:5px 9px;height:fit-content}
 .ok{background:var(--okbg);color:var(--ok)}
 .pend{background:var(--warnbg);color:var(--warn)}
 
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.kpi{border:3px solid var(--ink);border-radius:18px;padding:14px;box-shadow:3px 3px 0 var(--ink);color:#fff}
-.kpi:nth-child(1){background:var(--b)}
-.kpi:nth-child(2){background:var(--r)}
-.kpi.main{background:var(--y);color:#2a1d00}
-.kpi b{display:block;font:800 28px/1.1 "Baloo 2",sans-serif}
-.kpi span{font-size:12px;font-weight:600;opacity:.9}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--sh)}
+.kpi b{display:block;font:800 24px/1.1 Manrope;letter-spacing:-.02em}
+.kpi span{font-size:12px;color:var(--muted);font-weight:500}
+.kpi:nth-child(1) b{color:var(--b)}.kpi:nth-child(2) b{color:var(--r)}
+.kpi.main{background:var(--ink);border-color:var(--ink)}
+.kpi.main b{color:var(--y)}.kpi.main span{color:var(--bg);opacity:.75}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
 td,th{padding:8px 4px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:700;border-top:0}
-.r{text-align:right;white-space:nowrap}
+th{color:var(--muted);font-weight:600;border-top:0}
+.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 tr.tot td{font-weight:800;color:var(--ok)}
-details{margin-top:6px}
-summary{cursor:pointer;font:800 17px "Baloo 2",sans-serif;padding:6px 0}
+details{margin-top:4px}
+summary{cursor:pointer;font:700 15px Manrope;padding:6px 0}
 
 /* ideas */
-.ideascol{padding:26px 22px 80px 0;min-width:0}
-.ideascol #ideas{position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;scrollbar-width:thin}
-#ideas h2{font-size:30px}
-#ideas .sub{color:var(--muted);font-weight:600;font-size:13.5px;margin:-6px 0 10px}
+.ideascol{padding:28px 22px 80px 0;min-width:0}
+.ideascol #ideas{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow:auto;scrollbar-width:thin;margin-top:0}
+#ideas h2{font-size:22px}
+#ideas .sub{color:var(--muted);font-size:13px;margin:-6px 0 12px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.chip{border:2.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 11px 2px;font:800 13px "Baloo 2",sans-serif;cursor:pointer}
-.chip[aria-pressed=true]{background:var(--ink);color:var(--paper)}
-.idea{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:start;background:var(--card);border:3px solid var(--ink);border-radius:16px;padding:10px;margin-bottom:9px;box-shadow:3px 3px 0 var(--k,var(--ink))}
-.idea .em{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:var(--k);border:2.5px solid var(--ink)}
-.idea .nm{font:800 16px/1.15 "Baloo 2",sans-serif}
-.idea .meta{display:flex;gap:5px;flex-wrap:wrap;margin:3px 0}
-.tag{font:700 11px Manrope;border-radius:6px;padding:1px 6px;background:var(--line);color:var(--ink)}
-.tag.eu{background:var(--y);color:#2a1d00}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;font:600 12.5px Manrope;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.idea{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px;margin-bottom:8px}
+.idea .em{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:var(--soft)}
+.idea .nm{font:800 15px/1.2 Manrope;letter-spacing:-.01em}
+.idea .meta{display:flex;gap:5px;flex-wrap:wrap;margin:4px 0}
+.tag{font:600 11px Manrope;border-radius:6px;padding:2px 7px;background:var(--soft);color:var(--muted);text-decoration:none}
+.tag.eu{background:var(--warnbg);color:var(--warn)}
+.tag.km{background:color-mix(in srgb,var(--b) 14%,transparent);color:var(--b)}
+.tag.loc{background:color-mix(in srgb,var(--r) 14%,transparent);color:var(--r)}
 .idea .ds{font-size:13px;color:var(--muted)}
 .idea .acts{display:flex;flex-direction:column;gap:6px;align-items:center}
-.grip{width:36px;height:36px;border-radius:10px;border:2.5px solid var(--ink);background:var(--paper);display:grid;place-items:center;cursor:grab;touch-action:none;font-size:16px;user-select:none;-webkit-user-select:none}
-.addb{border:2.5px solid var(--ink);background:var(--day);color:#fff;border-radius:10px;width:36px;height:30px;font:800 18px/1 "Baloo 2";cursor:pointer}
+.grip{width:34px;height:34px;border-radius:10px;background:var(--soft);display:grid;place-items:center;cursor:grab;touch-action:none;font-size:15px;color:var(--muted);user-select:none;-webkit-user-select:none}
+.addb{border:0;background:var(--ink);color:var(--bg);border-radius:10px;width:34px;height:30px;font:700 17px/1 Manrope;cursor:pointer}
 .picker{grid-column:1/-1;display:flex;gap:5px;flex-wrap:wrap}
-.picker button{border:2px solid var(--ink);border-radius:10px;background:var(--tc);color:#fff;font:800 12px "Baloo 2";padding:3px 8px 2px;cursor:pointer}
-.ghost{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%) rotate(-4deg);background:#fff;border:3px solid var(--ink);border-radius:14px;padding:6px 12px;font:800 15px "Baloo 2";box-shadow:5px 5px 0 var(--day);color:#1d1a3a}
-body.dragging .tab{animation:wig .5s ease-in-out infinite alternate}
-@keyframes wig{from{rotate:-2deg}to{rotate:2deg}}
-.tab.over,#dia.over .stops{outline:4px dashed var(--day);outline-offset:4px}
+.picker button{border:0;border-radius:8px;background:var(--soft);color:var(--ink);font:700 12px Manrope;padding:5px 9px;cursor:pointer;box-shadow:inset 0 -3px 0 var(--tc)}
+.ghost{position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 13px;font:700 14px Manrope;box-shadow:0 10px 30px rgba(20,18,30,.25)}
+.tab.over,#dia.over .stops{outline:2px dashed var(--day);outline-offset:3px}
 .extra .body{border-style:dashed}
-.extra .x{float:right;border:0;background:none;font:800 18px/1 "Baloo 2";color:var(--muted);cursor:pointer;padding:0 0 0 8px}
-.pin.hide{display:none}
-.planbar{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 12px}
-.planbar button{border:2.5px solid var(--ink);background:var(--card);color:var(--ink);border-radius:999px;padding:3px 12px 2px;font:800 13px "Baloo 2";cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:999px;font:700 14px Manrope;z-index:9999;transition:opacity .3s}
+.extra .x{float:right;border:0;background:none;font:600 18px/1 Manrope;color:var(--muted);cursor:pointer;padding:0 0 0 8px}
+.planbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.planbar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:6px 11px;font:700 12.5px Manrope;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:12px;font:600 14px Manrope;z-index:9999;transition:opacity .3s;box-shadow:var(--sh)}
 @media (min-width:1301px){.app{grid-template-columns:minmax(0,1fr) minmax(0,560px) minmax(0,380px)}.panel{padding-right:20px}}
 @media (max-width:1300px){.ideascol{display:none}}
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
-  .mapside{height:auto;position:sticky;top:0;z-index:5;background:var(--paper);padding:10px 12px 12px}
+  .mapside{height:auto;position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--line)}
   .brand{display:none}
-  .mapbox{height:46vh;flex:none;border-radius:22px;border-width:3px;box-shadow:4px 4px 0 var(--day)}
-  .panel{padding:8px 16px 80px;max-width:none}
-  .title-card b{font-size:16px}
+  .mapbox{height:42vh;flex:none;border-radius:14px}
   .maptog{display:block}
+  .panel{padding:10px 16px 80px;max-width:none}
   .kpis{grid-template-columns:1fr 1fr}
   .kpi.main{grid-column:1/-1}
 }
@@ -168,7 +159,7 @@ body.dragging .tab{animation:wig .5s ease-in-out infinite alternate}
 <div class="app">
   <aside class="mapside">
     <div class="brand">
-      <h1><span>Ciudad</span> <span>de</span> <span>México</span></h1>
+      <h1>Ciudad de México</h1>
       <p>18 al 25 de noviembre. Danny y Ximena.</p>
     </div>
     <div style="display:flex;gap:8px;min-width:0"><div class="tabs" id="tabs" role="tablist" style="flex:1;min-width:0"></div><button class="maptog" id="maptog">Ocultar mapa</button></div>
@@ -274,7 +265,7 @@ const P={
   castillo:[19.4204,-99.1819,"Castillo","🏰"],
   antropo:[19.4260,-99.1863,"Antropología","🗿"]
 };
-const COL={"18":"#2a4fd6","19":"#e63b2e","20":"#f0458e","21":"#e9a000","22":"#0e9fb5","23":"#f26b1d","24":"#1e9e5a","25":"#6a44d4"};
+const COL={"18":"#2f5bd8","19":"#d9442b","20":"#d6336c","21":"#d98e00","22":"#0f8fa3","23":"#e0631f","24":"#1f8f57","25":"#6a4fd0"};
 const RIDE={"18":"✈️","23":"🎈","24":"👟","25":"✈️"};
 const D=[
  {k:"18",d:"Mié 18",s:"Llegada",z:"Aeropuerto y casa",stops:[
@@ -330,52 +321,61 @@ const D=[
   ["11:00","casa","Checkout del Airbnb",""],
   ["17:00","aicm","Vuela Ximena a Hermosillo","T2, AM 712"]]}
 ];
-const CATS=[["des","Desayunos","☕"],["com","Comidas top","🍽️"],["son","Sonorense","🥩"],["tac","Tacos y cena","🌮"],["cop","Copas y cantinas","🍸"],["pla","Planes","🎟️"]];
+const CATS=[["loc","Favoritos locales","👀"],["des","Desayunos","☕"],["com","Comidas top","🍽️"],["son","Sonorense","🥩"],["tac","Tacos y cena","🌮"],["cop","Copas y cantinas","🍸"],["pla","Planes","🎟️"]];
 const IDEAS=[
  ["des","El Cardenal","Centro",19.4339,-99.1357,"🥐","Chocolate y conchas con nata. Un clásico de familias chilangas, a 10 min andando","15 €"],
  ["des","Café de Tacuba","Centro",19.4365,-99.1380,"🕯️","Abierto desde 1912, enchiladas y tamales en un salón precioso","13 €"],
  ["des","Churrería El Moro","Centro",19.4325,-99.1412,"🍫","Churros con chocolate desde 1935, al lado de casa","4 €"],
  ["des","Testal","Centro",19.4337,-99.1424,"🍳","Tacos de huevo con chorizo y doraditas de suadero","8 €"],
- ["des","Fonda Margarita","Del Valle",19.3727,-99.1750,"🥘","Guisos en cazuela y frijoles con huevo. Muy local; cierra a media mañana","6 €"],
+ ["des","Fonda Margarita","Del Valle",19.3727,-99.1750,"🥘","Guisos en cazuela y frijoles con huevo. Muy local; cierra a media mañana","6 €",1],
  ["des","Panadería Rosetta","Roma",19.4183,-99.1625,"🥖","El rol de guayaba que sale en todos los TikTok. Para llevar","6 €"],
  ["des","Chilpa","Condesa",19.4085,-99.1680,"🌶️","Chilaquiles a tu gusto: salsa, proteína y toppings","9 €"],
  ["des","Quesería de Mí","Condesa",19.4065,-99.1755,"🥞","Hot cakes con ricotta en la masa","10 €"],
  ["des","Café Avellaneda","Coyoacán",19.3483,-99.1600,"☕","Café de especialidad pequeñito, para el viernes antes de la Casa Kahlo","4 €"],
+ ["des","La Esquina del Chilaquil","Condesa",19.4070,-99.1770,"🥪","Torta de chilaquiles con milanesa, el puesto viral que sí vale la pena. De 8 a 13","4 €",1],
+ ["pla","Esquites Don Josué","Narvarte",19.3955,-99.1440,"🌽","Esquites con tuétano y sabores raros. De 18 a 23, se acaban pronto","3 €",1],
  ["com","Contramar","Roma",19.4192,-99.1660,"🐟","Tostada de atún y pescado a la talla. El favorito de los chilangos; reservar","40 €"],
  ["com","Expendio de Maíz","Roma",19.4142,-99.1610,"🌽","Estrella Michelin y sin carta: van sacando platos de maíz hasta que digáis basta","25 €"],
- ["com","Mi Compa Chava","Roma",19.4155,-99.1615,"🦐","Mariscos sinaloenses y aguachile negro. Hay cola, sin reserva","30 €"],
+ ["com","Mi Compa Chava","Roma",19.4155,-99.1615,"🦐","Mariscos sinaloenses y aguachile negro. Hay cola, sin reserva","30 €",1],
  ["com","Azul Histórico","Centro",19.4337,-99.1366,"🌳","Cocina mexicana en un patio con árboles y luces","30 €"],
  ["com","Los Danzantes","Coyoacán",19.3500,-99.1622,"🫕","Mole y mezcal en la plaza de Coyoacán. Encaja el viernes","30 €"],
- ["com","Tostadas Coyoacán","Coyoacán",19.3510,-99.1615,"🥗","Dentro del mercado, tostadas de todo tipo. Barato y muy local","6 €"],
+ ["com","Tostadas Coyoacán","Coyoacán",19.3510,-99.1615,"🥗","Dentro del mercado, tostadas de todo tipo. Barato y muy local","6 €",1],
  ["com","San Ángel Inn","San Ángel",19.3480,-99.1890,"🍹","Antigua hacienda con margaritas famosas. Encaja el sábado","40 €"],
  ["com","Mercado de San Juan","Centro",19.4305,-99.1440,"🦗","Mercado gourmet: quesos, jamón, insectos y bocadillos en barra","10 €"],
- ["son","Taquería Gabriel","Cuauhtémoc",19.4300,-99.1700,"🌯","Asada sonorense, tortillas de harina a mano y frijoles maneados. Abre hasta las 3","10 €"],
+ ["son","Taquería Gabriel","Cuauhtémoc",19.4300,-99.1700,"🌯","Asada sonorense, tortillas de harina a mano y frijoles maneados. Abre hasta las 3","10 €",1],
  ["son","Los Maneados","Cuauhtémoc",19.4290,-99.1690,"🥩","Parrilla sonorense: cortes, cebollitas y frijoles maneados con chicharrón","20 €"],
  ["son","Arre Sonora","Álamos",19.3960,-99.1420,"🌶️","Burritos y volcanes de asada con chiles güeros rellenos de queso","10 €"],
  ["son","El Moustron","Narvarte",19.3820,-99.1480,"🌭","Dogos sonorenses de verdad y tacos de asada","8 €"],
  ["son","Sonora Grill","Varias",19.4270,-99.1660,"🔥","Cadena de brasa sonorense, más de cena bonita. Cortes caros","45 €"],
- ["tac","Los Cocuyos","Centro",19.4310,-99.1355,"🌮","Bib Gourmand. Suadero, lengua y cabeza del caldero. Abre 24 h y está a 10 min de casa","5 €"],
+ ["tac","Los Cocuyos","Centro",19.4310,-99.1355,"🌮","Bib Gourmand. Suadero, lengua y cabeza del caldero. Abre 24 h y está a 10 min de casa","5 €",1],
  ["tac","El Califa de León","San Rafael",19.4400,-99.1610,"⭐","Estrella Michelin, la única taquería con estrella. Gaonera con limón y salsa verde. Hay cola","5 €"],
- ["tac","El Huequito","Centro",19.4290,-99.1430,"🍍","Al pastor desde 1959, junto a casa","5 €"],
- ["tac","Los Especiales","Centro",19.4335,-99.1365,"🧺","Tacos de canasta en Madero, de los más baratos de la ciudad","2 €"],
- ["tac","El Vilsito","Narvarte",19.3880,-99.1610,"🔧","Bib Gourmand. Petén 248: taller mecánico de día, pastor de noche","6 €"],
- ["tac","Los Parados","Roma Sur",19.4060,-99.1625,"🧀","Desde 1965, carne a la plancha con queso. Abre hasta tarde","8 €"],
+ ["tac","El Huequito","Centro",19.4290,-99.1430,"🍍","Al pastor desde 1959, junto a casa","5 €",1],
+ ["tac","Los Especiales","Centro",19.4335,-99.1365,"🧺","Tacos de canasta en Madero, de los más baratos de la ciudad","2 €",1],
+ ["tac","El Vilsito","Narvarte",19.3880,-99.1610,"🔧","Bib Gourmand. Petén 248: taller mecánico de día, pastor de noche","6 €",1],
+ ["tac","Los Parados","Roma Sur",19.4060,-99.1625,"🧀","Desde 1965, carne a la plancha con queso. Abre hasta tarde","8 €",1],
+ ["tac","Tacos San Burgos","Juárez",19.4255,-99.1625,"🍺","Tortilla al momento, pastor y lengua, con micheladas. 24 h los fines de semana","5 €",1],
+ ["tac","Los Pastorcitos de Sirloin","Juárez",19.4265,-99.1555,"🥩","Tacos de sirloin y pastor, con queso fundido y alambres","8 €",1],
+ ["tac","Tacos Domingo","Centro",19.4300,-99.1480,"♨️","Al carbón por peso: asada, chuleta o costilla, con cebollitas. Junto a La Ciudadela","8 €",1],
+ ["tac","Yeshua Tacos","Centro",19.4360,-99.1310,"🔥","Las tripitas que la gente dice que son de lo mejor del Centro. L a S de 9 a 19","3 €",1],
+ ["tac","Taco Fresa","Del Valle",19.3905,-99.1690,"🌶️","Pastor flamin' hot y birria tijuanense. Pastor al 2x1 a 30 pesos","5 €",1],
+ ["tac","El Borrego Viudo","Tacubaya",19.4035,-99.1880,"🌙","Leyenda de madrugada, 24 h. Sale en Las crónicas del taco; opiniones divididas","4 €",1],
+ ["tac","Cinco Hermanos","La Merced",19.4255,-99.1235,"🏪","Suadero dentro del Mercado de la Merced, de los que repiten los foodies","3 €",1],
  ["tac","Tacos del Valle","Roma",19.4168,-99.1590,"🔥","Bib Gourmand. Trompo negro fuego, pork belly y tijuanitas","7 €"],
- ["tac","Tacos Los Alexis","Roma",19.4140,-99.1570,"🥩","Bib Gourmand. Asada, volcanes y costras, del chef de Pargot","7 €"],
- ["tac","El Jarocho","Roma Sur",19.4065,-99.1595,"🫓","Bib Gourmand. Tacos de guisado con tortilla hecha a mano. Abre y cierra pronto: para comer","5 €"],
+ ["tac","Tacos Los Alexis","Roma",19.4140,-99.1570,"🥩","Bib Gourmand. Asada, volcanes y costras, del chef de Pargot","7 €",1],
+ ["tac","El Jarocho","Roma Sur",19.4065,-99.1595,"🫓","Bib Gourmand. Tacos de guisado con tortilla hecha a mano. Abre y cierra pronto: para comer","5 €",1],
  ["tac","Los Consentidos del Barrio","Del Valle",19.3740,-99.1740,"♨️","Bib Gourmand. Al carbón: arrachera y el especial de pastor","8 €"],
- ["tac","Los Milanesos","Olivar de los Padres",19.3365,-99.2155,"🍖","Bib Gourmand. Tacos de milanesa con queso. Cerca de San Ángel para el sábado","6 €"],
+ ["tac","Los Milanesos","Olivar de los Padres",19.3365,-99.2155,"🍖","Bib Gourmand. Tacos de milanesa con queso. Cerca de San Ángel para el sábado","6 €",1],
  ["tac","La 89","Roma",19.4185,-99.1600,"🌯","Bib Gourmand. Norteño: birria, asada al carbón y quesadillas","8 €"],
- ["tac","El Paisa","San Rafael",19.4380,-99.1605,"⚡","Recomendado Michelin. Suadero y pastor rápidos, de pie. Junto al Califa","4 €"],
+ ["tac","El Paisa","San Rafael",19.4380,-99.1605,"⚡","Recomendado Michelin. Suadero y pastor rápidos, de pie. Junto al Califa","4 €",1],
  ["tac","Castacán","Roma",19.4220,-99.1690,"🐖","Recomendado Michelin. Cochinita pibil y lechón con la piel crujiente","7 €"],
  ["tac","Cariñito Tacos","Roma",19.4160,-99.1585,"🥢","Recomendado Michelin. Tacos con sabores asiáticos, el de siu yuk","8 €"],
- ["tac","Tacos Hola El Güero","Condesa",19.4120,-99.1725,"🥔","Recomendado Michelin. Guisados: picadillo y chorizo con papa","4 €"],
+ ["tac","Tacos Hola El Güero","Condesa",19.4120,-99.1725,"🥔","Recomendado Michelin. Guisados: picadillo y chorizo con papa","4 €",1],
  ["tac","Barbacoa Gonzalitos","Roma",19.4190,-99.1560,"🐂","Recomendado Michelin. Barbacoa de res estilo Monterrey, en maíz o harina","7 €"],
  ["tac","Ricos Tacos Toluca","Centro",19.4295,-99.1440,"🟢","Recomendado Michelin. Chorizo verde de Toluca, al lado de casa","4 €"],
  ["tac","El Gran Abanico","Tránsito",19.4210,-99.1310,"🐷","Recomendado Michelin. Carnitas michoacanas y costilla","5 €"],
  ["tac","Maizajo","Condesa",19.4100,-99.1720,"🌽","Recomendado Michelin. Carne al carbón con tortilla de maíz criollo de la casa","10 €"],
  ["tac","La Once Mil","Lomas",19.4280,-99.2140,"💎","Estrella Michelin. Tacos de lujo: wagyu, pork belly y trufa. El capricho caro","35 €"],
- ["tac","Tacos Charly","Tlalpan",19.2955,-99.1690,"🥇","Bib Gourmand: suadero confitado y pastor cortado finito. De 15 a 23, cerrado domingo, solo efectivo. Pilla de camino de Xochimilco a casa el sábado","5 €"],
+ ["tac","Tacos Charly","Tlalpan",19.2955,-99.1690,"🥇","Bib Gourmand: suadero confitado y pastor cortado finito. De 15 a 23, cerrado domingo, solo efectivo. Pilla de camino de Xochimilco a casa el sábado","5 €",1],
  ["tac","Orinoco","Roma",19.4180,-99.1640,"🐷","Tacos regios con chicharrón de rib eye. Muy de TikTok","8 €"],
  ["cop","Handshake Speakeasy","Zona Rosa",19.4255,-99.1630,"🤝","Nº 6 del mundo en The World's 50 Best Bars 2026. Reservar con tiempo","20 €"],
  ["cop","Licorería Limantour","Roma",19.4175,-99.1615,"🍸","Coctelería de lista mundial, sin reserva y con ambiente","15 €"],
@@ -385,7 +385,7 @@ const IDEAS=[
  ["cop","Salón Tenampa","Garibaldi",19.4406,-99.1395,"🎺","La cantina de los mariachis desde 1925. Para el martes en Garibaldi","10 €"],
  ["cop","Tío Pepe","Centro",19.4342,-99.1420,"🍺","Cantina de 1869 a dos calles de casa","8 €"],
  ["cop","Bósforo","Centro",19.4325,-99.1445,"🥃","Mezcalería oscura y pequeña, música buena. Al lado de casa","10 €"],
- ["cop","Las Duelistas","Centro",19.4285,-99.1430,"🍶","Pulquería con murales. Pulque curado muy barato","3 €"],
+ ["cop","Las Duelistas","Centro",19.4285,-99.1430,"🍶","Pulquería con murales. Pulque curado muy barato","3 €",1],
  ["cop","Zinco Jazz Club","Centro",19.4340,-99.1370,"🎷","Jazz en directo en un sótano del Centro","15 €"],
  ["pla","Piñatas en el Museo de Arte Popular","Centro",19.4335,-99.1460,"🪅","Exposición de piñatas hasta el 13 dic, mar a dom de 10 a 18. 60 pesos, domingo gratis","3 €"],
  ["pla","Catedral de noche","Centro",19.4343,-99.1335,"🕯️","Recorridos nocturnos desde las 19:30 hasta el 21 nov. Confirmar fechas","5 €"],
@@ -422,20 +422,17 @@ defs.innerHTML=`
 <pattern id="wav" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="#5cc8f0"/><path d="M0 5 q4 -3 8 0 t8 0" fill="none" stroke="#bfeaff" stroke-width="1.2"/></pattern>`;
 
 const world=g(svg,{id:'world'});
-el('rect',{x:-600,y:-600,width:1700,height:1800,fill:'#fbe3a6'},world);
-el('rect',{x:-600,y:-600,width:1700,height:1800,fill:'url(#dots)'},world);
+el('rect',{x:-600,y:-600,width:1700,height:1800,fill:'#ece6dc'},world);
 
 /* ciudad */
-el('path',{class:'land',fill:'#fff3d8',d:smooth([[19.56,-99.24],[19.58,-99.10],[19.53,-99.03],[19.47,-99.04],[19.42,-99.00],[19.36,-98.98],[19.29,-99.00],[19.24,-99.06],[19.25,-99.16],[19.28,-99.23],[19.36,-99.27],[19.46,-99.27]])},world);
+el('path',{class:'land',fill:'#f7f3ec',d:smooth([[19.56,-99.24],[19.58,-99.10],[19.53,-99.03],[19.47,-99.04],[19.42,-99.00],[19.36,-98.98],[19.29,-99.00],[19.24,-99.06],[19.25,-99.16],[19.28,-99.23],[19.36,-99.27],[19.46,-99.27]])},world);
 
 const lands=[
- ['url(#stripeY)',[[19.448,-99.152],[19.449,-99.127],[19.437,-99.121],[19.426,-99.125],[19.424,-99.150],[19.433,-99.156]]],
- ['url(#dotB)',[[19.465,-99.168],[19.466,-99.139],[19.452,-99.135],[19.449,-99.150],[19.446,-99.162]]],
- ['url(#stripeR)',[[19.424,-99.170],[19.423,-99.149],[19.412,-99.146],[19.404,-99.151],[19.405,-99.168]]],
- ['#ff9cc4',[[19.420,-99.184],[19.421,-99.171],[19.408,-99.169],[19.402,-99.177],[19.406,-99.186]]],
- ['url(#dotB)',[[19.368,-99.176],[19.367,-99.150],[19.352,-99.146],[19.339,-99.152],[19.338,-99.172],[19.350,-99.180]]],
- ['url(#stripeY)',[[19.356,-99.202],[19.355,-99.184],[19.343,-99.181],[19.336,-99.190],[19.339,-99.203]]],
- ['url(#stripeR)',[[19.430,-99.158],[19.430,-99.148],[19.420,-99.146],[19.418,-99.156]]],
+ ['#f6e7c8',[[19.448,-99.152],[19.449,-99.127],[19.437,-99.121],[19.426,-99.125],[19.424,-99.150],[19.433,-99.156]]],
+ ['#f3e9e2',[[19.424,-99.170],[19.423,-99.149],[19.412,-99.146],[19.404,-99.151],[19.405,-99.168]]],
+ ['#f3e9e2',[[19.420,-99.184],[19.421,-99.171],[19.408,-99.169],[19.402,-99.177],[19.406,-99.186]]],
+ ['#f6e7c8',[[19.368,-99.176],[19.367,-99.150],[19.352,-99.146],[19.339,-99.152],[19.338,-99.172],[19.350,-99.180]]],
+ ['#f6e7c8',[[19.356,-99.202],[19.355,-99.184],[19.343,-99.181],[19.336,-99.190],[19.339,-99.203]]],
 ];
 for(const [f,p] of lands)el('path',{class:'land',fill:f,d:smooth(p)},world);
 
@@ -444,7 +441,7 @@ const water=[
  [[19.275,-99.125],[19.278,-99.085],[19.262,-99.065],[19.246,-99.075],[19.240,-99.110],[19.255,-99.130]],
  [[19.4215,-99.1885],[19.4220,-99.1845],[19.4175,-99.1830],[19.4165,-99.1870]],
 ];
-for(const p of water)el('path',{class:'land',fill:'url(#wav)',d:smooth(p)},world);
+for(const p of water)el('path',{class:'land',fill:'#b9dcef',d:smooth(p)},world);
 
 const parks=[
  [[19.4275,-99.1825],[19.4270,-99.1990],[19.4220,-99.2120],[19.4070,-99.2170],[19.4010,-99.2040],[19.4060,-99.1900],[19.4135,-99.1800]],
@@ -457,15 +454,14 @@ const parks=[
  [[19.4720,-99.0750],[19.4720,-99.0560],[19.4560,-99.0560],[19.4560,-99.0750]],
  [[19.2960,-99.1000],[19.2960,-99.0760],[19.2840,-99.0760],[19.2840,-99.1000]],
 ];
-for(const p of parks)el('path',{class:'land',fill:'#7fd36b',d:smooth(p)},world);
+for(const p of parks)el('path',{class:'land',fill:'#cfe5bf',d:smooth(p)},world);
 
-el('path',{class:'land',fill:'#d9d2c4',d:smooth([[19.452,-99.088],[19.452,-99.060],[19.418,-99.054],[19.418,-99.085]])},world);
+el('path',{class:'land',fill:'#e4ded3',d:smooth([[19.452,-99.088],[19.452,-99.060],[19.418,-99.054],[19.418,-99.085]])},world);
 for(const [a,b] of [[[19.423,-99.083],[19.447,-99.062]],[[19.426,-99.079],[19.449,-99.058]]]){
   const [x1,y1]=pr(...a),[x2,y2]=pr(...b);
-  el('line',{x1,y1,x2,y2,class:'road',stroke:'#4a4a5a','stroke-width':5},world);
-  el('line',{x1,y1,x2,y2,class:'road',stroke:'#fff','stroke-width':1,'stroke-dasharray':'4 4'},world);
+  el('line',{x1,y1,x2,y2,class:'road',stroke:'#cfc7ba','stroke-width':4},world);
 }
-el('path',{class:'land',fill:'#f6c27a',d:smooth([[19.705,-98.860],[19.705,-98.828],[19.683,-98.828],[19.683,-98.860]])},world);
+el('path',{class:'land',fill:'#efe0c4',d:smooth([[19.705,-98.860],[19.705,-98.828],[19.683,-98.828],[19.683,-98.860]])},world);
 
 /* calles */
 const roads=[
@@ -486,26 +482,16 @@ const roads=[
  [[[19.4420,-99.1520],[19.4460,-99.1340]],3,'#fff'],
 ];
 const rg=g(world);
-for(const [pts,w,c] of roads){const d=smooth(pts,false);el('path',{d,class:'road base','stroke-width':w+3},rg);el('path',{d,class:'road',stroke:c,'stroke-width':w},rg)}
-{const [x,y]=pr(19.4115,-99.1695);el('ellipse',{cx:x,cy:y,rx:3.8,ry:4.6,class:'road base',fill:'none','stroke-width':6},rg);el('ellipse',{cx:x,cy:y,rx:3.8,ry:4.6,class:'road',stroke:'#fff','stroke-width':3},rg)}
-{const [x,y]=pr(19.4326,-99.1332);el('rect',{x:x-1.3,y:y-1.1,width:2.6,height:2.2,class:'land',fill:'#ff4f5e'},rg)}
+for(const [pts,w,c] of roads){const d=smooth(pts,false),major=w>=5;
+  el('path',{d,class:'road',stroke:major?'#e3cf9a':'#ddd4c6','stroke-width':(major?4.2:2.6)+1.6},rg);
+  el('path',{d,class:'road',stroke:major?'#fbe8b0':'#ffffff','stroke-width':major?4.2:2.6},rg)}
+{const [x,y]=pr(19.4326,-99.1332);el('rect',{x:x-1.2,y:y-1,width:2.4,height:2,fill:'#e2d9cb'},rg)}
 
 /* decoración que mantiene tamaño en pantalla */
 const deco=g(world),fixed=[];
 function fx(la,lo,html,cls=''){const [x,y]=pr(la,lo),o=g(deco,{class:cls});o.innerHTML=html;o._x=x;o._y=y;fixed.push(o);return o}
-const tree='<g class="bob"><rect x="-1.5" y="0" width="3" height="7" fill="#7a4a1e"/><circle r="7" cy="-2" fill="#2fae5f" stroke="#1d1a3a" stroke-width="2"/><circle r="2.5" cx="-2" cy="-4" fill="#7fe07a"/></g>';
-for(const [a,b] of [[19.424,-99.196],[19.410,-99.205],[19.419,-99.207],[19.414,-99.194],[19.33,-99.19],[19.315,-99.18],[19.32,-99.20],[19.575,-99.12],[19.56,-99.15],[19.555,-99.09],[19.34,-99.09],[19.29,-99.088],[19.464,-99.066],[19.3545,-99.173]])fx(a,b,tree);
-const mtn='<path d="M-22 10 L-6 -14 L2 -2 L10 -18 L28 10Z" fill="#a77c52" stroke="#1d1a3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-10 -8 L-6 -14 L-2 -8 Z M6 -12 L10 -18 L14 -12 Z" fill="#fff"/>';
-for(const [a,b] of [[19.585,-99.13],[19.565,-99.10],[19.57,-99.16]])fx(a,b,mtn);
-fx(19.300,-98.86,'<path d="M-46 22 L-20 -24 L-6 -4 L4 -14 L46 22Z" fill="#8b6bd6" stroke="#1d1a3a" stroke-width="3" stroke-linejoin="round"/><path d="M-29 -8 L-20 -24 L-12 -12 L-17 -6 Z" fill="#fff"/><path d="M0 -10 L4 -14 L12 -6 Z" fill="#fff"/><text class="lbl rl" y="38" style="font-size:10px">Izta y Popo, a lo lejos</text>');
-fx(19.6925,-98.8438,'<path d="M-26 10 L-10 -16 L6 -16 L22 10Z" fill="#ffc21a" stroke="#1d1a3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-18 -3 L14 -3" stroke="#1d1a3a" stroke-width="2"/><path d="M14 10 L24 -4 L34 10Z" fill="#ff8a3d" stroke="#1d1a3a" stroke-width="2.5" stroke-linejoin="round" transform="translate(4 -22)"/>');
-fx(19.437,-99.071,'<g transform="rotate(-40)"><path d="M0 -16 C3 -16 3 -10 3 -6 L16 2 L16 6 L3 2 L3 10 L8 14 L8 16 L0 14 L-8 16 L-8 14 L-3 10 L-3 2 L-16 6 L-16 2 L-3 -6 C-3 -10 -3 -16 0 -16Z" fill="#fff" stroke="#1d1a3a" stroke-width="2"/></g>');
-fx(19.715,-99.20,'<g class="spin"><circle r="20" fill="#ffc21a" stroke="#1d1a3a" stroke-width="3"/>'+[...Array(12)].map((_,i)=>`<path d="M0 -24 L4 -32 L-4 -32Z" fill="#ff6a3d" stroke="#1d1a3a" stroke-width="2" transform="rotate(${i*30})"/>`).join('')+'</g><circle r="2.5" cx="-6" cy="-3" fill="#1d1a3a"/><circle r="2.5" cx="6" cy="-3" fill="#1d1a3a"/><path d="M-7 5 Q0 12 7 5" fill="none" stroke="#1d1a3a" stroke-width="2.5" stroke-linecap="round"/>');
-fx(19.62,-99.02,'<g class="drift"><path d="M-24 6 C-30 6 -30 -6 -20 -6 C-18 -16 -2 -16 2 -8 C8 -14 22 -10 20 0 C28 0 28 6 22 6Z" fill="#fff" stroke="#1d1a3a" stroke-width="2.5"/></g>');
-fx(19.38,-99.235,'<g class="drift"><path d="M-24 6 C-30 6 -30 -6 -20 -6 C-18 -16 -2 -16 2 -8 C8 -14 22 -10 20 0 C28 0 28 6 22 6Z" fill="#fff" stroke="#1d1a3a" stroke-width="2.5"/></g>');
-fx(19.255,-98.97,'<g transform="rotate(10)"><circle r="20" fill="#fff" stroke="#1d1a3a" stroke-width="3"/><path d="M0 -16 L5 0 L0 16 L-5 0Z" fill="#e63b2e" stroke="#1d1a3a" stroke-width="2"/><path d="M0 0 L5 0 L0 16 L-5 0Z" fill="#2a4fd6"/><text class="lbl" y="-23" style="font-size:11px;fill:#1d1a3a">N</text></g>');
-fx(19.25,-99.10,'<g class="bob"><path d="M-14 0 L14 0 L10 6 L-10 6Z" fill="#e63b2e" stroke="#1d1a3a" stroke-width="2"/><path d="M-10 0 L-10 -10 L10 -10 L10 0" fill="none" stroke="#1d1a3a" stroke-width="2"/><path d="M-12 -10 Q0 -18 12 -10Z" fill="#ffc21a" stroke="#1d1a3a" stroke-width="2"/></g>');
-fx(19.268,-99.08,'<g class="bob" style="animation-delay:-1.4s"><path d="M-14 0 L14 0 L10 6 L-10 6Z" fill="#2a4fd6" stroke="#1d1a3a" stroke-width="2"/><path d="M-12 -10 Q0 -18 12 -10Z" fill="#ff6fa8" stroke="#1d1a3a" stroke-width="2"/><path d="M-10 0 L-10 -10 M10 0 L10 -10" stroke="#1d1a3a" stroke-width="2"/></g>');
+fx(19.6925,-98.8438,'<path d="M-14 7 L-5 -8 L5 -8 L14 7Z" fill="#d9b77a"/><path d="M10 7 L16 -1 L22 7Z" fill="#c9a364"/>');
+fx(19.437,-99.071,'<g transform="rotate(-40) scale(.7)" fill="#b3aa9c"><path d="M0 -16 C3 -16 3 -10 3 -6 L16 2 L16 6 L3 2 L3 10 L8 14 L8 16 L0 14 L-8 16 L-8 14 L-3 10 L-3 2 L-16 6 L-16 2 L-3 -6 C-3 -10 -3 -16 0 -16Z"/></g>');
 
 /* textos */
 const ZL=[[19.4385,-99.1385,'Centro',0],[19.4570,-99.1530,'Guerrero',1],[19.4150,-99.1585,'Roma',0],[19.4130,-99.1790,'Condesa',1],[19.4185,-99.2040,'Chapultepec',0],
@@ -519,13 +505,13 @@ for(const [a,b,t,r] of [[19.4005,-99.196,'Periférico',-80],[19.3795,-99.1765,'I
 const routeG=g(world),pinG=g(world);
 const pinEls={};
 for(const [id,[la,lo,n,e]] of Object.entries(P)){
-  const [x,y]=pr(la,lo),o=g(pinG,{class:'pin off hide'}),w=n.length*7+18;
-  o.innerHTML=`<g class="inner"><g class="bub"><path d="M0 0 C-6 -10 -17 -16 -17 -28 A17 17 0 1 1 17 -28 C17 -16 6 -10 0 0Z" fill="var(--c,#bbb)" stroke="#1d1a3a" stroke-width="3"/><text y="-21" text-anchor="middle" style="font-size:18px">${e}</text></g>
-  <g class="lab"><rect x="${-w/2}" y="6" width="${w}" height="21" rx="10.5" fill="#fff" stroke="#1d1a3a" stroke-width="2.5"/><text y="21.5" text-anchor="middle" class="lbl" style="font-size:13px;fill:#1d1a3a">${n}</text></g></g>`;
+  const [x,y]=pr(la,lo),o=g(pinG,{class:'pin off hide'+(IDS[id]?' idea':'')}),w=n.length*6.6+16;
+  o.innerHTML=`<g class="inner"><g class="bub"><circle r="12" fill="${IDS[id]?'#fff':'var(--c,#bbb)'}" stroke="${IDS[id]?'var(--c,#bbb)':'#fff'}" stroke-width="2.5" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))"/><text class="pn" y="4.3"></text></g>
+  <g class="lab"><rect x="${-w/2}" y="15" width="${w}" height="19" rx="6" fill="#fff" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))"/><text y="28.3">${n}</text></g></g>`;
   o._x=x;o._y=y;o._lw=w;o.addEventListener('click',()=>{const li=document.querySelector(`.stop[data-p="${id}"]`);li&&li.scrollIntoView({behavior:'smooth',block:'center'});highlight(id)});
   fixed.push(o);pinEls[id]=o;
 }
-const walker=fx(0,0,'<g class="bob"><circle r="16" fill="#fff" stroke="#1d1a3a" stroke-width="3"/><text y="7" text-anchor="middle" style="font-size:19px" id="ride">🚕</text></g>');
+const walker=fx(0,0,'<circle r="11" fill="#fff" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,.3))"/><text y="4.5" text-anchor="middle" style="font-size:12px" id="ride">🚕</text>');
 walker.style.display='none';
 
 /* cámara */
@@ -541,8 +527,8 @@ function apply(){
 let pinOrder=[];
 function declutter(ps){
   const u=units,occ=[],hit=r=>occ.some(o=>r[0]<o[2]&&r[2]>o[0]&&r[1]<o[3]&&r[3]>o[1]);
-  for(const id of pinOrder){const o=pinEls[id];occ.push([o._x-17*ps,o._y-48*ps,o._x+17*ps,o._y])}
-  for(const id of pinOrder){const o=pinEls[id],r=[o._x-o._lw/2*ps,o._y+5*ps,o._x+o._lw/2*ps,o._y+28*ps],l=o.querySelector('.lab');
+  for(const id of pinOrder){const o=pinEls[id];occ.push([o._x-13*ps,o._y-13*ps,o._x+13*ps,o._y+13*ps])}
+  for(const id of pinOrder){const o=pinEls[id],r=[o._x-o._lw/2*ps,o._y+15*ps,o._x+o._lw/2*ps,o._y+34*ps],l=o.querySelector('.lab');
     if(hit(r))l.style.display='none';else{l.style.display='';occ.push(r)}}
   for(const o of [...LBL].sort((a,b)=>a._p-b._p)){const r=[o._x-o._w/2*u,o._y-o._h/2*u,o._x+o._w/2*u,o._y+o._h/2*u];
     if(hit(r))o.style.display='none';else{o.style.display='';occ.push(r)}}
@@ -576,13 +562,12 @@ function drawRoute(ids,c,k){
   const seq=ids.filter((v,i)=>i===0||v!==ids[i-1]).map(i=>pr(P[i][0],P[i][1]));if(seq.length<2)return;
   let pts=[];for(let i=1;i<seq.length;i++){const s=curve(seq[i-1],seq[i]);pts=pts.concat(i>1?s.slice(1):s)}
   const d='M'+pts.map(p=>p[0].toFixed(3)+' '+p[1].toFixed(3)).join(' L');
-  const u=units,halo=el('path',{d,class:'route',stroke:'#1d1a3a','stroke-width':10*u},routeG),line=el('path',{d,class:'route',stroke:c,'stroke-width':6*u},routeG);
+  const u=units,halo=el('path',{d,class:'route',stroke:'#fff','stroke-width':7*u},routeG),line=el('path',{d,class:'route',stroke:c,'stroke-width':3.5*u},routeG);
   const L=halo.getTotalLength();
   for(const p of [halo,line]){p.style.strokeDasharray=L+' '+L;p.style.strokeDashoffset=L;p.getBoundingClientRect();p.style.transition='stroke-dashoffset 1.8s cubic-bezier(.6,0,.2,1)';p.style.strokeDashoffset=0}
   setTimeout(()=>{if(tok!==routeTok)return;
-    line.style.cssText='';halo.style.cssText='';line.setAttribute('stroke','#fff');line.setAttribute('stroke-width',4*u);
-    const dash=el('path',{d,class:'route',stroke:c,'stroke-width':4*u,'stroke-dasharray':`${10*u} ${10*u}`},routeG);
-    dash.animate([{strokeDashoffset:0},{strokeDashoffset:-20*u}],{duration:900,iterations:Infinity});
+    line.style.cssText='';halo.style.cssText='';const dash=el('path',{d,class:'route',stroke:'#fff','stroke-width':1.6*u,'stroke-dasharray':`${2*u} ${9*u}`,opacity:.9},routeG);
+    dash.animate([{strokeDashoffset:0},{strokeDashoffset:-22*u}],{duration:1400,iterations:Infinity});
     document.getElementById('ride').textContent=RIDE[k]||'🚕';walker.style.display='';
     const tl=halo.getTotalLength(),t0=performance.now(),dur=Math.min(14000,Math.max(6000,pts.length*100));
     const f=now=>{const p=halo.getPointAtLength(((now-t0)%dur)/dur*tl);walker._x=p.x;walker._y=p.y;walker.setAttribute('transform',`translate(${p.x} ${p.y}) scale(${units})`);walkRaf=requestAnimationFrame(f)};
@@ -621,6 +606,7 @@ const LONG={Mié:"Miércoles",Jue:"Jueves",Vie:"Viernes",Sáb:"Sábado",Dom:"Dom
 let cur=-1,curRt=[];
 document.getElementById('all').onclick=()=>tween(fitAll());
 let plan={};try{plan=JSON.parse(localStorage.getItem('cdmx-plan')||'{}')}catch(e){}
+let NUM={};
 async function show(i,force){
   if(i===cur&&!force)return;cur=i;
   const day=D[i],c=COL[day.k];root.style.setProperty('--day',c);
@@ -629,13 +615,14 @@ async function show(i,force){
   const ex=(plan[day.k]||[]).filter(id=>IDS[id]);
   const ids=day.stops.map(s=>s[1]),uniq=[...new Set([...ids,...ex])];
   const rt=(ids[0]==='casa'||ids[0]==='aicm')?ids:['casa',...ids];curRt=rt;
+  NUM={};let nn=0;for(const id of ids)if(!(id in NUM))NUM[id]=id==='casa'?'⌂':++nn;for(const id of ex)NUM[id]=P[id][3];
   for(const [id,o] of Object.entries(pinEls)){const on=uniq.includes(id);o.classList.toggle('off',!on);o.classList.toggle('hide',!on);o.classList.remove('on','pop');o.style.setProperty('--c',on?c:'#d8cfc0');
-    if(on){pinG.appendChild(o);void o.getBBox();o.classList.add('pop');o.querySelector('.inner').style.animationDelay=(1+uniq.indexOf(id)*.12)+'s'}}
+    if(on){o.querySelector('.pn').textContent=NUM[id];pinG.appendChild(o);void o.getBBox();o.classList.add('pop');o.querySelector('.inner').style.animationDelay=(1+uniq.indexOf(id)*.12)+'s'}}
   pinOrder=[...uniq];apply();renderIdeas();
   routeG.innerHTML='';walker.style.display='none';cancelAnimationFrame(walkRaf);routeTok++;
   badge.innerHTML=`<b>${day.d}</b><span>${day.s}</span>`;
   dia.innerHTML=`<div class="dayhead"><h2>${LONG[day.d.slice(0,3)]} ${day.k}: ${day.s}</h2><p class="zone2">${day.z}</p></div>
-  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.07*j}s"><span class="num${s[1]==='casa'?' soft':''}">${P[s[1]][3]}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}${ex.map(id=>{const x=IDS[id];return `<li class="stop extra" data-p="${id}"><span class="num">${x[5]}</span><div class="body"><button class="x" data-rm="${id}" aria-label="Quitar">×</button><div class="t">Añadido, ${x[7]} por persona</div><div class="n">${x[1]}</div><div class="d">${x[2]}. ${x[6]}</div></div></li>`}).join('')}</ol>
+  <ol class="stops">${day.stops.map((s,j)=>`<li class="stop" data-p="${s[1]}" style="animation-delay:${.07*j}s"><span class="num${s[1]==='casa'?' soft':''}">${NUM[s[1]]}</span><div class="body"><div class="t">${s[0]}</div><div class="n">${s[2]}</div>${s[3]?`<div class="d">${s[3]}</div>`:''}</div></li>`).join('')}${ex.map(id=>{const x=IDS[id];return `<li class="stop extra" data-p="${id}"><span class="num em">${x[5]}</span><div class="body"><button class="x" data-rm="${id}" aria-label="Quitar">×</button><div class="t">Añadido, ${x[7]} por persona</div><div class="n">${x[1]}</div><div class="d">${x[2]}. ${x[6]}</div></div></li>`}).join('')}</ol>
   ${day.tip?`<div class="tip">${day.tip}</div>`:''}`;
   dia.querySelectorAll('[data-rm]').forEach(b=>b.onclick=e=>{e.stopPropagation();removeIdea(D[cur].k,b.dataset.rm)});
   dia.querySelectorAll('.stop').forEach(li=>{li.onclick=()=>highlight(li.dataset.p);if(matchMedia('(hover:hover)').matches)li.onmouseenter=()=>highlight(li.dataset.p)});
@@ -645,7 +632,7 @@ async function show(i,force){
 }
 /* ideas */
 const ideasEl=document.getElementById('ideas'),ideasCol=document.getElementById('ideascol');
-const KC={des:'#ffc21a',com:'#ff6fa8',son:'#ff8a3d',tac:'#5cc8f0',cop:'#b39bff',pla:'#7fd36b'};
+const KC={};
 let filt='all';
 function savePlan(){try{localStorage.setItem('cdmx-plan',JSON.stringify(plan))}catch(e){}}
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.style.opacity=0,1600);setTimeout(()=>t.remove(),2000)}
@@ -666,12 +653,12 @@ const fmt=k=>k<1?Math.round(k*10)*100+' m':k.toFixed(1).replace('.',',')+' km';
 function renderIdeas(){
   if(!ideasEl)return;
   const [rp,rn]=ref();
-  const list=IDEAS.map((x,i)=>['i'+i,x,Math.min(...rp.map(q=>km(q,[x[3],x[4]])))]).filter(([,x])=>filt==='all'||x[0]===filt).sort((a,b)=>a[2]-b[2]);
+  const list=IDEAS.map((x,i)=>['i'+i,x,Math.min(...rp.map(q=>km(q,[x[3],x[4]])))]).filter(([,x])=>filt==='all'||x[0]===filt||(filt==='loc'&&x[8])).sort((a,b)=>a[2]-b[2]);
   ideasEl.innerHTML=`<h2>Ideas</h2><p class="sub">Ordenadas por cercanía a ${rn}. Arrastra con ⠿ a un día de arriba, o pulsa ＋. Precios aproximados por persona.</p>
   <div class="planbar"><button id="near">📍 Cerca de mí</button><button id="share">Compartir plan</button></div>
   <div class="chips"><button class="chip" data-f="all" aria-pressed="${filt==='all'}">Todo</button>${CATS.map(([k,n,e])=>`<button class="chip" data-f="${k}" aria-pressed="${filt===k}">${e} ${n}</button>`).join('')}</div>
   ${list.map(([id,x,d])=>`<div class="idea" data-id="${id}" style="--k:${KC[x[0]]}"><div class="em">${x[5]}</div>
-   <div><div class="nm">${x[1]}</div><div class="meta"><span class="tag">${x[2]}</span><span class="tag eu">${x[7]}</span><span class="tag km">a ${fmt(d)}</span></div><div class="ds">${x[6]}</div>
+   <div><div class="nm">${x[1]}</div><div class="meta">${x[8]?'<span class="tag loc">Favorito local</span>':''}<span class="tag">${x[2]}</span><span class="tag eu">${x[7]}</span><span class="tag km">a ${fmt(d)}</span></div><div class="ds">${x[6]}</div>
    <div class="meta"><a class="tag" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x[1]+' '+x[2]+' Ciudad de México')}" target="_blank" rel="noopener">Ver en Maps</a></div></div>
    <div class="acts"><div class="grip" title="Arrastrar">⠿</div><button class="addb" aria-label="Añadir a un día">＋</button></div></div>`).join('')}`;
   ideasEl.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filt=b.dataset.f;renderIdeas()});

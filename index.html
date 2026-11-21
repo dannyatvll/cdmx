@@ -299,10 +299,11 @@ const P={
   roma:[19.4140,-99.1650,"Roma y Condesa","Utensils"],
   gilardi:[19.4113,-99.1866,"Casa Gilardi","Waves"],
   castillo:[19.4204,-99.1819,"Castillo","Castle"],
-  antropo:[19.4260,-99.1863,"Antropología","Landmark"]
+  antropo:[19.4260,-99.1863,"Antropología","Landmark"],
+  rosetta:[19.4183,-99.1625,"Rosetta","Croissant"]
 };
 const COL={"18":"#2f5bd8","19":"#d9442b","20":"#d6336c","21":"#d98e00","22":"#0f8fa3","23":"#e0631f","24":"#1f8f57","25":"#6a4fd0"};
-const RIDE={"18":"Plane","23":"Wind","24":"TrainFront","25":"Plane"};
+const RIDE={"18":"Plane","23":"Wind","25":"Plane"};
 const D=[
  {k:"18",d:"Mié 18",s:"Llegada",z:"Aeropuerto y casa",stops:[
   ["20:20","aicm","Aterriza Ximena","T2, AM 713. Pasa a la T1 con el Aerotrén"],
@@ -312,13 +313,10 @@ const D=[
   tip:"Narvarte es tranquila y de barrio: de noche se puede volver andando por las calles principales."},
  {k:"19",d:"Jue 19",s:"Chapultepec",z:"Todo en la misma zona",stops:[
   ["10:00","gilardi","Casa Gilardi","Reservada. 600 pesos en efectivo. Uber desde casa, unos 20 min"],
-  ["11:15","castillo","Castillo de Chapultepec","A 10 min en Uber. Unas 2 h"],
-  ["13:30","castillo","Comida",""],
-  ["15:00","antropo","Museo de Antropología","Hasta las 18:00"],
   ["Noche","casa","Cena cerca de casa",""]],
-  tip:"Primer día y llegasteis tarde: si vais cansados, Antropología se puede acortar a las salas Mexica y Maya."},
+  tip:"El Castillo y Antropología se pasaron al domingo 22."},
  {k:"20",d:"Vie 20",s:"Coyoacán",z:"Sur, y de noche Arena México",stops:[
-  ["10:00","kahlo","Casa Kahlo","Aguayo 54. Metro L3 de Etiopía a Coyoacán y 20 min andando, o Uber unos 20 min. Las entradas llegan por correo el día antes"],
+  ["10:00","kahlo","Casa Kahlo","Aguayo 54. Uber unos 20 min. Las entradas llegan por correo el día antes"],
   ["11:30","coyoacan","Coyoacán","Paseo por el centro y comida temprano"],
   ["14:00","azul","Casa Azul","A dos calles de la Casa Kahlo. Comprada en Airbnb"],
   ["15:30","xoco","Cineteca de Xoco","A 10 min, 70 pesos"],
@@ -332,25 +330,29 @@ const D=[
   ["15:30","xochimilco","Xochimilco","Trajinera de 1 h desde Nuevo Nativitas"],
   ["Noche","casa","Cena cerca de casa",""]],
   tip:"Trajinera: unos 750 pesos la hora por barca. Si alguien dice que el embarcadero está cerrado, es un gancho."},
- {k:"22",d:"Dom 22",s:"Lagunilla y ballet",z:"Norte del Centro y Centro",stops:[
-  ["9:30","lagunilla","Lagunilla","Tianguis de antigüedades. Metro L3 de Centro Médico a Hidalgo y 15 min andando"],
-  ["11:30","vasconcelos","Biblioteca Vasconcelos","Gratis"],
-  ["12:30","wabi","Casa Wabi","Y comida en el Café Sabino"],
-  ["15:30","zocalo","Zócalo","Catedral y Palacio Nacional, a pie"],
+ {k:"22",d:"Dom 22",s:"Chapultepec y ballet",z:"Roma, Chapultepec, Santa María y Centro. Todo en Uber",stops:[
+  ["8:30","rosetta","Panadería Rosetta","Desayuno. Uber desde casa unos 15 min"],
+  ["9:30","castillo","Castillo de Chapultepec","Abre a las 9:00. Domingo se llena: mejor a primera hora. Unas 2 h. Uber unos 10 min"],
+  ["11:45","antropo","Museo de Antropología","A 5 min en Uber. Salas Mexica y Maya si vais justos"],
+  ["14:30","wabi","Casa Wabi","Comida en el Café Sabino. Uber unos 20 min"],
+  ["17:15","vasconcelos","Biblioteca Vasconcelos","Al atardecer, el sol se pone hacia las 18:00. Gratis, a 5 min"],
+  ["18:45","bellas","Cena por Bellas Artes","Uber unos 15 min"],
   ["20:30","bellas","Ballet Folklórico","Bellas Artes, galería fila A. Vuelta en Uber"]],
-  tip:"El Palacio Nacional a veces cierra sin avisar: miradlo el día antes y llevad pasaporte."},
+  tip:"Lagunilla (solo domingos) se cae para meter Chapultepec. Zócalo pasa al martes."},
  {k:"23",d:"Lun 23",s:"Globo",z:"Teotihuacán con transporte incluido",stops:[
   ["Madrugada","casa","Recogida","AeroTours os recoge en CDMX"],
   ["Mañana","teoti","Globo en Teotihuacán","Vuelo, desayuno en cueva y zona arqueológica"],
   ["Mediodía","casa","Descanso","Vuelta a casa"],
   ["Noche","roma","Roma y Condesa","Paseo y cena. A 10 min en Uber"]],
   tip:"No se sube a la Pirámide del Sol; a la de la Luna, como mucho a la primera plataforma."},
- {k:"24",d:"Mar 24",s:"Centro",z:"Metro L3 hasta Balderas y luego a pie",stops:[
-  ["10:30","ciudadela","La Ciudadela","Artesanías y recuerdos, último día. Al lado del metro Balderas"],
+ {k:"24",d:"Mar 24",s:"Centro",z:"Uber hasta La Ciudadela y luego a pie",stops:[
+  ["10:30","ciudadela","La Ciudadela","Artesanías y recuerdos, último día. Uber unos 15 min"],
   ["12:00","munal","Alameda y MUNAL","Cierra a las 18:00"],
   ["14:30","madero","Madero y comida","Casa de los Azulejos y Palacio Postal de camino"],
-  ["Tarde","casa","Descanso y maletas","Metro L3 de Juárez a Centro Médico"],
-  ["Noche","garibaldi","Garibaldi","Última noche. Ir y volver en Uber"]]},
+  ["16:00","zocalo","Zócalo","Catedral y Palacio Nacional, al final de Madero"],
+  ["Tarde","casa","Descanso y maletas","Uber unos 20 min"],
+  ["Noche","garibaldi","Garibaldi","Última noche. Ir y volver en Uber"]],
+  tip:"El Palacio Nacional a veces cierra sin avisar: miradlo el día antes y llevad pasaporte."},
  {k:"25",d:"Mié 25",s:"Vuelta",z:"Checkout a las 11:00",stops:[
   ["8:00","casa","Desayuno y maletas",""],
   ["9:30","aicm","Danny al aeropuerto","Uber unos 35 min. IB304 a las 12:50 desde la T1, llega a Madrid el jueves 26 a las 6:00"],
